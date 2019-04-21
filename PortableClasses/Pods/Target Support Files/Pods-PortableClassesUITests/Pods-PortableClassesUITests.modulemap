@@ -1,0 +1,6 @@
+framework module Pods_PortableClassesUITests {
+  umbrella header "Pods-PortableClassesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
