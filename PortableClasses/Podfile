@@ -6,7 +6,8 @@ target 'PortableClasses' do
   use_frameworks!
 
   # Pods for PortableClasses
-pod 'Firebase/Core'
+  pod 'Firebase/Core'
+  pod 'FirebaseUI'  
   target 'PortableClassesTests' do
     inherit! :search_paths
     # Pods for testing
