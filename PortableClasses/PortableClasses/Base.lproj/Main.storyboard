@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -149,7 +150,6 @@
         <!--Course View Controller-->
         <scene sceneID="Lst-DY-e0S">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X40-e3-N2D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xLh-2Q-ZQe" customClass="CourseViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m0V-y7-0r0" customClass="ClassesViewController">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -200,6 +200,7 @@
                         <viewLayoutGuide key="safeArea" id="Edc-06-nfm"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X40-e3-N2D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1870" y="421"/>
         </scene>
