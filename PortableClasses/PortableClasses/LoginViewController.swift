@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad();
     }
     
-    let email = "mll503@nyu.edu";
+    let email = "slg@nyu.edu";
     let password = "Abcd@!12";
 
     @IBAction func loginAction(_ sender: Any) {
