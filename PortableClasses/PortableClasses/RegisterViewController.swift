@@ -15,7 +15,7 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad();
     }
 
-    let email = "abc@nyu.edu";
+    let email = "slg@nyu.edu";
     let password = "Abcd@!12";
     
     @IBAction func signUpAction(_ sender: Any) {

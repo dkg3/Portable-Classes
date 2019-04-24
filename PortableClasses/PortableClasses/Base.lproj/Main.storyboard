@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Login View Controller" id="BYZ-38-t0r" customClass="ViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login View Controller" id="BYZ-38-t0r" customClass="LoginViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,6 +44,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Sign In"/>
+                                <connections>
+                                    <action selector="loginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MBz-J4-kqr"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iu4-PL-agW">
                                 <rect key="frame" x="252" y="568" width="145" height="42"/>
@@ -142,6 +145,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ro-PI-ZlX">
+                                <rect key="frame" x="137" y="520" width="146" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Back to Login"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="8RD-R7-jaF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.82745098039215681" green="0.97647058823529409" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="CpP-hj-Aij"/>
@@ -321,6 +333,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="n3p-2B-fvc"/>
+        <segue reference="Da5-Vf-FR4"/>
     </inferredMetricsTieBreakers>
 </document>
