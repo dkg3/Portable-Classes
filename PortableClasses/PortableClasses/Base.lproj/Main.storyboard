@@ -140,9 +140,15 @@
                                 <connections>
                                     <action selector="registerButton:" destination="AjS-fm-FFa" eventType="touchUpInside" id="sZd-oB-loJ"/>
                                     <action selector="signUpAction:" destination="1me-CQ-2zO" eventType="touchUpInside" id="6nT-xN-WGv"/>
-                                    <segue destination="7VP-9x-TkY" kind="presentation" id="RpY-fl-OLH"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ih-1k-W2v">
+                                <rect key="frame" x="81" y="522" width="255" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.01164490638" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.82745098039215681" green="0.97647058823529409" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="CpP-hj-Aij"/>
@@ -151,7 +157,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nUt-Hh-UEA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="AjS-fm-FFa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="138" y="767"/>
+            <point key="canvasLocation" x="137.68115942028987" y="766.74107142857144"/>
         </scene>
         <!--Course View Controller-->
         <scene sceneID="Lst-DY-e0S">
@@ -318,7 +324,4 @@
             <point key="canvasLocation" x="1055" y="421"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="RpY-fl-OLH"/>
-    </inferredMetricsTieBreakers>
 </document>
