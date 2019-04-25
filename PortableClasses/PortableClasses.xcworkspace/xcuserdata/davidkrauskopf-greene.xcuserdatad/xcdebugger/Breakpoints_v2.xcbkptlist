@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PortableClasses/RegisterViewController.swift"
-            timestampString = "577848389.957842"
+            timestampString = "577853928.833885"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "signUpAction(_:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -269,7 +269,7 @@
         <!--Map View Controller-->
         <scene sceneID="jzd-T8-rxZ">
             <objects>
-                <viewController id="ypz-p5-bYg" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController id="ypz-p5-bYg" customClass="MapViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aMf-Zr-xAH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -301,6 +301,9 @@
                         <color key="backgroundColor" red="0.8268892765045166" green="0.97676378488540649" blue="0.99418741464614868" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="zWT-Zx-guq"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="usl-OH-abo" id="wUN-YP-AhT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gz9-Rr-xGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -366,6 +369,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Da5-Vf-FR4"/>
-        <segue reference="8RD-R7-jaF"/>
+        <segue reference="efz-NX-Jy4"/>
     </inferredMetricsTieBreakers>
 </document>
