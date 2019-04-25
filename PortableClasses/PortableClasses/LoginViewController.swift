@@ -15,11 +15,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad();
     }
     
-    let email = "slg@nyu.edu";
-    let password = "Abcd@!12";
+    @IBOutlet weak var userEmail: UITextField!
+    @IBOutlet weak var userPassword: UITextField!
 
     @IBAction func loginAction(_ sender: Any) {
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: userEmail.text!, password: userPassword.text!) { (user, error) in
             if error == nil{
                 self.performSegue(withIdentifier: "loginToHome", sender: self)
             }
