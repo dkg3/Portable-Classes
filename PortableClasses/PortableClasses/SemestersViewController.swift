@@ -23,4 +23,26 @@ class SemestersViewController: UIViewController {
             print ("Error signing out: %@", signOutError)
         }
     }
+    @IBAction func addSemesterPopUp(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Add Semester", message: "Please type your semester.", preferredStyle: .alert)
+    
+        alert.addTextField { (textField) in
+            textField.text = ""
+        }
+        
+        // TODO: look at other styles
+        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            let semesterName = textField?.text
+            self.addSemesterToTable(semester: semesterName!)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func addSemesterToTable(semester: String) {
+        
+    }
 }
