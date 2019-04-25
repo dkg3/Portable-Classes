@@ -227,6 +227,14 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" id="efz-NX-Jy4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfT-42-1xx">
+                                <rect key="frame" x="16" y="57" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <segue destination="7VP-9x-TkY" kind="presentation" id="5cS-e0-q75"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.8268892765045166" green="0.97676378488540649" blue="0.99418741464614868" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="Edc-06-nfm"/>
@@ -236,10 +244,10 @@
             </objects>
             <point key="canvasLocation" x="1870" y="421"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Course View Controller-->
         <scene sceneID="HIm-AG-daR">
             <objects>
-                <viewController id="tRL-zi-nfL" sceneMemberID="viewController">
+                <viewController id="tRL-zi-nfL" customClass="AddCourseViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BaF-iQ-EBJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,6 +264,23 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Add course to semester"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMc-FR-AJZ">
+                                <rect key="frame" x="16" y="57" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <segue destination="xLh-2Q-ZQe" kind="presentation" id="6PI-lw-Bba"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUt-cq-Xh8">
+                                <rect key="frame" x="368" y="57" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="logout"/>
+                                <connections>
+                                    <action selector="logoutAction:" destination="tRL-zi-nfL" eventType="touchUpInside" id="upa-OI-Whv"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="QWn-wG-mcO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.82688927649999999" green="0.97676378490000004" blue="0.99418741460000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -297,6 +322,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LV7-hf-5Xc">
+                                <rect key="frame" x="16" y="57" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="back"/>
+                                <connections>
+                                    <segue destination="xLh-2Q-ZQe" kind="presentation" id="ivE-nG-FKb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hT-uE-7Lx">
+                                <rect key="frame" x="368" y="57" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="logout"/>
+                                <connections>
+                                    <action selector="logoutAction:" destination="ypz-p5-bYg" eventType="touchUpInside" id="q6x-kY-npd"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="uAv-Rm-RNl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.8268892765045166" green="0.97676378488540649" blue="0.99418741464614868" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="zWT-Zx-guq"/>
@@ -365,10 +407,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="back" width="50" height="50"/>
         <image name="logout" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Da5-Vf-FR4"/>
-        <segue reference="efz-NX-Jy4"/>
+        <segue reference="5cS-e0-q75"/>
+        <segue reference="6PI-lw-Bba"/>
+        <segue reference="QWn-wG-mcO"/>
     </inferredMetricsTieBreakers>
 </document>

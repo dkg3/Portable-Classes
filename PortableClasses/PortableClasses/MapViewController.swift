@@ -43,4 +43,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         print("Unable to access your current location")
     }
     
+    @IBAction func logoutAction(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+        }
+        catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+    
 }

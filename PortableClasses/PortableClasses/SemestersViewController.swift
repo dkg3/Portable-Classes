@@ -23,6 +23,7 @@ class SemestersViewController: UIViewController {
             print ("Error signing out: %@", signOutError)
         }
     }
+    
     @IBAction func addSemesterPopUp(_ sender: Any) {
         
         let alert = UIAlertController(title: "Add Semester", message: "Please type your semester.", preferredStyle: .alert)
