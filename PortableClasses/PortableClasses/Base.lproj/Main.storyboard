@@ -375,9 +375,13 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8tW-b2-mbn">
-                                <rect key="frame" x="0.0" y="127" width="414" height="407"/>
+                                <rect key="frame" x="0.0" y="127" width="414" height="658"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="7VP-9x-TkY" id="JEg-A0-CWh"/>
+                                    <outlet property="delegate" destination="7VP-9x-TkY" id="pzw-Bp-BZL"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ne-a3-5ZT">
                                 <rect key="frame" x="368" y="57" width="26" height="26"/>
@@ -388,18 +392,25 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" id="cLK-di-quE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ccs-Le-W7r">
-                                <rect key="frame" x="40" y="585" width="95" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAm-Z6-csP">
+                                <rect key="frame" x="310" y="64" width="30" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add semester"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="1" green="0.01164490638" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
-                                    <action selector="addSemesterPopUp:" destination="7VP-9x-TkY" eventType="touchUpInside" id="ee1-IL-0xQ"/>
+                                    <action selector="onAddTapped" destination="7VP-9x-TkY" eventType="touchUpInside" id="I36-Ck-Nuz"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.82688927649999999" green="0.97676378490000004" blue="0.99418741460000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="PpH-zH-KuI"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="8tW-b2-mbn" id="OWP-qz-nyu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ddc-hD-gMA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -412,7 +423,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5cS-e0-q75"/>
-        <segue reference="6PI-lw-Bba"/>
-        <segue reference="QWn-wG-mcO"/>
+        <segue reference="dn4-G5-mHt"/>
+        <segue reference="cLK-di-quE"/>
     </inferredMetricsTieBreakers>
 </document>

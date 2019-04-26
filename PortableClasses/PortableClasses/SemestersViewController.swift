@@ -11,6 +11,34 @@ import Firebase
 
 class SemestersViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var semesters = [String]()
+    
+    @IBAction func onAddTapped() {
+        let alert = UIAlertController(title: "Add Semester", message: nil, preferredStyle: .alert)
+        alert.addTextField {(semesterTF) in
+            semesterTF.placeholder = "Enter Semester"
+        }
+        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+            guard let semester = alert.textFields?.first?.text else {return}
+            self.add(semester)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (_) in
+            return
+        }
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    func add(_ semester: String) {
+        let index = 0
+        semesters.insert(semester, at: index)
+        let indexPath = IndexPath(row: index, section: 0)
+        tableView.insertRows(at: [indexPath], with: .left)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad();
     }
@@ -24,26 +52,29 @@ class SemestersViewController: UIViewController {
         }
     }
     
-    @IBAction func addSemesterPopUp(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add Semester", message: "Please type your semester.", preferredStyle: .alert)
+}
+
+extension SemestersViewController: UITableViewDataSource {
     
-        alert.addTextField { (textField) in
-            textField.text = ""
-        }
-        
-        // TODO: look at other styles
-        alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0]
-            let semesterName = textField?.text
-            self.addSemesterToTable(semester: semesterName!)
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-        
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    func addSemesterToTable(semester: String) {
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return semesters.count
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let semester = semesters[indexPath.row]
+        cell.textLabel?.text = semester
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else {return}
+        semesters.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
 }
