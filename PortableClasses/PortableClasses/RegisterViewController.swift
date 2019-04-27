@@ -79,9 +79,38 @@ class RegisterViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         else {
+            
+            
+            
+            
+            
             Auth.auth().createUser(withEmail: userEmail.text!, password: userPassword.text!){ (user, error) in
                 if error == nil {
+                    
+                    let db = Firestore.firestore()
+                    // add user to db
+                    var ref: DocumentReference? = nil
+                    ref = db.collection("users").document(self.userEmail.text!)
+                    ref?.setData([
+                        "email": self.userEmail.text!
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding document")
+                        }
+                    }
+                    // create semesters array
+                    let semestersRef = ref?.collection("semesters")
+                    let semestersCollectionRef = semestersRef?.document("semesters")
+                    semestersCollectionRef?.setData([
+                        "semesters": []
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding collection")
+                        }
+                    }
+                    
                     self.performSegue(withIdentifier: "signupToHome", sender: self)
+                    
                 }
                 else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)

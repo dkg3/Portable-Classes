@@ -11,9 +11,36 @@ import Firebase
 
 class SemestersViewController: UIViewController {
     
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     var semesters = [String]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        
+        let db = Firestore.firestore()
+        
+        var userRef: DocumentReference? = nil
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        
+        let semestsRef = userRef?.collection("semesters").document("semesters")
+        semestsRef!.getDocument { (document, error) in
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                    // asynchronously reload table once db returns array of semesters
+                    DispatchQueue.main.async {
+                        self.semesters = data["semesters"]! as! [String]
+                        self.tableView.reloadData()
+                    }
+                })
+            })
+        }
+    }
     
     @IBAction func onAddTapped() {
         let alert = UIAlertController(title: "Add Semester", message: nil, preferredStyle: .alert)
@@ -24,24 +51,51 @@ class SemestersViewController: UIViewController {
             guard let semester = alert.textFields?.first?.text else {return}
             self.add(semester)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (_) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
             return
         }
-        alert.addAction(addAction)
+        
         alert.addAction(cancelAction)
+        alert.addAction(addAction)
         present(alert, animated: true)
     }
     
     func add(_ semester: String) {
-        let index = 0
-        semesters.insert(semester, at: index)
-        let indexPath = IndexPath(row: index, section: 0)
-        tableView.insertRows(at: [indexPath], with: .left)
+        
+        let db = Firestore.firestore()
+        
+        var userRef: DocumentReference? = nil
+        
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        let semestsRef = userRef?.collection("semesters").document("semesters")
+        
+        // append semester
+        semestsRef?.updateData([
+            "semesters": FieldValue.arrayUnion([semester])
+        ]) { err in
+            if err != nil {
+                print("Error adding document")
+            } else {
+                // initialize classes array for this semester
+                let classesRef = semestsRef?.collection("classes")
+                let classesDoc = classesRef?.document("classes")
+                classesDoc?.setData([
+                    "classes": []
+                ]) { err in
+                    if err != nil {
+                        print("Error adding document")
+                    } else {
+                        // add semester to table
+                        let index = 0
+                        self.semesters.insert(semester, at: index)
+                        let indexPath = IndexPath(row: index, section: 0)
+                        self.tableView.insertRows(at: [indexPath], with: .left)
+                    }
+                }
+            }
+        }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad();
-    }
     
     @IBAction func logoutAction(_ sender: Any) {
         do {
