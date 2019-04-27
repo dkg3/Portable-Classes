@@ -9,6 +9,9 @@ target 'PortableClasses' do
   pod 'Firebase/Core'
   pod 'FirebaseUI'  
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
+
   target 'PortableClassesTests' do
     inherit! :search_paths
     # Pods for testing
