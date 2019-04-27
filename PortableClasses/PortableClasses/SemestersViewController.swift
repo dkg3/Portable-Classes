@@ -20,6 +20,8 @@ class SemestersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        tableView.rowHeight = 90
+        
         let db = Firestore.firestore()
         
         var userRef: DocumentReference? = nil
@@ -120,6 +122,9 @@ extension SemestersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+
+        cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
+        
         let semester = semesters[indexPath.row]
         cell.textLabel?.text = semester
         return cell
