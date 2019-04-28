@@ -36,8 +36,14 @@ class SemestersViewController: UIViewController {
                 $0.data().flatMap({ (data) in
                     // asynchronously reload table once db returns array of semesters
                     DispatchQueue.main.async {
-                        self.semesters = data["semesters"]! as! [String]
-                        self.tableView.reloadData()
+                        if data["semesters"] != nil {
+                            self.semesters = data["semesters"]! as! [String]
+                            self.tableView.reloadData()
+                        }
+                        else {
+                            return
+                        }
+                       
                     }
                 })
             })
