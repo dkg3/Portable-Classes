@@ -16,6 +16,7 @@
 		001774A8226D17CF00A8B2D7 /* PortableClassesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001774A7226D17CF00A8B2D7 /* PortableClassesUITests.swift */; };
 		001774BA226D1D7900A8B2D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 001774B9226D1D7900A8B2D7 /* GoogleService-Info.plist */; };
 		0025FB922271537400F7A8F0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025FB912271537400F7A8F0 /* MapViewController.swift */; };
+		0025FB9A2277AD9000F7A8F0 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025FB992277AD9000F7A8F0 /* CameraViewController.swift */; };
 		00B8B04F227120B600499EFB /* SemestersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B8B04E227120B500499EFB /* SemestersViewController.swift */; };
 		205AC9290D2217819478E9E1 /* Pods_PortableClasses.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E597AAAD2E77FE089D9B59 /* Pods_PortableClasses.framework */; };
 		4F5F59DF226FA9E7005478D6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */; };
@@ -60,6 +61,7 @@
 		001774A9226D17CF00A8B2D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		001774B9226D1D7900A8B2D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0025FB912271537400F7A8F0 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		0025FB992277AD9000F7A8F0 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		00B8B04E227120B500499EFB /* SemestersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemestersViewController.swift; sourceTree = "<group>"; };
 		4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				00177490226D17CF00A8B2D7 /* LaunchScreen.storyboard */,
 				00177493226D17CF00A8B2D7 /* Info.plist */,
 				001774B9226D1D7900A8B2D7 /* GoogleService-Info.plist */,
+				0025FB992277AD9000F7A8F0 /* CameraViewController.swift */,
 			);
 			path = PortableClasses;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F5F59DF226FA9E7005478D6 /* LoginViewController.swift in Sources */,
+				0025FB9A2277AD9000F7A8F0 /* CameraViewController.swift in Sources */,
 				0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */,
 				00B8B04F227120B600499EFB /* SemestersViewController.swift in Sources */,
 				4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */,
