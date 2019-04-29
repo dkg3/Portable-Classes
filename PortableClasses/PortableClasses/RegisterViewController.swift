@@ -92,7 +92,8 @@ class RegisterViewController: UIViewController {
                     var ref: DocumentReference? = nil
                     ref = db.collection("users").document(self.userEmail.text!)
                     ref?.setData([
-                        "email": self.userEmail.text!
+                        "email": self.userEmail.text!,
+                        "location": GeoPoint(latitude: 0, longitude: 0)
                     ]) { err in
                         if err != nil {
                             print("Error adding document")
