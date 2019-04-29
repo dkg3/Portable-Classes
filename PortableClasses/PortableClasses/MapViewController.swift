@@ -11,7 +11,8 @@ import MapKit
 import CoreLocation
 import Firebase
 
-class CityLocation: NSObject, MKAnnotation {
+// class that represents user on the map
+class UserLocation: NSObject, MKAnnotation {
     var title: String?
     var coordinate: CLLocationCoordinate2D
     
@@ -49,13 +50,45 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         self.mapView.setRegion(region, animated: true)
         
         let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        userRef?.updateData(["location": GeoPoint(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)])
         
-        let test = CityLocation(title: "Test", coordinate: CLLocationCoordinate2D(latitude: 37, longitude:-122))
-        mapView.addAnnotation(test)
-        mapView.addAnnotations([test])
+        let allUsersRef: CollectionReference? = db.collection("users")
+        
+        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!)
+        
+        currUserRef?.updateData(["location": GeoPoint(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)])
+        
+        // loop through all users
+        allUsersRef?.getDocuments() { (querySnapshot, err) in
+            if err != nil {
+                print("Error getting all users")
+            } else {
+                
+                for document in querySnapshot!.documents {
+                    
+                    if document.data()["location"] != nil {
+                        
+                        // TODO: create public/private bool to determine whether to show user on map
+                        
+                        // document id is the same as username
+                        let username = document.documentID
+                        
+                        // don't annotate map with current user
+                        if username != Auth.auth().currentUser?.email {
+                            let gp: GeoPoint = document.data()["location"] as! GeoPoint
+                            
+                            let userToShow = UserLocation(title: username, coordinate: CLLocationCoordinate2D(latitude: gp.latitude, longitude: gp.longitude))
+                            
+                            // place pin on map with username under it
+                            self.mapView.addAnnotation(userToShow)
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
+        
+    
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
