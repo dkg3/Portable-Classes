@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -35,10 +37,46 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             myImg.image = pickedImage
+            
+            var data = Data()
+            data = pickedImage.jpegData(compressionQuality: 0.8)!
+            let imageRef = Storage.storage().reference().child("images/" + randomString(20))
+            _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
+                imageRef.downloadURL { url, error in
+                    if error != nil {
+
+                    } else {
+                        print(url?.absoluteString ?? "")
+                        
+                        let db = Firestore.firestore()
+                        let allUsersRef: CollectionReference? = db.collection("users")
+                        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!)
+                        currUserRef?.setData([
+                            "image": url?.absoluteString ?? ""
+                        ], merge: true) { err in
+                            if err != nil {
+                                print("Error adding document")
+                            }
+                        }
+                    }
+                }
+            }
         }
-        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func randomString(_ length: Int) -> String {
+        let letters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        var randomString = ""
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        return randomString
     }
     
 }
