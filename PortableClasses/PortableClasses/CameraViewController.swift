@@ -14,6 +14,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBOutlet weak var myImg: UIImageView!
     
+    var allImages: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -49,13 +51,12 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                     if error != nil {
 
                     } else {
-                        print(url?.absoluteString ?? "")
-                        
+                        self.allImages.append(url?.absoluteString ?? "")
                         let db = Firestore.firestore()
                         let allUsersRef: CollectionReference? = db.collection("users")
                         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!)
                         currUserRef?.setData([
-                            "image": url?.absoluteString ?? ""
+                            "image": self.allImages
                         ], merge: true) { err in
                             if err != nil {
                                 print("Error adding document")
