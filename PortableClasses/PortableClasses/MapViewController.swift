@@ -22,10 +22,13 @@ class UserLocation: NSObject, MKAnnotation {
     }
 }
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     var locationManager = CLLocationManager()
+    
+    @IBOutlet weak var tableView: UITableView!
+    var usersArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -41,6 +44,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         else {
             print("Please turn on location services or GPS")
         }
+        
+        // set table delegate to this view controller
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        
+        let db = Firestore.firestore()
+        let allUsersRef: CollectionReference? = db.collection("users")
+        
+        // loop through all users
+        allUsersRef?.getDocuments() { (querySnapshot, err) in
+            if err != nil {
+                print("Error getting all users")
+            } else {
+                for document in querySnapshot!.documents {
+                    // TODO: create public/private bool to determine whether to show user on map
+                    
+                    // document id is the same as username
+                    let username = document.documentID
+                    
+                    // // add users to the array to display in the table but don't include current user
+                    if username != Auth.auth().currentUser?.email {
+                        self.usersArray.append(username)
+                        // asynchronously reload table everytime a user is added to the array
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+        print(usersArray)
     }
     
     //MARK: CLLocationManager Delagates
@@ -81,19 +116,49 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                             // place pin on map with username under it
                             self.mapView.addAnnotation(userToShow)
                         }
-                        
                     }
-                    
                 }
             }
         }
-        
-    
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
     }
+    
+    // table methods
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return usersArray.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "usernameCell", for: indexPath)
+        
+        
+        cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
+        
+        let semester = usersArray[indexPath.row]
+        cell.textLabel?.text = semester
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(usersArray[indexPath.row])
+    }
+    
+    
+    
+    
+    
+    
+    
     
     @IBAction func logoutAction(_ sender: Any) {
         do {
