@@ -187,7 +187,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYM-fu-a7x">
-                                            <rect key="frame" x="330" y="6" width="46" height="30"/>
+                                            <rect key="frame" x="320" y="6" width="46" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="View"/>
                                             <connections>
@@ -217,7 +217,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ac-YN-1dz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1086" y="2184"/>
+            <point key="canvasLocation" x="1085.5999999999999" y="2183.497536945813"/>
         </scene>
         <!--Courses-->
         <scene sceneID="iao-Gf-SnZ">
@@ -234,6 +234,16 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ziO-XZ-KT6" id="i4q-PB-BlT">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B2O-Kp-Vui">
+                                            <rect key="frame" x="320" y="6" width="50" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="View"/>
+                                            <connections>
+                                                <segue destination="W2a-Nl-1AO" kind="show" id="bDd-z0-7mn"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -252,7 +262,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHh-hO-YNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970" y="2172"/>
+            <point key="canvasLocation" x="1968.8" y="2171.6748768472908"/>
+        </scene>
+        <!--Class Features-->
+        <scene sceneID="JrT-vm-2N0">
+            <objects>
+                <tableViewController id="W2a-Nl-1AO" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eoO-yT-off">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FHX-Gu-reO">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FHX-Gu-reO" id="yCn-7Q-laf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="W2a-Nl-1AO" id="AUX-zD-mAe"/>
+                            <outlet property="delegate" destination="W2a-Nl-1AO" id="O3R-NL-oyD"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Class Features" largeTitleDisplayMode="always" id="Nc8-mx-A1N"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qw6-jG-4pN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2745" y="2176"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bmR-SP-Z0T">
