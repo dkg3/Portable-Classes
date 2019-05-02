@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/aramirez/Desktop/NYU/Year 4/Spring/iOS Programming/finalproject/Portable-Classes/PortableClasses/PortableClasses/ClassFeaturesTableViewController.swift">
-   </FileRef>
-   <FileRef
       location = "group:PortableClasses.xcodeproj">
    </FileRef>
    <FileRef
