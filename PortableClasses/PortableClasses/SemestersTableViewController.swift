@@ -18,6 +18,8 @@ class SemestersTableViewController: UITableViewController {
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+//    @IBOutlet weak var editButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,14 +48,28 @@ class SemestersTableViewController: UITableViewController {
          self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.leftBarButtonItem = self.addButton
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+//        self.navigationItem.leftBarButtonItems?.append(self.addButton)//, self.editButton]
+        
+        
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        navigationItem.rightBarButtonItems?.append(add)
         
         
     }
     
+
     
-    @IBAction func onAddTapped() {
+//    @IBAction func editButtonTapped(_ sender: Any) {
+//        self.navigationItem.leftBarButtonItem.append(self.addButton)
+//    }
+    
+    
+    
+    
+    
+    @objc func addTapped() {
         let alert = UIAlertController(title: "Add Semester", message: nil, preferredStyle: .alert)
         alert.addTextField {(semesterTF) in
             semesterTF.placeholder = "Enter Semester"
