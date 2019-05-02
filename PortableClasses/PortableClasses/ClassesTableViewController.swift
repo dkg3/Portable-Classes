@@ -7,17 +7,37 @@
 //
 
 import UIKit
+import Firebase
 
 class ClassesTableViewController: UITableViewController {
     
-    
-    
-    
     var classes = [String]()
+    var currSemester = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //        classesTableView.rowHeight = 90
-        classes = ["iOS", "NLP"]
+        
+        let db = Firestore.firestore()
+
+        var userRef: DocumentReference? = nil
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
+        
+        classesRef!.getDocument { (document, error) in
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                    // asynchronously reload table once db returns array of semesters
+                    DispatchQueue.main.async {
+                        self.classes = data["classes"]! as! [String]
+                        self.tableView.reloadData()
+                    }
+                })
+            })
+        }
         
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
@@ -46,16 +66,76 @@ class ClassesTableViewController: UITableViewController {
     }
     
     func add(_ course: String) {
-
         
-        let index = 0
-        self.classes.insert(course, at: index)
-        let indexPath = IndexPath(row: index, section: 0)
-        self.tableView.insertRows(at: [indexPath], with: .left)
+        let db = Firestore.firestore()
+        
+        var userRef: DocumentReference? = nil
+        
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
+        // add new course collection
+        let newCourseCollection = classesRef?.collection(course)
+        
+        // append semester
+        classesRef?.updateData([
+            "classes": FieldValue.arrayUnion([course])
+        ]) { err in
+            if err != nil {
+                print("Error adding course")
+            } else {
+                // initialize notes, handNotes, deadlines, & flashcards arrays for this course
+                let currClassRef = classesRef?.collection(course)
+                let notesDoc = currClassRef?.document("notes")
+                let handNotesDoc = currClassRef?.document("handNotes")
+                let deadlinesDoc = currClassRef?.document("deadlines")
+                let flashcardsDoc = currClassRef?.document("flashcards")
+                
+                // initialize notes array
+                notesDoc?.setData([
+                    "notes": [],
+                ]) { err in
+                    if err != nil {
+                        print("Error adding notes")
+                    }
+                }
+                
+                // initialize hand notes array
+                handNotesDoc?.setData([
+                    "handNotes": [],
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding hand notes")
+                        }
+                }
+                
+                // initialize dealines array
+                deadlinesDoc?.setData([
+                    "deadlines": [],
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding deadlines")
+                        }
+                }
+                
+                // initialize notes array
+                flashcardsDoc?.setData([
+                    "flashcards": [],
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding flash cards")
+                        }
+                }
+                
+                
+                
+                let index = 0
+                self.classes.insert(course, at: index)
+                let indexPath = IndexPath(row: index, section: 0)
+                self.tableView.insertRows(at: [indexPath], with: .left)
+            }
+        }
     }
-    
-    
-    
+  
     
     // MARK: - Table view data source
     

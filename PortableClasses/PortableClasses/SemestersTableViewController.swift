@@ -212,12 +212,10 @@ class SemestersTableViewController: UITableViewController {
     */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let backItem = UIBarButtonItem()
-//        backItem.title = "Back"
-//        navigationItem.backBarButtonItem = backItem
-        
-        // send current semester
-//        let currSemester =
+        // send current semester to classrs page
+        let classVC = segue.destination as! ClassesTableViewController
+        classVC.currSemester = currSemester
+
     }
     
     
