@@ -23,7 +23,7 @@ class ClassFeaturesTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        classFeatures = ["Notes", "Pictures", "Deadlines", "Flash Cards"]
+        classFeatures = ["Deadlines", "Notes", "Pictures", "Flash Cards"]
         
         self.navigationItem.title = currClass
     }
@@ -36,21 +36,51 @@ class ClassFeaturesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
         return classFeatures.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "classFeatureCell", for: indexPath)
+        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "flashcardsCell", for: indexPath)
+//
+//        let feature = classFeatures[indexPath.row]
+//        cell.textLabel?.text = feature
+//
+//        return cell
+        
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "deadlinesCell", for: indexPath)
+            let feature = classFeatures[indexPath.row]
+            cell.textLabel?.text = feature
+            print(0)
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell", for: indexPath)
+            let feature = classFeatures[indexPath.row]
+            cell.textLabel?.text = feature
+            print(1)
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "picturesCell", for: indexPath)
+            let feature = classFeatures[indexPath.row]
+            cell.textLabel?.text = feature
+            print(2)
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "flashcardsCell", for: indexPath)
+            let feature = classFeatures[indexPath.row]
+            cell.textLabel?.text = feature
+            print(3)
+            return cell
 
-        // Configure the cell...
-        let feature = classFeatures[indexPath.row]
-        cell.textLabel?.text = feature
-
-        return cell
-    }
+        default:
+            return UITableViewCell()
+        }
     
+    }
 
     /*
     // Override to support conditional editing of the table view.
