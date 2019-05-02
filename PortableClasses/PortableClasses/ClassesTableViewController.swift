@@ -13,10 +13,11 @@ class ClassesTableViewController: UITableViewController {
     
     var classes = [String]()
     var currSemester = ""
+    var currClass = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        classesTableView.rowHeight = 90
+        
         
         let db = Firestore.firestore()
 
@@ -153,11 +154,19 @@ class ClassesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "classCell", for: indexPath)
         
-            cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
     
             let course = classes[indexPath.row]
             cell.textLabel?.text = course
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        currClass = classes[indexPath.row]
+        print(currClass)
+        
+        //        self.performSegue(withIdentifier: "semesterToClasses", sender: self)
     }
     
     
@@ -196,15 +205,15 @@ class ClassesTableViewController: UITableViewController {
      }
      */
     
-    /*
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+        let classFeaturesVC = segue.destination as! ClassFeaturesTableViewController
+        classFeaturesVC.currClass = currClass
      }
-     */
+ 
     
 }
 

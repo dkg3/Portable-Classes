@@ -11,11 +11,8 @@ import Firebase
 
 class SemestersTableViewController: UITableViewController {
     
-    
     var semesters = [String]()
     var currSemester: String = ""
-    
-    
     
     @IBOutlet var semestersTable: UITableView!
     
@@ -23,10 +20,6 @@ class SemestersTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("hello table")
-        
-        
-//        self.addButton.isHidden = false
         
         semestersTable.rowHeight = 90
         
@@ -136,9 +129,6 @@ class SemestersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "semesterCell", for: indexPath)
-
-    
-        cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
         
         let semester = semesters[indexPath.row]
         cell.textLabel?.text = semester
@@ -222,11 +212,8 @@ class SemestersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
         currSemester = semesters[indexPath.row]
         print(currSemester)
-        
-//        self.performSegue(withIdentifier: "semesterToClasses", sender: self)
     }
 
 }

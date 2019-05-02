@@ -24,6 +24,7 @@
 		4F5F59E3226FB5FF005478D6 /* CourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F59E2226FB5FF005478D6 /* CourseViewController.swift */; };
 		4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */; };
 		4F663AA42274F0AF003758EB /* ClassesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */; };
+		4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B7452227ABC6B001F4141 /* ClassFeaturesTableViewController.swift */; };
 		8096E61713C007D5B966964E /* Pods_PortableClassesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5BF1FAE93C87DEE3962391 /* Pods_PortableClassesUITests.framework */; };
 		C8ACA430A3EBE7BDA87B120A /* Pods_PortableClassesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE4DFB0E0B408AF02A9A42B /* Pods_PortableClassesTests.framework */; };
 /* End PBXBuildFile section */
@@ -68,6 +69,7 @@
 		4F5F59E2226FB5FF005478D6 /* CourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseViewController.swift; sourceTree = "<group>"; };
 		4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemestersTableViewController.swift; sourceTree = "<group>"; };
 		4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassesTableViewController.swift; sourceTree = "<group>"; };
+		4F7B7452227ABC6B001F4141 /* ClassFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClassFeaturesTableViewController.swift; path = "/Users/aramirez/Desktop/NYU/Year 4/Spring/iOS Programming/finalproject/Portable-Classes/PortableClasses/PortableClasses/ClassFeaturesTableViewController.swift"; sourceTree = "<absolute>"; };
 		6B5BF1FAE93C87DEE3962391 /* Pods_PortableClassesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PortableClassesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EED16BA45CC74AF064D962C /* Pods-PortableClassesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortableClassesUITests.debug.xcconfig"; path = "Target Support Files/Pods-PortableClassesUITests/Pods-PortableClassesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B041599370586A621C56B324 /* Pods-PortableClassesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortableClassesTests.debug.xcconfig"; path = "Target Support Files/Pods-PortableClassesTests/Pods-PortableClassesTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				00B8B04E227120B500499EFB /* SemestersViewController.swift */,
 				4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */,
 				4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */,
+				4F7B7452227ABC6B001F4141 /* ClassFeaturesTableViewController.swift */,
 				4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */,
 				4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */,
 				0017748B226D17CC00A8B2D7 /* Main.storyboard */,
@@ -488,6 +491,7 @@
 			files = (
 				4F5F59DF226FA9E7005478D6 /* LoginViewController.swift in Sources */,
 				0025FB9A2277AD9000F7A8F0 /* CameraViewController.swift in Sources */,
+				4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */,
 				0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */,
 				00B8B04F227120B600499EFB /* SemestersViewController.swift in Sources */,
 				4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */,
