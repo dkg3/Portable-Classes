@@ -228,6 +228,7 @@ class SemestersTableViewController: UITableViewController {
         
         currSemester = semesters[indexPath.row]
         print(currSemester)
+        performSegue(withIdentifier: "semesterToCourses", sender: nil)
     }
 
 }

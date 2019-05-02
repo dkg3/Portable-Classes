@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -179,22 +179,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="semesterCell" rowHeight="90" id="YSm-uL-3qh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="semesterCell" rowHeight="90" id="YSm-uL-3qh">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YSm-uL-3qh" id="C0G-8P-SPS">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="89.666666666666671"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYM-fu-a7x">
-                                            <rect key="frame" x="319" y="29" width="46" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="View"/>
-                                            <connections>
-                                                <segue destination="EQW-DX-hHG" kind="show" id="Rrp-y4-aBo"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
@@ -210,6 +200,7 @@
                     <connections>
                         <outlet property="addButton" destination="cJd-0r-T9N" id="2Kr-ee-qOc"/>
                         <outlet property="semestersTable" destination="j8D-7Z-iQd" id="dct-0i-2hV"/>
+                        <segue destination="EQW-DX-hHG" kind="show" identifier="semesterToCourses" id="1W0-Hj-WZr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ac-YN-1dz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -233,9 +224,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <segue destination="Ai9-kY-u7v" kind="show" id="76H-W2-2Ih"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -250,6 +238,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Ai9-kY-u7v" kind="show" identifier="courseToFeatures" id="4fV-ue-jIE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHh-hO-YNe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -771,7 +762,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logout" width="19.5" height="19.5"/>
+        <image name="logout" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Da5-Vf-FR4"/>

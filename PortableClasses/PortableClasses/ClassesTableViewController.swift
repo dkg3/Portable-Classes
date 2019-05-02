@@ -23,7 +23,9 @@ class ClassesTableViewController: UITableViewController {
 
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        print("BEFORE REFERENCE")
         let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
+        print("CLASS REFERENCE", classesRef!)
         
         classesRef!.getDocument { (document, error) in
             if error != nil {
@@ -165,6 +167,7 @@ class ClassesTableViewController: UITableViewController {
         
         currClass = classes[indexPath.row]
         print(currClass)
+        performSegue(withIdentifier: "courseToFeatures", sender: nil)
         
         //        self.performSegue(withIdentifier: "semesterToClasses", sender: self)
     }
