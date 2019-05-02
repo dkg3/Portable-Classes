@@ -32,6 +32,12 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        
         mapView.showsUserLocation = true
         if CLLocationManager.locationServicesEnabled() == true {
             if CLLocationManager.authorizationStatus() == .restricted || CLLocationManager.authorizationStatus() == .denied || CLLocationManager.authorizationStatus() == .notDetermined {
@@ -156,17 +162,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     
-    
-    
-    
-    
-    @IBAction func logoutAction(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-        }
-        catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
+    @IBAction func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
-    
 }

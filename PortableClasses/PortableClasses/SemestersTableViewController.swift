@@ -21,8 +21,6 @@ class SemestersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        semestersTable.rowHeight = 90
-        
         let db = Firestore.firestore()
         
         var userRef: DocumentReference? = nil
@@ -48,7 +46,7 @@ class SemestersTableViewController: UITableViewController {
          self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
+//         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem = self.addButton
         
         
