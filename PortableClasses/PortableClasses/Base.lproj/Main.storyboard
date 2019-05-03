@@ -407,7 +407,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="Sfz-8B-4fG" kind="presentation" id="3Z1-gU-nNx"/>
+                                    <segue destination="Sfz-8B-4fG" kind="presentation" identifier="notesToCompleted" id="3Z1-gU-nNx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

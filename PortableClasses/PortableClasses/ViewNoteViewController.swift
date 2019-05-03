@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewNoteViewController: UIViewController {
+    
+    var currNote = ""
 
     @IBOutlet weak var completedNoteText: UITextView!
     
@@ -16,6 +18,7 @@ class ViewNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        completedNoteText.text = currNote
     }
     
     @IBAction func addNoteTapped(_ sender: Any) {

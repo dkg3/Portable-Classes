@@ -73,8 +73,11 @@ class NotesViewController: UITableViewController {
                     "notes": FieldValue.arrayUnion([message])
                     ])
                 self.notes.append(message)
-                print(self.notes)
             }
+        }
+        if segue.identifier == "notesToCompleted" {
+            let viewNoteVC = segue.destination as! ViewNoteViewController
+            viewNoteVC.currNote = self.notes[tableView.indexPathForSelectedRow!.row]
         }
         self.tableView.reloadData()
     }
