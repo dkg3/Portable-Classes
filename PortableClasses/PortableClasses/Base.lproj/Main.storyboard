@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -268,7 +268,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="hte-uY-ydv" kind="show" id="G09-Uf-nfo"/>
+                                    <segue destination="hte-uY-ydv" kind="show" identifier="featuresToDeadlines" id="G09-Uf-nfo"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="notesCell" rowHeight="90" id="AFn-RC-6XE">
@@ -280,7 +280,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="d54-Y1-7zV" kind="show" id="0gt-IZ-7f8"/>
+                                    <segue destination="d54-Y1-7zV" kind="show" identifier="featuresToNotes" id="0gt-IZ-7f8"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="picturesCell" rowHeight="90" id="bW6-tB-J1I">
@@ -292,7 +292,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="8Mz-Fd-cA2" kind="show" id="cLT-M5-Hrq"/>
+                                    <segue destination="8Mz-Fd-cA2" kind="show" identifier="featuresToPics" id="cLT-M5-Hrq"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="flashcardsCell" rowHeight="90" id="6OW-gi-0hH">
@@ -304,7 +304,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="lyI-YM-9QJ" kind="show" id="UGn-dK-ESB"/>
+                                    <segue destination="lyI-YM-9QJ" kind="show" identifier="featuresToCards" id="UGn-dK-ESB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -391,14 +391,14 @@
         <!--Notes-->
         <scene sceneID="RH0-Qh-L8n">
             <objects>
-                <tableViewController id="d54-Y1-7zV" sceneMemberID="viewController">
+                <tableViewController id="d54-Y1-7zV" customClass="NotesViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="h3u-RS-TLA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3tT-Zd-Jwa">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="noteCell" id="3tT-Zd-Jwa">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3tT-Zd-Jwa" id="lSp-b3-tWi">
@@ -406,6 +406,9 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="Sfz-8B-4fG" kind="presentation" id="3Z1-gU-nNx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -414,7 +417,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Notes" id="yBJ-Xq-bR7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RAs-jx-W7s"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RAs-jx-W7s">
+                            <connections>
+                                <segue destination="nt4-Es-rem" kind="presentation" id="aa2-Tc-UhK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Rz-aE-dY6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -424,7 +431,7 @@
         <!--Pictures-->
         <scene sceneID="ya6-KF-Tl3">
             <objects>
-                <tableViewController id="8Mz-Fd-cA2" sceneMemberID="viewController">
+                <tableViewController id="8Mz-Fd-cA2" customClass="PicsViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="0RE-n3-ySw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -573,6 +580,7 @@
                         <outlet property="addButton" destination="UVr-aN-RnS" id="ncb-j2-1JV"/>
                         <outlet property="cancelButton" destination="iL4-j1-4KI" id="hc0-uc-HaQ"/>
                         <outlet property="dateTextField" destination="dBW-pw-OOd" id="cgQ-PA-fSE"/>
+                        <outlet property="reminderTextField" destination="csT-7X-jZM" id="KJm-QJ-gpL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vl-MM-ELx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -664,7 +672,7 @@
         <!--Flash cards-->
         <scene sceneID="DHb-cW-smU">
             <objects>
-                <tableViewController id="lyI-YM-9QJ" sceneMemberID="viewController">
+                <tableViewController id="lyI-YM-9QJ" customClass="CardsViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="FFb-I4-bJX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -844,6 +852,94 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coy-bk-BrO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7686" y="848"/>
+        </scene>
+        <!--Add Note View Controller-->
+        <scene sceneID="qn6-w8-OTX">
+            <objects>
+                <viewController id="nt4-Es-rem" customClass="AddNoteViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TsF-Sp-LgA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWA-xI-UeM">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="Eq0-UU-Eih">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rbU-eQ-T17">
+                                            <connections>
+                                                <action selector="cancelAddingNote:" destination="nt4-Es-rem" id="Fr2-zy-ChZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Add" style="done" id="fWn-NA-R4X">
+                                            <connections>
+                                                <action selector="addNoteTapped:" destination="nt4-Es-rem" id="hpH-X7-VZD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="This is a note being made..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Y3J-FB-49H">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="IKW-a5-D8Z"/>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="fWn-NA-R4X" id="mzx-eA-y84"/>
+                        <outlet property="cancelButton" destination="rbU-eQ-T17" id="XIw-oJ-zyF"/>
+                        <outlet property="noteBody" destination="Y3J-FB-49H" id="LLR-pP-72s"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9xE-jJ-POR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8402" y="-491"/>
+        </scene>
+        <!--View Note View Controller-->
+        <scene sceneID="oY1-ic-nj7">
+            <objects>
+                <viewController id="Sfz-8B-4fG" customClass="ViewNoteViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hxm-Oc-dtp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cc9-bx-LzP">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem id="94G-7L-Ikh">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="rca-oE-4dF">
+                                            <connections>
+                                                <action selector="addNoteTapped:" destination="Sfz-8B-4fG" id="r1y-kL-Pzl"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="This is a completed note." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mCY-iz-HwS">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="HKf-Qt-p7M"/>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="rca-oE-4dF" id="c7p-bH-YfG"/>
+                        <outlet property="completedNoteText" destination="mCY-iz-HwS" id="mz4-9g-NiH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LoQ-yn-jc3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8401" y="158"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

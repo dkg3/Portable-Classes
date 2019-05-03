@@ -119,6 +119,7 @@ class ClassesTableViewController: UITableViewController {
                 
                 // initialize dealines array
                 deadlinesDoc?.setData([
+                    "dates": [],
                     "deadlines": [],
                     ]) { err in
                         if err != nil {
@@ -172,6 +173,7 @@ class ClassesTableViewController: UITableViewController {
         
         
         currClass = classes[indexPath.row]
+        print(currSemester)
         print(currClass)
         performSegue(withIdentifier: "courseToFeatures", sender: nil)
         
@@ -238,6 +240,7 @@ class ClassesTableViewController: UITableViewController {
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let classFeaturesVC = segue.destination as! ClassFeaturesTableViewController
+        classFeaturesVC.currSemester = currSemester
         classFeaturesVC.currClass = currClass
      }
  

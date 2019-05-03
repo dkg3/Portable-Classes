@@ -12,6 +12,7 @@ class ClassFeaturesTableViewController: UITableViewController {
     @IBOutlet var classFeaturesTable: UITableView!
     
     var classFeatures = [String]()
+    var currSemester = ""
     var currClass = ""
     
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class ClassFeaturesTableViewController: UITableViewController {
         classFeatures = ["Deadlines", "Notes", "Pictures", "Flash Cards"]
         
         self.navigationItem.title = currClass
+        print(currSemester, currClass)
     }
 
     // MARK: - Table view data source
@@ -117,14 +119,34 @@ class ClassFeaturesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+//        let deadlinesVC = segue.destination as! DeadlinesTableViewController
+//        deadlinesVC.currSemester = currSemester
+//        deadlinesVC.currClass = currClass
+        
+        
+        let notesVC = segue.destination as! NotesViewController
+        notesVC.currSemester = currSemester
+        notesVC.currClass = currClass
+        
+        
+//        let picsVC = segue.destination as! PicsViewController
+//        picsVC.currSemester = currSemester
+//        picsVC.currClass = currClass
+        
+        
+//        let cardsVC = segue.destination as! CardsViewController
+//        cardsVC.currSemester = currSemester
+//        cardsVC.currClass = currClass
     }
-    */
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//    }
+    
 
 }

@@ -10,8 +10,11 @@ import UIKit
 
 class AddDeadlineViewController: UIViewController {
 
+    var callback1 : ((String) -> Void)?
+    var callback2 : ((String) -> Void)?
     
     @IBOutlet weak var dateTextField: UITextField!
+    @IBOutlet weak var reminderTextField: UITextField!
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -66,12 +69,14 @@ class AddDeadlineViewController: UIViewController {
          self.dismiss(animated: true, completion: nil)
     }
     
+    
     @IBAction func addDeadlineTapped(_ sender: Any) {
         
 //        let deadlinesVC = segue.destination as! DeadlinesTableViewController
 //        deadlinesVC.deadlines.append(newDeadline)
         
-        
+        callback1?(reminderTextField.text!)
+        callback2?(dateTextField.text!)
         self.dismiss(animated: true, completion: nil)
 //        self.navigationController?.popViewController(animated: true)
     }

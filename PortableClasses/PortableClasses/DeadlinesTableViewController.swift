@@ -7,26 +7,46 @@
 //
 
 import UIKit
+import Firebase
 
 class DeadlinesTableViewController: UITableViewController {
 
     var deadlines = [String]()
     var dates = [String]()
     
+    var currSemester = ""
+    var currClass = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let db = Firestore.firestore()
+
+        var userRef: DocumentReference? = nil
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("deadlines")
+
+        deadlinesRef!.getDocument { (document, error) in
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                    // asynchronously reload table once db returns array of semesters
+                    DispatchQueue.main.async {
+                        self.deadlines = data["deadlines"]! as! [String]
+                        self.dates = data["dates"]! as! [String]
+                        self.tableView.reloadData()
+                    }
+                })
+            })
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        
-        
-        
-        deadlines = ["iOS final", "NLP final"]
-        dates = ["May 6, 2019", "May 6, 2019"]
     }
 
     // MARK: - Table view data source
@@ -49,6 +69,7 @@ class DeadlinesTableViewController: UITableViewController {
 
         let deadline = deadlines[indexPath.row]
         cell.textLabel?.text = deadline
+        print("dates array = ", dates, deadlines)
         let date = dates[indexPath.row]
         
         cell.detailTextLabel?.text = date
@@ -91,15 +112,37 @@ class DeadlinesTableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let addDeadlinesVC = segue.destination as? AddDeadlineViewController {
+            addDeadlinesVC.callback1 = { message in
+                let db = Firestore.firestore()
+                var userRef: DocumentReference? = nil
+                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
+                deadlinesRef?.updateData([
+                    "deadlines": FieldValue.arrayUnion([message])
+                ])
+                self.deadlines.append(message)
+                print(self.deadlines)
+            }
+            addDeadlinesVC.callback2 = { message in
+                let db = Firestore.firestore()
+                var userRef: DocumentReference? = nil
+                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                let datesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
+                datesRef?.updateData([
+                    "dates": FieldValue.arrayUnion([message])
+                ])
+                self.dates.append(message)
+                print(self.dates)
+            }
+        }
+        self.tableView.reloadData()
     }
-    */
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
 
 }
