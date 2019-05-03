@@ -124,24 +124,26 @@ class ClassFeaturesTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let deadlinesVC = segue.destination as! DeadlinesTableViewController
-//        deadlinesVC.currSemester = currSemester
-//        deadlinesVC.currClass = currClass
-        
-        
-        let notesVC = segue.destination as! NotesViewController
-        notesVC.currSemester = currSemester
-        notesVC.currClass = currClass
-        
-        
-//        let picsVC = segue.destination as! PicsViewController
-//        picsVC.currSemester = currSemester
-//        picsVC.currClass = currClass
-        
-        
-//        let cardsVC = segue.destination as! CardsViewController
-//        cardsVC.currSemester = currSemester
-//        cardsVC.currClass = currClass
+        if segue.identifier == "featuresToDeadlines" {
+            let deadlinesVC = segue.destination as! DeadlinesTableViewController
+            deadlinesVC.currSemester = currSemester
+            deadlinesVC.currClass = currClass
+        }
+        else if segue.identifier == "featuresToNotes" {
+            let notesVC = segue.destination as! NotesViewController
+            notesVC.currSemester = currSemester
+            notesVC.currClass = currClass
+        }
+        else if segue.identifier == "featuresToPics" {
+            let picsVC = segue.destination as! PicsViewController
+            picsVC.currSemester = currSemester
+            picsVC.currClass = currClass
+        }
+        else if segue.identifier == "featuresToCards" {
+            let cardsVC = segue.destination as! CardsViewController
+            cardsVC.currSemester = currSemester
+            cardsVC.currClass = currClass
+        }
     }
     
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
