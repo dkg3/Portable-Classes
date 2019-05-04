@@ -135,7 +135,7 @@ class ClassFeaturesTableViewController: UITableViewController {
             notesVC.currClass = currClass
         }
         else if segue.identifier == "featuresToPics" {
-            let picsVC = segue.destination as! PicsViewController
+            let picsVC = segue.destination as! PicsCollectionViewController
             picsVC.currSemester = currSemester
             picsVC.currClass = currClass
         }

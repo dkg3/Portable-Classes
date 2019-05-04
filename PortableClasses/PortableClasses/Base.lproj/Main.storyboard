@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -292,7 +292,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="8Mz-Fd-cA2" kind="show" identifier="featuresToPics" id="cLT-M5-Hrq"/>
+                                    <segue destination="cD4-qv-N4f" kind="show" id="lJo-3P-2fP"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="flashcardsCell" rowHeight="90" id="6OW-gi-0hH">
@@ -429,41 +429,54 @@
             <point key="canvasLocation" x="6625" y="-72"/>
         </scene>
         <!--Pictures-->
-        <scene sceneID="ya6-KF-Tl3">
+        <scene sceneID="x2D-Md-w4V">
             <objects>
-                <tableViewController id="8Mz-Fd-cA2" customClass="PicsViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="0RE-n3-ySw">
+                <collectionViewController title="Pictures" id="cD4-qv-N4f" customClass="PicsCollectionViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="N4e-00-fMR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="sectionIndexBackgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Jna-Jq-Whs">
-                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jna-Jq-Whs" id="KL9-ea-CAI">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.666666666666671"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="LSK-6V-0bM">
+                            <size key="itemSize" width="120" height="120"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="picCell" id="wXr-rC-FdF" customClass="CollectionViewCell" customModule="PortableClasses" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </tableViewCell>
-                        </prototypes>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nQe-Ou-dYY">
+                                            <rect key="frame" x="2" y="0.0" width="120" height="120"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <connections>
+                                    <outlet property="imageView" destination="nQe-Ou-dYY" id="yyb-18-HM2"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="dataSource" destination="8Mz-Fd-cA2" id="E4a-fN-C3P"/>
-                            <outlet property="delegate" destination="8Mz-Fd-cA2" id="fb7-93-fCE"/>
+                            <outlet property="dataSource" destination="cD4-qv-N4f" id="GHx-Rk-Vkz"/>
+                            <outlet property="delegate" destination="cD4-qv-N4f" id="p2s-gI-eow"/>
                         </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Pictures" id="Fta-gz-gFq">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="eit-vb-z87">
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Pictures" id="Wp2-RG-Cl8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="AzF-Py-Yeg">
                             <connections>
-                                <segue destination="tBI-yU-v8K" kind="presentation" id="7O9-NL-X4b"/>
+                                <segue destination="tBI-yU-v8K" kind="show" id="wjJ-P4-QZT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y65-Rn-j27" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yfD-UU-55j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6625" y="848"/>
+            <point key="canvasLocation" x="6684" y="826.84729064039414"/>
         </scene>
         <!--Deadlines-->
         <scene sceneID="MlG-rb-g9G">
@@ -637,7 +650,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6s7-SF-U1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8905" y="848"/>
+            <point key="canvasLocation" x="8401" y="827"/>
         </scene>
         <!--Add Course View Controller-->
         <scene sceneID="HIm-AG-daR">
@@ -851,7 +864,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="coy-bk-BrO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7686" y="848"/>
+            <point key="canvasLocation" x="7522" y="827"/>
         </scene>
         <!--Add Note View Controller-->
         <scene sceneID="qn6-w8-OTX">
