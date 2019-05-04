@@ -23,6 +23,8 @@ class SemestersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
         let db = Firestore.firestore()
         
         var userRef: DocumentReference? = nil
