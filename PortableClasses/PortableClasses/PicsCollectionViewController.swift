@@ -126,9 +126,11 @@ class PicsCollectionViewController: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nav = segue.destination as! UINavigationController
-        let fullImgVC = nav.topViewController as! FullImageViewController
-        fullImgVC.currImage = images[imgSelected]
+        if segue.identifier == "imgToFullImg" {
+            let nav = segue.destination as! UINavigationController
+            let fullImgVC = nav.topViewController as! FullImageViewController
+            fullImgVC.currImage = images[imgSelected]
+        }
     }
  
 

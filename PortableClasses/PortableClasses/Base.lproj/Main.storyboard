@@ -469,7 +469,7 @@
                     <navigationItem key="navigationItem" title="Pictures" id="Wp2-RG-Cl8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="AzF-Py-Yeg">
                             <connections>
-                                <segue destination="tBI-yU-v8K" kind="show" id="wjJ-P4-QZT"/>
+                                <segue destination="tBI-yU-v8K" kind="show" identifier="newImg" id="wjJ-P4-QZT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
