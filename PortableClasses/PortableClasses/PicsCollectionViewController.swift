@@ -17,10 +17,9 @@ class PicsCollectionViewController: UICollectionViewController {
     var currSemester = ""
     var currClass = ""
     
-    var toggle = false
     var imgSelected = -1
     
-    let images = ["iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork"]
+    let images = ["iTunesArtwork", "settingsIcon", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +67,6 @@ class PicsCollectionViewController: UICollectionViewController {
         cell.imageView.image = image
         
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
-        toggle = true
         imgSelected = indexPath.row
         
         return cell
@@ -114,23 +112,23 @@ class PicsCollectionViewController: UICollectionViewController {
         let location = sender.location(in: self.collectionView)
         let indexPath = self.collectionView.indexPathForItem(at: location)
         
-        if toggle {
-            if let index = indexPath {
-                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
-                let image = UIImage(named: images[index.row])
-                imageView.image = image
-                self.view.addSubview(imageView)
-                self.navigationController?.setNavigationBarHidden(true, animated: true)
-                print("Got clicked on index: \(index.row)!")
-                toggle = false
-            }
-        }
-        else {
-            self.view.viewWithTag(100)?.removeFromSuperview()
-            toggle = true
-            print("ok")
+        if let index = indexPath {
+//                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+//                let image = UIImage(named: images[index.row])
+//                imageView.image = image
+//                self.view.addSubview(imageView)
+//                self.navigationController?.setNavigationBarHidden(true, animated: true)
+            print("Got clicked on index: \(index.row)!")
+            imgSelected = index.row
+            performSegue(withIdentifier: "imgToFullImg", sender: nil)
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nav = segue.destination as! UINavigationController
+        let fullImgVC = nav.topViewController as! FullImageViewController
+        fullImgVC.currImage = images[imgSelected]
     }
  
 
