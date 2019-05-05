@@ -101,11 +101,6 @@ class PicsCollectionViewController: UICollectionViewController {
 //    }
 //
 //    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-////        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
-////        let image = UIImage(named: images[indexPath.row])
-////        imageView.image = image
-////        self.view.addSubview(imageView)
-//        print(indexPath.row)
 //    }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
@@ -113,11 +108,6 @@ class PicsCollectionViewController: UICollectionViewController {
         let indexPath = self.collectionView.indexPathForItem(at: location)
         
         if let index = indexPath {
-//                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
-//                let image = UIImage(named: images[index.row])
-//                imageView.image = image
-//                self.view.addSubview(imageView)
-//                self.navigationController?.setNavigationBarHidden(true, animated: true)
             print("Got clicked on index: \(index.row)!")
             imgSelected = index.row
             performSegue(withIdentifier: "imgToFullImg", sender: nil)
