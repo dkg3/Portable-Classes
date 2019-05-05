@@ -682,7 +682,7 @@
             </objects>
             <point key="canvasLocation" x="3948" y="1321"/>
         </scene>
-        <!--Cards View Controller-->
+        <!--Flash Cards-->
         <scene sceneID="DHb-cW-smU">
             <objects>
                 <tableViewController id="lyI-YM-9QJ" customClass="CardsViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
@@ -708,6 +708,13 @@
                             <outlet property="delegate" destination="lyI-YM-9QJ" id="WPS-to-cTB"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Flash Cards" id="Q9J-Zc-8lf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v45-uj-cNl">
+                            <connections>
+                                <action selector="addTapped" destination="lyI-YM-9QJ" id="JLq-cJ-Hdh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="XeH-74-jON" kind="show" identifier="cardsToCollection" id="674-o9-Miu"/>
                     </connections>
