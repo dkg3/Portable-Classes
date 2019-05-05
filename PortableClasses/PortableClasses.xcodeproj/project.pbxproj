@@ -24,6 +24,8 @@
 		00E17525227CD55E00DDD4B0 /* ViewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */; };
 		00E17527227E1A7800DDD4B0 /* PicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */; };
 		00E17529227E231A00DDD4B0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */; };
+		00E1752D227F5FDE00DDD4B0 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */; };
+		00E1752F227F6D5900DDD4B0 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E1752E227F6D5900DDD4B0 /* FullImageViewController.swift */; };
 		205AC9290D2217819478E9E1 /* Pods_PortableClasses.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E597AAAD2E77FE089D9B59 /* Pods_PortableClasses.framework */; };
 		4F5F59DF226FA9E7005478D6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */; };
 		4F5F59E1226FB5CD005478D6 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */; };
@@ -81,6 +83,8 @@
 		00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteViewController.swift; sourceTree = "<group>"; };
 		00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicsCollectionViewController.swift; sourceTree = "<group>"; };
 		00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
+		00E1752E227F6D5900DDD4B0 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemestersTableViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */,
 				4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */,
 				0017748B226D17CC00A8B2D7 /* Main.storyboard */,
+				00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */,
 				00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */,
 				00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */,
 				00E17522227CCD2800DDD4B0 /* AddNoteViewController.swift */,
@@ -179,6 +184,7 @@
 				001774B9226D1D7900A8B2D7 /* GoogleService-Info.plist */,
 				0025FB992277AD9000F7A8F0 /* CameraViewController.swift */,
 				00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */,
+				00E1752E227F6D5900DDD4B0 /* FullImageViewController.swift */,
 				4F84E13C227ED5BE006AC40E /* FlashCard.swift */,
 				4F84E13E227ED5CD006AC40E /* FlashCard.xib */,
 				4F84E140227ED668006AC40E /* FlashCardsScrollViewController.swift */,
@@ -531,6 +537,7 @@
 				00E17521227CC5D700DDD4B0 /* CardsViewController.swift in Sources */,
 				4F84E13D227ED5BE006AC40E /* FlashCard.swift in Sources */,
 				4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */,
+				00E1752D227F5FDE00DDD4B0 /* LinkedTextView.swift in Sources */,
 				00E17523227CCD2800DDD4B0 /* AddNoteViewController.swift in Sources */,
 				4FAFD325227BC35F004789EA /* DeadlinesTableViewController.swift in Sources */,
 				0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */,
@@ -538,6 +545,7 @@
 				00B8B04F227120B600499EFB /* OverviewViewController.swift in Sources */,
 				4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */,
 				00E1751D227CC1AD00DDD4B0 /* NotesViewController.swift in Sources */,
+				00E1752F227F6D5900DDD4B0 /* FullImageViewController.swift in Sources */,
 				00177488226D17CC00A8B2D7 /* AppDelegate.swift in Sources */,
 				4FAFD327227BC961004789EA /* AddDeadlineViewController.swift in Sources */,
 				4F5F59E1226FB5CD005478D6 /* RegisterViewController.swift in Sources */,
