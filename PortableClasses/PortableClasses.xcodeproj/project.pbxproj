@@ -30,6 +30,10 @@
 		4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */; };
 		4F663AA42274F0AF003758EB /* ClassesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */; };
 		4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B7452227ABC6B001F4141 /* ClassFeaturesTableViewController.swift */; };
+		4F84E13D227ED5BE006AC40E /* FlashCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84E13C227ED5BE006AC40E /* FlashCard.swift */; };
+		4F84E13F227ED5CD006AC40E /* FlashCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F84E13E227ED5CD006AC40E /* FlashCard.xib */; };
+		4F84E141227ED668006AC40E /* FlashCardsScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84E140227ED668006AC40E /* FlashCardsScrollViewController.swift */; };
+		4F84E143227F4EF7006AC40E /* AddFlashCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84E142227F4EF7006AC40E /* AddFlashCardViewController.swift */; };
 		4FAFD325227BC35F004789EA /* DeadlinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAFD324227BC35F004789EA /* DeadlinesTableViewController.swift */; };
 		4FAFD327227BC961004789EA /* AddDeadlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAFD326227BC961004789EA /* AddDeadlineViewController.swift */; };
 		8096E61713C007D5B966964E /* Pods_PortableClassesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B5BF1FAE93C87DEE3962391 /* Pods_PortableClassesUITests.framework */; };
@@ -82,6 +86,10 @@
 		4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemestersTableViewController.swift; sourceTree = "<group>"; };
 		4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassesTableViewController.swift; sourceTree = "<group>"; };
 		4F7B7452227ABC6B001F4141 /* ClassFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassFeaturesTableViewController.swift; sourceTree = "<group>"; };
+		4F84E13C227ED5BE006AC40E /* FlashCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCard.swift; sourceTree = "<group>"; };
+		4F84E13E227ED5CD006AC40E /* FlashCard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FlashCard.xib; sourceTree = "<group>"; };
+		4F84E140227ED668006AC40E /* FlashCardsScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardsScrollViewController.swift; sourceTree = "<group>"; };
+		4F84E142227F4EF7006AC40E /* AddFlashCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashCardViewController.swift; sourceTree = "<group>"; };
 		4FAFD324227BC35F004789EA /* DeadlinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlinesTableViewController.swift; sourceTree = "<group>"; };
 		4FAFD326227BC961004789EA /* AddDeadlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeadlineViewController.swift; sourceTree = "<group>"; };
 		6B5BF1FAE93C87DEE3962391 /* Pods_PortableClassesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PortableClassesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +179,10 @@
 				001774B9226D1D7900A8B2D7 /* GoogleService-Info.plist */,
 				0025FB992277AD9000F7A8F0 /* CameraViewController.swift */,
 				00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */,
+				4F84E13C227ED5BE006AC40E /* FlashCard.swift */,
+				4F84E13E227ED5CD006AC40E /* FlashCard.xib */,
+				4F84E140227ED668006AC40E /* FlashCardsScrollViewController.swift */,
+				4F84E142227F4EF7006AC40E /* AddFlashCardViewController.swift */,
 			);
 			path = PortableClasses;
 			sourceTree = "<group>";
@@ -325,6 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F84E13F227ED5CD006AC40E /* FlashCard.xib in Resources */,
 				00177492226D17CF00A8B2D7 /* LaunchScreen.storyboard in Resources */,
 				001774BA226D1D7900A8B2D7 /* GoogleService-Info.plist in Resources */,
 				0017748F226D17CF00A8B2D7 /* Assets.xcassets in Resources */,
@@ -510,15 +523,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F84E141227ED668006AC40E /* FlashCardsScrollViewController.swift in Sources */,
 				4F5F59DF226FA9E7005478D6 /* LoginViewController.swift in Sources */,
 				0025FB9A2277AD9000F7A8F0 /* CameraViewController.swift in Sources */,
 				00E17529227E231A00DDD4B0 /* CollectionViewCell.swift in Sources */,
 				00E17525227CD55E00DDD4B0 /* ViewNoteViewController.swift in Sources */,
 				00E17521227CC5D700DDD4B0 /* CardsViewController.swift in Sources */,
+				4F84E13D227ED5BE006AC40E /* FlashCard.swift in Sources */,
 				4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */,
 				00E17523227CCD2800DDD4B0 /* AddNoteViewController.swift in Sources */,
 				4FAFD325227BC35F004789EA /* DeadlinesTableViewController.swift in Sources */,
 				0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */,
+				4F84E143227F4EF7006AC40E /* AddFlashCardViewController.swift in Sources */,
 				00B8B04F227120B600499EFB /* OverviewViewController.swift in Sources */,
 				4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */,
 				00E1751D227CC1AD00DDD4B0 /* NotesViewController.swift in Sources */,
