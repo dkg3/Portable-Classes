@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class AddDeadlineViewController: UIViewController {
 
@@ -18,9 +19,15 @@ class AddDeadlineViewController: UIViewController {
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    
+    var dateToAdd:String!
+    var dateFormatterForCal = DateFormatter()
+    
+    
     var datePicker: UIDatePicker?
     var newDeadline: String?
     var newDate: String?
+    var addToCalendar:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +86,46 @@ class AddDeadlineViewController: UIViewController {
         callback2?(dateTextField.text!)
         self.dismiss(animated: true, completion: nil)
 //        self.navigationController?.popViewController(animated: true)
+        
+        
+        
+        // add to calendar
+        if addToCalendar {
+            let eventStore:EKEventStore = EKEventStore()
+            
+            eventStore.requestAccess(to: .event, completion: {(granted, error) in
+                if granted && error == nil {
+                    
+                    let event:EKEvent = EKEvent(eventStore: eventStore)
+                    event.title = self.reminderTextField.text
+                    event.startDate = Date()
+                    print(event.startDate)
+                    event.endDate = Date()
+                    event.notes = "Optional Notes"
+                    event.calendar = eventStore.defaultCalendarForNewEvents
+                    do {
+                        try eventStore.save(event, span: .thisEvent)
+                    }
+                    catch let error as NSError{
+                        print("err")
+                    }
+                }
+                else {
+                    print("err")
+                }
+                
+            })
+        }
     }
     
+    
+    @IBAction func calSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            addToCalendar = true
+        }
+        else {
+            addToCalendar = false
+        }
+    }
     
 }
