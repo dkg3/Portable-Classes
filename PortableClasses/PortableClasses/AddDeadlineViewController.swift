@@ -20,7 +20,7 @@ class AddDeadlineViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    var dateToAdd:String!
+    var dateToAdd:Date?
     var dateFormatterForCal = DateFormatter()
     
     
@@ -56,6 +56,8 @@ class AddDeadlineViewController: UIViewController {
     @objc func donePressed(_ sender: UIBarButtonItem) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE MMM dd, yyyy 'at' HH:mm "
+        dateToAdd = self.datePicker!.date
+    
         dateTextField.text = dateFormatter.string(from: (datePicker?.date)!)
         view.endEditing(true)
     }
@@ -98,10 +100,8 @@ class AddDeadlineViewController: UIViewController {
                     
                     let event:EKEvent = EKEvent(eventStore: eventStore)
                     event.title = self.reminderTextField.text
-                    event.startDate = Date()
-                    print(event.startDate)
-                    event.endDate = Date()
-                    event.notes = "Optional Notes"
+                    event.startDate = self.dateToAdd
+                    event.endDate = self.dateToAdd
                     event.calendar = eventStore.defaultCalendarForNewEvents
                     do {
                         try eventStore.save(event, span: .thisEvent)
