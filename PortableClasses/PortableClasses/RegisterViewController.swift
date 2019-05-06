@@ -18,27 +18,17 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var privacyDescription: UITextView!
     @IBOutlet weak var pSwitch: UISwitch!
     
-    var publicAccount:Bool!
+    var publicAccount:Bool! = false
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        print("WHY NOT")
-        
-        
-        
         pSwitch.setOn(false, animated: true)
-        print("WELLLLL")
         print(pSwitch.isOn)
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        print("WHY NOT")
-        
-        
-        
         pSwitch.setOn(false, animated: true)
-        print("WELLLLL")
         print(pSwitch.isOn)
     }
     
