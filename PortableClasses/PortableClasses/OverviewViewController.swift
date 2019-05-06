@@ -11,6 +11,7 @@ import Firebase
 
 class OverviewViewController: UIViewController {
     
+    var publicAccount:Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -19,6 +20,25 @@ class OverviewViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    @IBAction func `switch`(_ sender: UISwitch) {
+        let db = Firestore.firestore()
+        
+        var userRef: DocumentReference? = nil
+        
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        
+        
+        if sender.isOn {
+            publicAccount = true
+        }
+        else {
+            publicAccount = false
+        }
+        
+        userRef?.updateData([
+            "public": self.publicAccount
+            ])
     }
     
     @IBAction func logoutAction(_ sender: Any) {

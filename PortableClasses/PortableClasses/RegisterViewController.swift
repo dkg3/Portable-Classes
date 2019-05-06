@@ -18,6 +18,27 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
     
+    
+    
+    @IBOutlet weak var privacyLabel: UILabel!
+    @IBOutlet weak var privacyDescription: UITextView!
+    var publicAccount:Bool!
+    
+    @IBAction func `switch`(_ sender: UISwitch) {
+        if sender.isOn {
+//            privacyLabel.text = "Public Account"
+//            privacyDescription.text = "Allow other users to see you on the map."
+            publicAccount = true
+            
+        }
+        else {
+//            privacyLabel.text = "Private Account"
+//            privacyDescription.text = "Other users will not be able to see you on the map"
+            publicAccount = false
+        }
+    }
+    
+    
     @IBAction func signUpAction(_ sender: Any) {
         let lowerLetterRegEx  = ".*[a-z]+.*"
         let test1 = NSPredicate(format:"SELF MATCHES %@", lowerLetterRegEx)
@@ -93,6 +114,7 @@ class RegisterViewController: UIViewController {
                     ref = db.collection("users").document(self.userEmail.text!)
                     ref?.setData([
                         "email": self.userEmail.text!,
+                        "public": self.publicAccount,
                         "location": GeoPoint(latitude: 0, longitude: 0)
                     ]) { err in
                         if err != nil {

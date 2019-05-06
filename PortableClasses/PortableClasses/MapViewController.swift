@@ -72,7 +72,12 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     
                     // // add users to the array to display in the table but don't include current user
                     if username != Auth.auth().currentUser?.email {
-                        self.usersArray.append(username)
+                        
+                        // only show public users
+                        if document.data()["public"] as! Bool {
+                             self.usersArray.append(username)
+                        }
+                       
                         // asynchronously reload table everytime a user is added to the array
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -81,7 +86,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         }
-        print(usersArray)
     }
     
     //MARK: CLLocationManager Delagates
@@ -115,12 +119,16 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                         
                         // don't annotate map with current user
                         if username != Auth.auth().currentUser?.email {
-                            let gp: GeoPoint = document.data()["location"] as! GeoPoint
+                            // don't show private users
+                            if document.data()["public"] as! Bool {
+                                let gp: GeoPoint = document.data()["location"] as! GeoPoint
+                                
+                                let userToShow = UserLocation(title: username, coordinate: CLLocationCoordinate2D(latitude: gp.latitude, longitude: gp.longitude))
+                                
+                                // place pin on map with username under it
+                                self.mapView.addAnnotation(userToShow)
+                            }
                             
-                            let userToShow = UserLocation(title: username, coordinate: CLLocationCoordinate2D(latitude: gp.latitude, longitude: gp.longitude))
-                            
-                            // place pin on map with username under it
-                            self.mapView.addAnnotation(userToShow)
                         }
                     }
                 }
@@ -150,8 +158,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
         
-        let semester = usersArray[indexPath.row]
-        cell.textLabel?.text = semester
+        let usr = usersArray[indexPath.row]
+        cell.textLabel?.text = usr
         return cell
     }
     
