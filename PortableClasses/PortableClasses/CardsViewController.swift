@@ -41,7 +41,10 @@ class CardsViewController: UITableViewController {
             })
         }
         
-//        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        navigationItem.rightBarButtonItems?.append(add)
         
     }
     
@@ -70,7 +73,7 @@ class CardsViewController: UITableViewController {
         performSegue(withIdentifier: "cardsToCollection", sender: nil)
     }
     
-    @IBAction func addTapped() {
+    @objc func addTapped() {
         let alert = UIAlertController(title: "Add Collection of Flash Cards", message: nil, preferredStyle: .alert)
         alert.addTextField {(fcCollectionTF) in
             fcCollectionTF.placeholder = "Enter Collection"
