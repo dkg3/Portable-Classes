@@ -24,6 +24,26 @@ class SemestersTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        self.navigationController?.navigationBar.backgroundColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
+
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.font: UIFont(name: "Avenir Heavy", size: 20)!]
+        
+
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)]
+        
+        
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 20)!];
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 20)!];
+        
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)]
+        
+        
+        
         
         let db = Firestore.firestore()
         
@@ -44,6 +64,8 @@ class SemestersTableViewController: UITableViewController {
                     }
                 })
             })
+            
+            
         }
 
         // Uncomment the following line to preserve selection between presentations
@@ -148,6 +170,9 @@ class SemestersTableViewController: UITableViewController {
         
         let semester = semesters[indexPath.row]
         cell.textLabel?.text = semester
+        
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
         return cell
     }
  

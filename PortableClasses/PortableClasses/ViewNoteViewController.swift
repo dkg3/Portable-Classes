@@ -19,6 +19,8 @@ class ViewNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         completedNoteText.text = currNote
+        
+        self.navigationItem.backBarButtonItem?.tintColor = UIColor.white//(red:0.13, green:0.03, blue:0.59, alpha:1.0)
     }
     
     @IBAction func addNoteTapped(_ sender: Any) {

@@ -57,24 +57,32 @@ class ClassFeaturesTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "deadlinesCell", for: indexPath)
             let feature = classFeatures[indexPath.row]
             cell.textLabel?.text = feature
+            cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+            cell.textLabel?.textColor = UIColor.white
             print(0)
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "notesCell", for: indexPath)
             let feature = classFeatures[indexPath.row]
             cell.textLabel?.text = feature
+            cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+            cell.textLabel?.textColor = UIColor.white
             print(1)
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "picturesCell", for: indexPath)
             let feature = classFeatures[indexPath.row]
             cell.textLabel?.text = feature
+            cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+            cell.textLabel?.textColor = UIColor.white
             print(2)
             return cell
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "flashcardsCell", for: indexPath)
             let feature = classFeatures[indexPath.row]
             cell.textLabel?.text = feature
+            cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+            cell.textLabel?.textColor = UIColor.white
             print(3)
             return cell
 

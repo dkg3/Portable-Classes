@@ -63,6 +63,8 @@ class CardsViewController: UITableViewController {
         
         let card = cards[indexPath.row]
         cell.textLabel?.text = card
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
         
         return cell
     }

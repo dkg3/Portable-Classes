@@ -11,11 +11,34 @@ import Firebase
 
 class OverviewViewController: UIViewController {
     
+    @IBOutlet weak var welcomeUser: UILabel!
+    @IBOutlet weak var pSwitch: UISwitch!
     var publicAccount:Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad();
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        let db = Firestore.firestore()
+        
+        var userRef: DocumentReference? = nil
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        
+        userRef!.getDocument { (document, error) in
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                   
+                    DispatchQueue.main.async {
+                        self.pSwitch.setOn(data["public"]! as! Bool, animated: true)
+                        self.welcomeUser.text = "Welcome,  " +  (data["email"]! as! String)
+                    }
+                })
+            })
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,6 +62,8 @@ class OverviewViewController: UIViewController {
         userRef?.updateData([
             "public": self.publicAccount
             ])
+        
+        print(self.publicAccount)
     }
     
     @IBAction func logoutAction(_ sender: Any) {

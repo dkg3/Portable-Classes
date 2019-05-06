@@ -20,12 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let db = Firestore.firestore()
         
         // set nav bar to transparent
-        /*
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().backgroundColor = .clear
         UINavigationBar.appearance().isTranslucent = true
-          */
+        
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 20)!
+        ]
+ 
         return true
     }
     

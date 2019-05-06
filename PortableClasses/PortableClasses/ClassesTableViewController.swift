@@ -164,8 +164,11 @@ class ClassesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "classCell", for: indexPath)
         
     
-            let course = classes[indexPath.row]
-            cell.textLabel?.text = course
+        let course = classes[indexPath.row]
+        cell.textLabel?.text = course
+        
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
         return cell
     }
     

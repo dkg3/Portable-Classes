@@ -19,6 +19,9 @@ class AddNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        noteBody.textColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
+        noteBody.font = UIFont(name: "Avenir-Medium", size: 20)
     }
     
     @IBAction func cancelAddingNote(_ sender: Any) {

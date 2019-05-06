@@ -165,7 +165,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
         else {
             reveal = true;
             
-            self.button.setTitle("Press to reveal definition",for: .normal)
+//            self.button.setTitle("Press to reveal definition",for: .normal)
             
             UIView.transition(with: scrollView, duration: 0.8, options: .transitionFlipFromRight, animations: nil, completion: nil)
             

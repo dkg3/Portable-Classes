@@ -67,6 +67,9 @@ class NotesViewController: UITableViewController {
         let note = notes[indexPath.row]
         cell.textLabel?.text = note
         
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
+        
         return cell
     }
     

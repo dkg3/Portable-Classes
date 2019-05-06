@@ -11,18 +11,36 @@ import Firebase
 
 class RegisterViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad();
-    }
-
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
     
-    
-    
     @IBOutlet weak var privacyLabel: UILabel!
     @IBOutlet weak var privacyDescription: UITextView!
+    @IBOutlet weak var pSwitch: UISwitch!
+    
     var publicAccount:Bool!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        print("WHY NOT")
+        
+        
+        
+        pSwitch.setOn(false, animated: true)
+        print("WELLLLL")
+        print(pSwitch.isOn)
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("WHY NOT")
+        
+        
+        
+        pSwitch.setOn(false, animated: true)
+        print("WELLLLL")
+        print(pSwitch.isOn)
+    }
     
     @IBAction func `switch`(_ sender: UISwitch) {
         if sender.isOn {

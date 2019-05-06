@@ -82,6 +82,10 @@ class DeadlinesTableViewController: UITableViewController {
         
         cell.detailTextLabel?.text = date
         
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor(red:0.54, green:1.00, blue:0.71, alpha:1.0)
+        
         return cell
     }
  

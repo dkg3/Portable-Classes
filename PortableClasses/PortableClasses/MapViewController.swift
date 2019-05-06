@@ -30,10 +30,12 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var tableView: UITableView!
     var usersArray = [String]()
     
+    @IBOutlet weak var label: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad();
         
-    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        label.textColor = UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
@@ -160,6 +162,9 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let usr = usersArray[indexPath.row]
         cell.textLabel?.text = usr
+        
+        cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        cell.textLabel?.textColor = UIColor.white
         return cell
     }
     
