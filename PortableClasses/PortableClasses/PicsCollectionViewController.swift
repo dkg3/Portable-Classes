@@ -22,7 +22,7 @@ class PicsCollectionViewController: UICollectionViewController {
     
     var imgSelected = -1
     
-    let images = ["iTunesArtwork", "settingsIcon", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork"]
+//    let images = ["iTunesArtwork", "settingsIcon", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,29 @@ class PicsCollectionViewController: UICollectionViewController {
         let width = (view.frame.size.width - 3) / 3
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: width, height: width)
+        
+        let db = Firestore.firestore()
+        let allUsersRef: CollectionReference? = db.collection("users")
+        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
+        
+        currUserRef?.getDocument { (document, error) in
+//            if let document = document {
+//                self.pics = document["handNotes"] as? Array ?? [""]
+//                print(self.pics)
+//            }
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                    // asynchronously reload table once db returns array of pictures
+                    DispatchQueue.main.async {
+                        self.pics = data["handNotes"]! as! [String]
+                        self.collectionView.reloadData()
+                    }
+                })
+            })
+        }
     }
 
     /*
@@ -59,15 +82,26 @@ class PicsCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return images.count
+        print("size = ", self.pics.count)
+        return self.pics.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picCell", for: indexPath) as! CollectionViewCell
     
         // Configure the cell
-        let image = UIImage(named: images[indexPath.row])
-        cell.imageView.image = image
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let data = try Data.init(contentsOf: URL.init(string:self.pics[indexPath.row])!)
+                DispatchQueue.main.async {
+                    let image: UIImage = UIImage(data: data)!
+                    cell.imageView.image = image
+                }
+            }
+            catch {
+                // error
+            }
+        }
         
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         imgSelected = indexPath.row
@@ -122,14 +156,38 @@ class PicsCollectionViewController: UICollectionViewController {
         if segue.identifier == "imgToFullImg" {
             let nav = segue.destination as! UINavigationController
             let fullImgVC = nav.topViewController as! FullImageViewController
-            fullImgVC.currImage = images[imgSelected]
+            fullImgVC.currImage = self.pics[imgSelected]
         }
         else if segue.identifier == "newImg" {
             let nav = segue.destination as! UINavigationController
             let picsVC = nav.topViewController as! CameraViewController
+            picsVC.callback = {message in
+                let db = Firestore.firestore()
+                let allUsersRef: CollectionReference? = db.collection("users")
+                let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
+                
+                currUserRef?.getDocument { (document, error) in
+                    if error != nil {
+                        print("Could not find document")
+                    }
+                    _ = document.flatMap({
+                        $0.data().flatMap({ (data) in
+                            // asynchronously reload table once db returns array of pictures
+                            DispatchQueue.main.async {
+                                self.pics = data["handNotes"]! as! [String]
+                                self.collectionView.reloadData()
+                            }
+                        })
+                    })
+                }
+            }
             picsVC.currSemester = currSemester
             picsVC.currClass = currClass
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
     }
  
 

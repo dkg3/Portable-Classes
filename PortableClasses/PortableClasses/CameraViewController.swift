@@ -14,6 +14,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBOutlet weak var myImg: UIImageView!
     
+    var callback : ((UIImageView) -> Void)?
+    
     var allImages: [String] = []
     
     var currSemester = ""
@@ -86,6 +88,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func dismissView(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        if myImg != nil {
+            callback?(myImg)
+        }
     }
-    
 }

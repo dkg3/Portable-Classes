@@ -21,12 +21,28 @@ class FullImageViewController: UIViewController {
         print(currImage)
         
         let imageName = currImage
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (image!.size.width / 2), y: (self.view.frame.size.height / 2) - (image!.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
-        imageView.center = self.view.center;
-        imageView.contentMode = .scaleAspectFit
-        view.addSubview(imageView)
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let data = try Data.init(contentsOf: URL.init(string:imageName)!)
+                DispatchQueue.main.async {
+                    let image: UIImage = UIImage(data: data)!
+                    let imageView = UIImageView(image: image)
+                    imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (image.size.width / 2), y: (self.view.frame.size.height / 2) - (image.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
+                    imageView.center = self.view.center;
+                    imageView.contentMode = .scaleAspectFit
+                    self.view.addSubview(imageView)
+                }
+            }
+            catch {
+                // error
+            }
+        }
+//        let image = UIImage(named: imageName)
+//        let imageView = UIImageView(image: image!)
+//        imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (image!.size.width / 2), y: (self.view.frame.size.height / 2) - (image!.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
+//        imageView.center = self.view.center;
+//        imageView.contentMode = .scaleAspectFit
+//        view.addSubview(imageView)
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
