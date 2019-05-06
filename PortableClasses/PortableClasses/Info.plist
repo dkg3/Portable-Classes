@@ -5,10 +5,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Avenir-Medium.ttf</string>
-		<string>Gotham-Bold.otf</string>
-		<string>Gothem-Book.otf</string>
-		<string>Gotham-Medium.otf</string>
-		<string>Gotham-Light.otf</string>
 	</array>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Portable Classes would like to access your Calendar to add this reminder.</string>
