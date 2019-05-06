@@ -24,6 +24,10 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad();
         pSwitch.setOn(false, animated: true)
         print(pSwitch.isOn)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
     }
     
     
@@ -153,4 +157,9 @@ class RegisterViewController: UIViewController {
             }
         }
     }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
 }

@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Avenir-Medium.ttf</string>
-	</array>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Portable Classes would like to access your Calendar to add this reminder.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -47,12 +41,18 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Portable Classes would like to access your Calendar to add this reminder.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need to access your camera to take a picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App wants to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your photo library</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Avenir-Medium.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -64,8 +64,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

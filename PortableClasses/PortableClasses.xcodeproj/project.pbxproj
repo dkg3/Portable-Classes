@@ -726,6 +726,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B93064667D6728FA85FB5ACD /* Pods-PortableClasses.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RMK3DSSFMM;
@@ -746,6 +747,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB24E2204722F16900D69772 /* Pods-PortableClasses.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RMK3DSSFMM;

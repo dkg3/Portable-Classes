@@ -22,6 +22,10 @@ class AddNoteViewController: UIViewController {
         
         noteBody.textColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
         noteBody.font = UIFont(name: "Avenir-Medium", size: 20)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
     }
     
     @IBAction func cancelAddingNote(_ sender: Any) {
@@ -31,6 +35,10 @@ class AddNoteViewController: UIViewController {
     @IBAction func addNoteTapped(_ sender: Any) {
         callback?(noteBody.text!)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 
 }

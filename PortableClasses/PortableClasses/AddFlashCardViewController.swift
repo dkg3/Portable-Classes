@@ -22,7 +22,9 @@ class AddFlashCardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
     }
     
     
@@ -35,6 +37,10 @@ class AddFlashCardViewController: UIViewController {
         callback1?(termTextField.text!)
         callback2?(defintionTextView.text!)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
 }

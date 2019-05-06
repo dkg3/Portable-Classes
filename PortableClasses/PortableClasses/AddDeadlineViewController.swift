@@ -47,6 +47,10 @@ class AddDeadlineViewController: UIViewController {
         toolbar.setItems([cancelButton, flexButton, doneButton], animated: false)
         dateTextField.inputView = datePicker
         dateTextField?.inputAccessoryView = toolbar
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
     }
     
     @objc func cancelPressed(_ sender: UIBarButtonItem) {
@@ -126,6 +130,10 @@ class AddDeadlineViewController: UIViewController {
         else {
             addToCalendar = false
         }
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
 }
