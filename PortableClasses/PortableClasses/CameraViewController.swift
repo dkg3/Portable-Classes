@@ -16,6 +16,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var allImages: [String] = []
     
+    var currSemester = ""
+    var currClass = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -54,9 +57,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                         self.allImages.append(url?.absoluteString ?? "")
                         let db = Firestore.firestore()
                         let allUsersRef: CollectionReference? = db.collection("users")
-                        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!)
+                        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
                         currUserRef?.setData([
-                            "image": self.allImages
+                            "handNotes": FieldValue.arrayUnion([url?.absoluteString ?? ""])
                         ], merge: true) { err in
                             if err != nil {
                                 print("Error adding document")

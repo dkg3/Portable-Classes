@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
+import FirebaseUI
 
 private let reuseIdentifier = "Cell"
 
@@ -120,6 +123,12 @@ class PicsCollectionViewController: UICollectionViewController {
             let nav = segue.destination as! UINavigationController
             let fullImgVC = nav.topViewController as! FullImageViewController
             fullImgVC.currImage = images[imgSelected]
+        }
+        else if segue.identifier == "newImg" {
+            let nav = segue.destination as! UINavigationController
+            let picsVC = nav.topViewController as! CameraViewController
+            picsVC.currSemester = currSemester
+            picsVC.currClass = currClass
         }
     }
  

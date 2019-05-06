@@ -292,7 +292,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <segue destination="cD4-qv-N4f" kind="show" id="lJo-3P-2fP"/>
+                                    <segue destination="cD4-qv-N4f" kind="show" identifier="featuresToPics" id="lJo-3P-2fP"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="flashcardsCell" rowHeight="90" id="6OW-gi-0hH">
