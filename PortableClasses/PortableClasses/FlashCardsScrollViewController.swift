@@ -24,115 +24,85 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     var currClass = ""
     var currCardsCollection = ""
     
-    var numCards = 0
+    var numCards:Int = 0
     var terms:[String] = []
     var definitions:[String] = []
-    
     var revealed:[Bool] = []
     
+    var trash:UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.bringSubviewToFront(pageControl)
         
-        
         self.navigationItem.title = currCardsCollection
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
         
+        self.navigationItem.rightBarButtonItem = self.trash
         self.navigationItem.rightBarButtonItems?.append(add)
+
         
+        getInfoFromDB()
         
-        
-        let db = Firestore.firestore()
-        
-        var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
-        fcRef!.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
-            _ = document.flatMap({
-                $0.data().flatMap({ (data) in
-                    // asynchronously reload table once db returns array of semesters
-                    DispatchQueue.main.async {
-                        self.terms = data["terms"]! as! [String]
-                        
-                        self.definitions = data["definitions"] as! [String]
-                    
-                        
-                        self.numCards = self.terms.count
-                        
-                        self.pages = self.createFlashcards()
-                        self.setupScrollView(pages: self.pages)
-                        self.pageControl.numberOfPages = self.pages.count
-                        
-//                        self.pageControl.currentPage = 0
-                        
-                        
-                        self.view.bringSubviewToFront(self.pageControl)
-                        
-                    }
-                })
-            })
-        }
- 
- 
-        
-    }
-    @objc func addTapped() {
-        /*
-        let alert = UIAlertController(title: "Add Flash Card", message: nil, preferredStyle: .alert)
-        alert.addTextField {(semesterTF) in
-            semesterTF.placeholder = "Enter Semester"
-        }
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
-            guard let fc = alert.textFields?.first?.text else {return}
-            self.add(fc)
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
-            return
-        }
-        
-        alert.addAction(cancelAction)
-        alert.addAction(addAction)
-        present(alert, animated: true)
-        */
-        
-        performSegue(withIdentifier: "cardsToAdd", sender: nil)
         
     }
     
-    func addFC(_ fc: String) {
+    @objc func addTapped() {
+        performSegue(withIdentifier: "cardsToAdd", sender: nil)
+    }
+    
+    @objc func trashTapped() {
         
-        
-        
-        
-        
-       
-        
-        /*
         let db = Firestore.firestore()
+        
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         
-        let fcRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("flashcards").collection(currCardsCollection).document("flashcards")
+        let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
         
-        // append semester
         fcRef?.updateData([
-            "terms": FieldValue.arrayUnion([fc])
+            "terms": FieldValue.arrayRemove([terms[self.pageControl.currentPage]]),
+            "definitions": FieldValue.arrayRemove([definitions[self.pageControl.currentPage]])
         ]) { err in
-            if err != nil {
-                print("Error adding document")
-            } 
+            if let err = err {
+                print("Error updating document: \(err)")
+            }
+            else {
+                // update scroll view
+                DispatchQueue.main.async {
+                    self.terms.remove(at: self.pageControl.currentPage)
+                    self.definitions.remove(at: self.pageControl.currentPage)
+                    
+                    
+                    if self.terms.count == 0 {
+                        self.pages[0].textView.text = ""
+                        self.pages[0].label.text = ""
+                        self.navigationItem.rightBarButtonItems?[0].isEnabled = false
+                        self.pageControl.numberOfPages = 0
+                        self.button.isHidden = true
+                    }
+                    else {
+                        self.numCards = self.terms.count
+                        
+                        self.pages = self.createFlashcards()
+                        
+                        self.setupScrollView(pages: self.pages)
+                        self.pageControl.numberOfPages = self.pages.count
+                        
+                        self.pageControl.currentPage = 0
+                        
+                        
+                        self.view.bringSubviewToFront(self.pageControl)
+                    }
+                    
+                }
+                
+            }
         }
         
-        */
     }
     
     
@@ -140,15 +110,11 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
         var cards:[FlashCard] = []
         for i in 0 ..< terms.count {
             cards.append(Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard)
-            
             (cards[i] as FlashCard).label.text = terms[i]
-            
             (cards[i] as FlashCard).textView.text = definitions[i]
             (cards[i] as FlashCard).textView.isHidden = true
             
             revealed.append(false)
-            
-            print("lala \(cards[i] as FlashCard).textView.text)")
         }
         return cards
     }
@@ -163,12 +129,11 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             scrollView.addSubview(pages[i])
             
             
-            button = UIButton(frame: CGRect(x: 0
-                , y: 0, width: 260, height: 60))
+            button = UIButton(frame: CGRect(x: view.frame.width/2 - 90, y: view.frame.height - 200, width: 180, height: 40))
             
-            button.backgroundColor = .yellow
+            button.backgroundColor = .red
         
-            button.center = self.view.center
+//            button.center = self.view.center
             button.setTitle("Tap to toggle", for: .normal)
             button.addTarget(self, action:#selector(self.revealDefinition), for: .touchUpInside)
             
@@ -185,8 +150,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     @objc func revealDefinition() {
         
         reveal = revealed[pageControl.currentPage]
-        
-        print("FLIP")
         if reveal {
             reveal = false
             
@@ -223,8 +186,11 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     
         pageControl.numberOfPages = pages.count
 //        pageControl.currentPage = 0
-//        setupScrollView(pages: pages)
         
+        getInfoFromDB()
+    }
+    
+    func getInfoFromDB() {
         let db = Firestore.firestore()
         
         var userRef: DocumentReference? = nil
@@ -236,12 +202,10 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             }
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
-                    // asynchronously reload table once db returns array of semesters
+                    // asynchronously reload scroll view once db returns array of flash cards
                     DispatchQueue.main.async {
                         self.terms = data["terms"]! as! [String]
-                        print("TERMS!!!! \(self.terms)")
                         self.definitions = data["definitions"] as! [String]
-                        print("DEFS!!!! \(self.definitions)")
                         
                         self.numCards = self.terms.count
                         
@@ -249,10 +213,14 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                         self.setupScrollView(pages: self.pages)
                         self.pageControl.numberOfPages = self.pages.count
                         
-                        //                        self.pageControl.currentPage = 0
-                        
-                        
                         self.view.bringSubviewToFront(self.pageControl)
+                        
+                        if self.numCards > 0 {
+                            self.navigationItem.rightBarButtonItems?[0].isEnabled = true
+                        }
+                        else {
+                           self.navigationItem.rightBarButtonItems?[0].isEnabled = false
+                        }
                         
                     }
                 })
@@ -291,7 +259,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                 let newFC = Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard
                 newFC.label.text = message
                 self.pages.append(newFC)
- 
             }
             
             

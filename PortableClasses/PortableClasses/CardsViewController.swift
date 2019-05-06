@@ -40,6 +40,9 @@ class CardsViewController: UITableViewController {
                 })
             })
         }
+        
+//        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -122,6 +125,37 @@ class CardsViewController: UITableViewController {
                     }
                 }
             }
+        }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            let db = Firestore.firestore()
+            
+            var userRef: DocumentReference? = nil
+            userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            
+            let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards")
+            // TODO: finish deleting collection if possible
+            _ = fcRef?.collection(cards[indexPath.row])
+            
+            fcRef?.updateData([
+                "flashcards": FieldValue.arrayRemove([cards[indexPath.row]])
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+            
+            
+            cards.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
