@@ -451,7 +451,7 @@
                     <navigationItem key="navigationItem" title="Notes" id="yBJ-Xq-bR7">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="RAs-jx-W7s">
                             <connections>
-                                <segue destination="nt4-Es-rem" kind="presentation" id="aa2-Tc-UhK"/>
+                                <segue destination="nt4-Es-rem" kind="presentation" identifier="notesToAdd" id="aa2-Tc-UhK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -557,7 +557,7 @@
                     <navigationItem key="navigationItem" title="Deadlines" id="Uss-1l-SH2">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="kTh-fa-IsB">
                             <connections>
-                                <segue destination="B0w-by-Q4Z" kind="presentation" id="WrG-Xm-PL6"/>
+                                <segue destination="B0w-by-Q4Z" kind="presentation" identifier="deadlinesToAdd" id="WrG-Xm-PL6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

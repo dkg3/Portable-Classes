@@ -39,8 +39,16 @@ class NotesViewController: UITableViewController {
                 })
             })
         }
+        
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        navigationItem.rightBarButtonItems?.append(add)
+        
     }
-    
+    @objc func addTapped() {
+        performSegue(withIdentifier: "notesToAdd", sender: self)
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -61,6 +69,36 @@ class NotesViewController: UITableViewController {
         
         return cell
     }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            let db = Firestore.firestore()
+            
+            var userRef: DocumentReference? = nil
+            userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            
+            let notesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("notes")
+            
+            notesRef?.updateData([
+                "notes": FieldValue.arrayRemove([notes[indexPath.row]])
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+            
+            
+            notes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addNotesVC = segue.destination as? AddNoteViewController {

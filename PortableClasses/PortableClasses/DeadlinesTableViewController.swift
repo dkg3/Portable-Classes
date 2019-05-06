@@ -46,7 +46,15 @@ class DeadlinesTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        
+        navigationItem.rightBarButtonItems?.append(add)
+    }
+    
+    @objc func addTapped() {
+        performSegue(withIdentifier: "deadlinesToAdd", sender: self)
     }
 
     // MARK: - Table view data source
@@ -86,17 +94,33 @@ class DeadlinesTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            
+            let db = Firestore.firestore()
+            
+            var userRef: DocumentReference? = nil
+            userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            
+            let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("deadlines")
+            
+            deadlinesRef?.updateData([
+                "deadlines": FieldValue.arrayRemove([deadlines[indexPath.row]]), "dates": FieldValue.arrayRemove([dates[indexPath.row]])
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+            
+            
+            deadlines.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.
