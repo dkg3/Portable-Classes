@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class FullImageViewController: UIViewController {
     
     var currImage = ""
+    var currSemester = ""
+    var currClass = ""
+    
+    var trash:UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,26 +42,24 @@ class FullImageViewController: UIViewController {
                 // error
             }
         }
-//        let image = UIImage(named: imageName)
-//        let imageView = UIImageView(image: image!)
-//        imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (image!.size.width / 2), y: (self.view.frame.size.height / 2) - (image!.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
-//        imageView.center = self.view.center;
-//        imageView.contentMode = .scaleAspectFit
-//        view.addSubview(imageView)
+        self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
+        self.navigationItem.rightBarButtonItem = self.trash
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func trashTapped() {
+        let db = Firestore.firestore()
+        var userRef: DocumentReference? = nil
+        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        let picRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("handNotes")
+        
+        picRef?.updateData([
+            "handNotes": FieldValue.arrayRemove([currImage]),
+        ])
+        self.dismiss(animated: true, completion: nil)
     }
-    */
 
 }

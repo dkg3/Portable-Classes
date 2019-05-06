@@ -157,6 +157,8 @@ class PicsCollectionViewController: UICollectionViewController {
             let nav = segue.destination as! UINavigationController
             let fullImgVC = nav.topViewController as! FullImageViewController
             fullImgVC.currImage = self.pics[imgSelected]
+            fullImgVC.currSemester = currSemester
+            fullImgVC.currClass = currClass
         }
         else if segue.identifier == "newImg" {
             let nav = segue.destination as! UINavigationController
@@ -187,7 +189,28 @@ class PicsCollectionViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.collectionView.reloadData()
+        let db = Firestore.firestore()
+        let allUsersRef: CollectionReference? = db.collection("users")
+        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
+        
+        currUserRef?.getDocument { (document, error) in
+            //            if let document = document {
+            //                self.pics = document["handNotes"] as? Array ?? [""]
+            //                print(self.pics)
+            //            }
+            if error != nil {
+                print("Could not find document")
+            }
+            _ = document.flatMap({
+                $0.data().flatMap({ (data) in
+                    // asynchronously reload table once db returns array of pictures
+                    DispatchQueue.main.async {
+                        self.pics = data["handNotes"]! as! [String]
+                        self.collectionView.reloadData()
+                    }
+                })
+            })
+        }
     }
  
 
