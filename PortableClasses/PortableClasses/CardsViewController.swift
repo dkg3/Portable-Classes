@@ -123,7 +123,7 @@ class CardsViewController: UITableViewController {
                         print("Error adding document")
                     } else {
                         // add semester to table
-                        let index = 0
+                        let index = self.cards.count
                         self.cards.insert(collection, at: index)
                         let indexPath = IndexPath(row: index, section: 0)
                         self.tableView.insertRows(at: [indexPath], with: .left)

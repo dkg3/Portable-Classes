@@ -83,7 +83,11 @@ class SemestersTableViewController: UITableViewController {
         
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
+    }
     
 //    @IBAction func editButtonTapped(_ sender: Any) {
 //        self.navigationItem.leftBarButtonItem.append(self.addButton)
@@ -140,7 +144,7 @@ class SemestersTableViewController: UITableViewController {
                         print("Error adding document")
                     } else {
                         // add semester to table
-                        let index = 0
+                        let index = self.semesters.count
                         self.semesters.insert(semester, at: index)
                         let indexPath = IndexPath(row: index, section: 0)
                         self.tableView.insertRows(at: [indexPath], with: .left)
@@ -212,25 +216,22 @@ class SemestersTableViewController: UITableViewController {
             
             semesters.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
     
     // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
+//    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+//
+//    }
  
 
-    /*
+    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+        return false
     }
-    */
+ 
 
     /*
     // MARK: - Navigation

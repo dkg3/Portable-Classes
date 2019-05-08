@@ -27,7 +27,7 @@ class AddDeadlineViewController: UIViewController {
     var datePicker: UIDatePicker?
     var newDeadline: String?
     var newDate: String?
-    var addToCalendar:Bool = true
+    var addToCalendar:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,12 +124,16 @@ class AddDeadlineViewController: UIViewController {
     
     
     @IBAction func calSwitch(_ sender: UISwitch) {
+        print(sender.isOn)
+        print("hm")
         if sender.isOn {
             addToCalendar = true
+            print("YES?!")
         }
         else {
             addToCalendar = false
         }
+        print("DID THIS WORK???")
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {

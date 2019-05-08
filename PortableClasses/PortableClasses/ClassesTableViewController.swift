@@ -55,6 +55,11 @@ class ClassesTableViewController: UITableViewController {
         navigationItem.rightBarButtonItems?.append(add)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
+    }
     
     @IBAction func addButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Add Course", message: nil, preferredStyle: .alert)
@@ -138,7 +143,7 @@ class ClassesTableViewController: UITableViewController {
                 
                 
                 
-                let index = 0
+                let index = self.classes.count
                 self.classes.insert(course, at: index)
                 let indexPath = IndexPath(row: index, section: 0)
                 self.tableView.insertRows(at: [indexPath], with: .left)

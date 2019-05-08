@@ -33,7 +33,7 @@ class OverviewViewController: UIViewController {
                    
                     DispatchQueue.main.async {
                         self.pSwitch.setOn(data["public"]! as! Bool, animated: true)
-                        self.welcomeUser.text = "Welcome,  " +  (data["email"]! as! String)
+                        self.welcomeUser.text = "Welcome, " +  (data["email"]! as! String)
                     }
                 })
             })
