@@ -161,8 +161,4 @@ class RegisterViewController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
-    }
 }
