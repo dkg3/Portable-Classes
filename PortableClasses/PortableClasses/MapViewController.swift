@@ -31,6 +31,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var usersArray = [String]()
     
     @IBOutlet weak var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
@@ -136,6 +137,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         }
+        locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -171,9 +173,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(usersArray[indexPath.row])
     }
-    
-    
-    
     
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
