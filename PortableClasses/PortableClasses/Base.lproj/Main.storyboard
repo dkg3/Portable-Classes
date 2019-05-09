@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -725,37 +724,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6s7-SF-U1Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8401" y="827"/>
-        </scene>
-        <!--Add Course View Controller-->
-        <scene sceneID="HIm-AG-daR">
-            <objects>
-                <viewController id="tRL-zi-nfL" customClass="AddCourseViewController" customModule="PortableClasses" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="BaF-iQ-EBJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Course" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="erd-bO-lWD">
-                                <rect key="frame" x="67" y="319" width="241" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtw-BK-AXu">
-                                <rect key="frame" x="70" y="374" width="235" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="Add course to semester"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.82688927649999999" green="0.97676378490000004" blue="0.99418741460000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="lI3-OF-MCf"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eob-E4-Cj9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3948" y="1321"/>
+            <point key="canvasLocation" x="8400.7999999999993" y="826.84729064039414"/>
         </scene>
         <!--Flash Cards-->
         <scene sceneID="DHb-cW-smU">
@@ -1103,7 +1072,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.82687383889999999" green="0.97668915990000005" blue="0.99825793500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.95294117647058818" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="IKW-a5-D8Z"/>
                     </view>
                     <connections>
@@ -1229,7 +1198,21 @@
                     <view key="view" contentMode="scaleToFill" id="1w2-NS-qze">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="scrollableAxes" translatesAutoresizingMaskIntoConstraints="NO" id="Q23-bh-E1d">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <connections>
+                                    <outlet property="delegate" destination="V5c-rd-Ur9" id="HJz-Hd-Pdn"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" red="0.1300802529" green="0.028177028520000001" blue="0.58674603700000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Q23-bh-E1d" firstAttribute="leading" secondItem="AuP-jA-1mJ" secondAttribute="leading" id="7GJ-Vj-y9J"/>
+                            <constraint firstItem="Q23-bh-E1d" firstAttribute="top" secondItem="AuP-jA-1mJ" secondAttribute="top" id="HoJ-Br-yhn"/>
+                            <constraint firstAttribute="bottom" secondItem="Q23-bh-E1d" secondAttribute="bottom" id="Trg-DY-qdl"/>
+                            <constraint firstItem="Q23-bh-E1d" firstAttribute="trailing" secondItem="AuP-jA-1mJ" secondAttribute="trailing" id="Tz1-L9-Jp8"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="AuP-jA-1mJ"/>
                     </view>
                     <navigationItem key="navigationItem" id="SM6-Xz-Wzb">
@@ -1239,10 +1222,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="scrollView" destination="Q23-bh-E1d" id="t3v-2s-KXt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y52-At-ndY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10270" y="1574"/>
+            <point key="canvasLocation" x="10269.6" y="1573.8916256157636"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vIh-kk-Oe4">

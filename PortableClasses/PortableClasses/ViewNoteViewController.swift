@@ -32,5 +32,14 @@ class ViewNoteViewController: UIViewController {
     @IBAction func addNoteTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+    }
 }

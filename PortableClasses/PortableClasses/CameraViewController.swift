@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var myImg: UIImageView!
     
@@ -92,4 +92,5 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
             callback?(myImg)
         }
     }
+    
 }

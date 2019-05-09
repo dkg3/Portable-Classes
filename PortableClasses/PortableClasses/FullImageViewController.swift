@@ -9,11 +9,16 @@
 import UIKit
 import Firebase
 
-class FullImageViewController: UIViewController {
+class FullImageViewController: UIViewController, UIScrollViewDelegate {
+    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var currImage = ""
     var currSemester = ""
     var currClass = ""
+    
+    var imageView: UIImageView = UIImageView()
+    var image: UIImage = UIImage()
     
     var trash:UIBarButtonItem!
 
@@ -30,12 +35,12 @@ class FullImageViewController: UIViewController {
             do {
                 let data = try Data.init(contentsOf: URL.init(string:imageName)!)
                 DispatchQueue.main.async {
-                    let image: UIImage = UIImage(data: data)!
-                    let imageView = UIImageView(image: image)
-                    imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (image.size.width / 2), y: (self.view.frame.size.height / 2) - (image.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
-                    imageView.center = self.view.center;
-                    imageView.contentMode = .scaleAspectFit
-                    self.view.addSubview(imageView)
+                    self.image = UIImage(data: data)!
+                    self.imageView = UIImageView(image: self.image)
+                    self.imageView.frame = CGRect(x: (self.view.frame.size.width / 2) - (self.image.size.width / 2), y: (self.view.frame.size.height / 2) - (self.image.size.height / 2), width: self.view.frame.size.width / 1.05, height: self.view.frame.size.width / 1.05)
+                    self.imageView.center = self.view.center;
+                    self.imageView.contentMode = .scaleAspectFit
+                    self.view.addSubview(self.imageView)
                 }
             }
             catch {
@@ -44,6 +49,10 @@ class FullImageViewController: UIViewController {
         }
         self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
         self.navigationItem.rightBarButtonItem = self.trash
+//        scrollView.delegate = self
+//        scrollView.minimumZoomScale = 0.5
+//        scrollView.maximumZoomScale = 4.0
+//        scrollView.zoomScale = 1.0
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
@@ -61,5 +70,9 @@ class FullImageViewController: UIViewController {
         ])
         self.dismiss(animated: true, completion: nil)
     }
+    
+//    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+//        return self.imageView
+//    }
 
 }
