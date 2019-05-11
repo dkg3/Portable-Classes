@@ -25,6 +25,8 @@ class AddFlashCardViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
+        
+        termTextField.becomeFirstResponder()
     }
     
     
