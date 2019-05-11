@@ -16,6 +16,8 @@ class NotesViewController: UITableViewController {
     var currSemester = ""
     var currClass = ""
     
+    var index = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,9 +118,22 @@ class NotesViewController: UITableViewController {
                 self.notes.append(message)
             }
         }
+        else if let editNotesVC = segue.destination as? ViewNoteViewController {
+            editNotesVC.callback = { message in
+                self.notes[self.index] = message
+                let db = Firestore.firestore()
+                var userRef: DocumentReference? = nil
+                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                let notesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
+                notesRef?.updateData([
+                    "notes": self.notes
+                    ])
+            }
+        }
         if segue.identifier == "notesToCompleted" {
             let viewNoteVC = segue.destination as! ViewNoteViewController
             viewNoteVC.currNote = self.notes[tableView.indexPathForSelectedRow!.row]
+            index = tableView.indexPathForSelectedRow!.row
         }
         self.tableView.reloadData()
     }

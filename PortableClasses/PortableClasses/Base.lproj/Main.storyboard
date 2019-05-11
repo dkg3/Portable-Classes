@@ -1116,6 +1116,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="completedNoteText" destination="mCY-iz-HwS" id="mz4-9g-NiH"/>
+                        <outlet property="editButton" destination="rNI-pb-RBV" id="TFf-ap-3Pi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LoQ-yn-jc3" userLabel="First Responder" sceneMemberID="firstResponder"/>
