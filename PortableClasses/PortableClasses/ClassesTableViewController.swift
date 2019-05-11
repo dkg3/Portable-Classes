@@ -15,6 +15,8 @@ class ClassesTableViewController: UITableViewController {
     var currSemester = ""
     var currClass = ""
     
+    var addAction: UIAlertAction!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,8 +67,10 @@ class ClassesTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Add Course", message: nil, preferredStyle: .alert)
         alert.addTextField {(courseTF) in
             courseTF.placeholder = "Enter Course Name"
+            // add event listener to text field to toggle add button
+            courseTF.addTarget(self, action: #selector(self.textFieldChanged(_:)), for: .editingChanged)
         }
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        self.addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let course = alert.textFields?.first?.text else {return}
             self.add(course)
         }
@@ -74,9 +78,17 @@ class ClassesTableViewController: UITableViewController {
             return
         }
         
+        
+        addAction.isEnabled = false
+        
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         present(alert, animated: true)
+    }
+    
+    // enable add button on UIActionController when there is text
+    @objc func textFieldChanged(_ textField: UITextField) {
+        addAction.isEnabled = textField.text!.count > 0
     }
     
     func add(_ course: String) {

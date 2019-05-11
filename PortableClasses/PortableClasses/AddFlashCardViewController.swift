@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddFlashCardViewController: UIViewController {
+class AddFlashCardViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var termTextField: UITextField!
     @IBOutlet weak var defintionTextView: UITextView!
@@ -21,12 +21,26 @@ class AddFlashCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        defintionTextView.delegate = self
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
         
         termTextField.becomeFirstResponder()
+        
+        addButton.isEnabled = false
+        termTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        
+    }
+    
+    @objc func textFieldChanged(_ textField: UITextField) {
+        // toggle add button when both text fields are filled
+        addButton.isEnabled = textField.text!.count > 0 && defintionTextView.text!.count > 0
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        addButton.isEnabled = textView.text!.count > 0 && termTextField.text!.count > 0
     }
     
     

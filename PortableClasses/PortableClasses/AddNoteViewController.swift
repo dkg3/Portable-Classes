@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddNoteViewController: UIViewController {
+class AddNoteViewController: UIViewController, UITextViewDelegate {
     
     var callback : ((String) -> Void)?
 
@@ -19,6 +19,8 @@ class AddNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        noteBody.delegate = self
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -34,6 +36,13 @@ class AddNoteViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
+        
+        addButton.isEnabled = false
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        // toggle add button upon text being added/removed
+        addButton.isEnabled = textView.text!.count > 0
     }
     
     @objc func stopEditing(_ sender: UIBarButtonItem) {

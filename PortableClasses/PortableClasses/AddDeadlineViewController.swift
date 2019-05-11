@@ -20,6 +20,9 @@ class AddDeadlineViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    var reminderDone: Bool! = false
+    var dateDone: Bool! = false
+    
     var dateToAdd:Date?
     var dateFormatterForCal = DateFormatter()
     
@@ -52,8 +55,26 @@ class AddDeadlineViewController: UIViewController {
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
         
+        
+        addButton.isEnabled = false
+        
+        reminderTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        dateTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingDidEnd)
+        
+        
         reminderTextField.becomeFirstResponder()
     }
+    @objc func textFieldChanged(_ textField: UITextField) {
+        // toggle add button when both text fields are filled
+        if textField == reminderTextField {
+            addButton.isEnabled = textField.text!.count > 0 && dateTextField.text!.count > 0
+        }
+        else {
+            addButton.isEnabled = textField.text!.count > 0 && reminderTextField.text!.count > 0
+        }
+    }
+    
+    
     
     @objc func cancelPressed(_ sender: UIBarButtonItem) {
         view.endEditing(true)

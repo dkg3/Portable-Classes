@@ -18,6 +18,8 @@ class SemestersTableViewController: UITableViewController {
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    var addAction: UIAlertAction!
+    
 //    @IBOutlet weak var editButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -99,10 +101,8 @@ class SemestersTableViewController: UITableViewController {
     
     @objc func addTapped() {
         let alert = UIAlertController(title: "Add Semester", message: nil, preferredStyle: .alert)
-        alert.addTextField {(semesterTF) in
-            semesterTF.placeholder = "Enter Semester"
-        }
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        
+        self.addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let semester = alert.textFields?.first?.text else {return}
             self.add(semester)
         }
@@ -110,11 +110,24 @@ class SemestersTableViewController: UITableViewController {
             return
         }
         
+        alert.addTextField {(semesterTF) in
+            semesterTF.placeholder = "Enter Semester"
+            
+            // add event listener to text field to toggle add button
+            semesterTF.addTarget(self, action: #selector(self.textFieldChanged(_:)), for: .editingChanged)
+        }
+        
+        addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         present(alert, animated: true)
     }
     
+    // enable add button on UIActionController when there is text
+    @objc func textFieldChanged(_ textField: UITextField) {
+        addAction.isEnabled = textField.text!.count > 0
+    }
+  
     func add(_ semester: String) {
         
         let db = Firestore.firestore()
