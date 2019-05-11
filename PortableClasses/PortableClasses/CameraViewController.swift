@@ -49,7 +49,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
             myImg.image = pickedImage
             
             var data = Data()
-            data = pickedImage.jpegData(compressionQuality: 0.8)!
+            data = pickedImage.jpegData(compressionQuality: 0.5)!
             let imageRef = Storage.storage().reference().child((Auth.auth().currentUser?.email)! + "/" +  randomString(20))
             _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
                 imageRef.downloadURL { url, error in
