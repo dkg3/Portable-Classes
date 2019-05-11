@@ -51,6 +51,8 @@ class AddDeadlineViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
+        
+        reminderTextField.becomeFirstResponder()
     }
     
     @objc func cancelPressed(_ sender: UIBarButtonItem) {

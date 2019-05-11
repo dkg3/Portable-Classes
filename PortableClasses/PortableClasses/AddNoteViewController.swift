@@ -20,12 +20,24 @@ class AddNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(stopEditing(_:)))
+        let flexButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbar.setItems([flexButton, flexButton, doneButton], animated: false)
+        noteBody?.inputAccessoryView = toolbar
+        
         noteBody.textColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
         noteBody.font = UIFont(name: "Avenir-Medium", size: 20)
+        noteBody.becomeFirstResponder()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
+    }
+    
+    @objc func stopEditing(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
     }
     
     @IBAction func cancelAddingNote(_ sender: Any) {
