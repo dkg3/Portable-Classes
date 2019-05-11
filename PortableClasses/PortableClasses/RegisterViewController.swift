@@ -30,6 +30,9 @@ class RegisterViewController: UIViewController {
         view.isUserInteractionEnabled = true
     }
     
+    @IBAction func backToLogin(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         pSwitch.setOn(false, animated: true)

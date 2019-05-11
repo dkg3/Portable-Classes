@@ -159,7 +159,7 @@
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                 <state key="normal" title="Back to Login"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" id="8RD-R7-jaF"/>
+                                    <action selector="backToLogin:" destination="1me-CQ-2zO" eventType="touchUpInside" id="eYJ-GF-yWT"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Public Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Hi-kYw">
@@ -1251,8 +1251,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="n3p-2B-fvc"/>
-        <segue reference="6dh-je-gHS"/>
+        <segue reference="Da5-Vf-FR4"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.99807673689999998" green="0.95913749930000003" blue="0.4060299993" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
