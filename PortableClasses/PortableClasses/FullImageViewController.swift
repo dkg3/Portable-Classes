@@ -24,6 +24,8 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
     var trash:UIBarButtonItem!
     
     var audioPlayer = AVAudioPlayer()
+    
+    var previousScale:CGFloat = 1.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +54,22 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         }
         self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
         self.navigationItem.rightBarButtonItem = self.trash
-//        scrollView.delegate = self
-//        scrollView.minimumZoomScale = 0.5
-//        scrollView.maximumZoomScale = 4.0
-//        scrollView.zoomScale = 1.0
+
+        let gesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:)))
+        self.view.addGestureRecognizer(gesture)
+        
+        let right = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
+        let left = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
+        left.direction = .left
+        let up = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
+        up.direction = .up
+        let down = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
+        down.direction = .down
+        
+        self.view.addGestureRecognizer(right)
+        self.view.addGestureRecognizer(left)
+        self.view.addGestureRecognizer(up)
+        self.view.addGestureRecognizer(down)
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
@@ -82,8 +96,43 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-//    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//        return self.imageView
-//    }
+    @objc func pinchAction(sender: UIPinchGestureRecognizer) {
+        if previousScale * sender.scale >= 0.8 && previousScale * sender.scale <= 4.0 {
+            let scale:CGFloat = previousScale * sender.scale
+            self.view.transform = CGAffineTransform(scaleX: scale, y: scale);
+            previousScale = sender.scale
+        }
+    }
+    
+    @objc func swipeAction(sender: UISwipeGestureRecognizer) {
+        if (sender.direction == .left) {
+            print("Swipe Left")
+            let labelPosition = CGPoint(x: self.view.frame.origin.x - 100.0, y: self.view.frame.origin.y)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            })
+        }
+        else if (sender.direction == .right) {
+            print("Swipe Right")
+            let labelPosition = CGPoint(x: self.view.frame.origin.x + 100.0, y: self.view.frame.origin.y)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            })
+        }
+        else if (sender.direction == .up) {
+            print("Swipe Up")
+            let labelPosition = CGPoint(x: self.view.frame.origin.x, y: self.view.frame.origin.y - 100.0)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            })
+        }
+        else if (sender.direction == .down) {
+            print("Swipe Down")
+            let labelPosition = CGPoint(x: self.view.frame.origin.x, y: self.view.frame.origin.y + 100.0)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            })
+        }
+    }
 
 }
