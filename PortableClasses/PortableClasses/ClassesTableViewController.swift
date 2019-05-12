@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class ClassesTableViewController: UITableViewController {
     
@@ -16,6 +17,8 @@ class ClassesTableViewController: UITableViewController {
     var currClass = ""
     
     var addAction: UIAlertAction!
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,6 +164,15 @@ class ClassesTableViewController: UITableViewController {
                 self.tableView.insertRows(at: [indexPath], with: .left)
             }
         }
+        
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
     }
   
     
@@ -229,6 +241,15 @@ class ClassesTableViewController: UITableViewController {
                 } else {
                     print("Document successfully updated")
                 }
+            }
+            
+            let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
             }
             
             

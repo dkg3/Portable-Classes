@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class DeadlinesTableViewController: UITableViewController {
 
@@ -16,6 +17,8 @@ class DeadlinesTableViewController: UITableViewController {
     
     var currSemester = ""
     var currClass = ""
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +119,15 @@ class DeadlinesTableViewController: UITableViewController {
                 } else {
                     print("Document successfully updated")
                 }
+            }
+            
+            let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
             }
             
             

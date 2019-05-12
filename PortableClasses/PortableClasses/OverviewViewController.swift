@@ -8,12 +8,16 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class OverviewViewController: UIViewController {
     
     @IBOutlet weak var welcomeUser: UILabel!
     @IBOutlet weak var pSwitch: UISwitch!
+    
     var publicAccount:Bool!
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -62,6 +66,15 @@ class OverviewViewController: UIViewController {
         userRef?.updateData([
             "public": self.publicAccount
             ])
+        
+        let path = Bundle.main.path(forResource: "flip", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
         
         print(self.publicAccount)
     }

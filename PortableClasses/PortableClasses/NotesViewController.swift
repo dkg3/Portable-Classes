@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class NotesViewController: UITableViewController {
 
@@ -17,6 +18,8 @@ class NotesViewController: UITableViewController {
     var currClass = ""
     
     var index = 0
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +97,15 @@ class NotesViewController: UITableViewController {
                 } else {
                     print("Document successfully updated")
                 }
+            }
+            
+            let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
             }
             
             

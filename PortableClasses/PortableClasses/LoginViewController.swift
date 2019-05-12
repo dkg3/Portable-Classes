@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class LoginViewController: UIViewController {
     
@@ -21,10 +22,20 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
+    
+    var audioPlayer = AVAudioPlayer()
 
     @IBAction func loginAction(_ sender: Any) {
         Auth.auth().signIn(withEmail: userEmail.text!, password: userPassword.text!) { (user, error) in
             if error == nil{
+                let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+                let url = URL(fileURLWithPath: path)
+                do {
+                    self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                    self.audioPlayer.play()
+                } catch {
+                    print("uh oh")
+                }
                 self.performSegue(withIdentifier: "loginToHome", sender: self)
             }
             else {

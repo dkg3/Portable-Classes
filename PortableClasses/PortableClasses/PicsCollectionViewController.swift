@@ -21,15 +21,10 @@ class PicsCollectionViewController: UICollectionViewController {
     var currClass = ""
     
     var imgSelected = -1
-    
-//    let images = ["iTunesArtwork", "settingsIcon", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork", "iTunesArtwork"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
@@ -43,10 +38,6 @@ class PicsCollectionViewController: UICollectionViewController {
         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
         
         currUserRef?.getDocument { (document, error) in
-//            if let document = document {
-//                self.pics = document["handNotes"] as? Array ?? [""]
-//                print(self.pics)
-//            }
             if error != nil {
                 print("Could not find document")
             }
@@ -61,16 +52,6 @@ class PicsCollectionViewController: UICollectionViewController {
             })
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 

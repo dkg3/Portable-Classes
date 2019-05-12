@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import AVFoundation
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
 
@@ -20,6 +21,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var currSemester = ""
     var currClass = ""
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,12 +88,25 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         return randomString
     }
     
-    
-    @IBAction func dismissView(_ sender: Any) {
+    @IBAction func cancelView(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         if myImg != nil {
             callback?(myImg)
         }
     }
     
+    @IBAction func doneView(_ sender: Any) {
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
+        self.dismiss(animated: true, completion: nil)
+        if myImg != nil {
+            callback?(myImg)
+        }
+    }
 }

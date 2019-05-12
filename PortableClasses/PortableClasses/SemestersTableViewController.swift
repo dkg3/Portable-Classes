@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class SemestersTableViewController: UITableViewController {
     
@@ -19,6 +20,8 @@ class SemestersTableViewController: UITableViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     var addAction: UIAlertAction!
+    
+    var audioPlayer = AVAudioPlayer()
     
 //    @IBOutlet weak var editButton: UIBarButtonItem!
     
@@ -165,6 +168,15 @@ class SemestersTableViewController: UITableViewController {
                 }
             }
         }
+        
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
     }
     
     
@@ -229,6 +241,15 @@ class SemestersTableViewController: UITableViewController {
             
             semesters.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
+            }
         }
     }
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class CardsViewController: UITableViewController {
 
@@ -16,6 +17,8 @@ class CardsViewController: UITableViewController {
     var currSemester = ""
     var currClass = ""
     var currCardsCollection = ""
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,6 +134,14 @@ class CardsViewController: UITableViewController {
                 }
             }
         }
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
     }
     
     
@@ -154,6 +165,15 @@ class CardsViewController: UITableViewController {
                 } else {
                     print("Document successfully updated")
                 }
+            }
+            
+            let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
             }
             
             

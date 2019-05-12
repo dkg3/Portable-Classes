@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+import AVFoundation
 
 class AddDeadlineViewController: UIViewController {
 
@@ -31,6 +32,8 @@ class AddDeadlineViewController: UIViewController {
     var newDeadline: String?
     var newDate: String?
     var addToCalendar:Bool = false
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +119,15 @@ class AddDeadlineViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
 //        self.navigationController?.popViewController(animated: true)
         
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
+        
         
         
         // add to calendar
@@ -155,6 +167,14 @@ class AddDeadlineViewController: UIViewController {
         }
         else {
             addToCalendar = false
+        }
+        let path = Bundle.main.path(forResource: "flip", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
         }
         print("DID THIS WORK???")
     }

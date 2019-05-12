@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AddFlashCardViewController: UIViewController, UITextViewDelegate {
 
@@ -18,6 +19,8 @@ class AddFlashCardViewController: UIViewController, UITextViewDelegate {
     
     var callback1: ((String) -> Void)?
     var callback2: ((String) -> Void)?
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,14 @@ class AddFlashCardViewController: UIViewController, UITextViewDelegate {
     @IBAction func addPressed(_ sender: UIBarButtonItem) {
         callback1?(termTextField.text!)
         callback2?(defintionTextView.text!)
+        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UITextViewDelegate {
     
@@ -30,6 +31,8 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     var revealed:[Bool] = []
     
     var trash:UIBarButtonItem!
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +105,14 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                 
             }
         }
-        
+        let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
     }
     
     
@@ -173,6 +183,15 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             pages[pageControl.currentPage].textView.isHidden = false
         
            
+        }
+        
+        let path = Bundle.main.path(forResource: "flip", ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
         }
         
         let result = revealed[pageControl.currentPage]

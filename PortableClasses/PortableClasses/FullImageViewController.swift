@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class FullImageViewController: UIViewController, UIScrollViewDelegate {
     
@@ -21,6 +22,8 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
     var image: UIImage = UIImage()
     
     var trash:UIBarButtonItem!
+    
+    var audioPlayer = AVAudioPlayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +71,14 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         picRef?.updateData([
             "handNotes": FieldValue.arrayRemove([currImage]),
         ])
+        let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            print("uh oh")
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
