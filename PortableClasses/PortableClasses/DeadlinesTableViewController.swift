@@ -131,8 +131,10 @@ class DeadlinesTableViewController: UITableViewController {
             }
             
             
-            deadlines.remove(at: indexPath.row)
+            self.deadlines.remove(at: indexPath.row)
+            print(self.deadlines)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -155,30 +157,66 @@ class DeadlinesTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addDeadlinesVC = segue.destination as? AddDeadlineViewController {
-            addDeadlinesVC.callback1 = { message in
-                let db = Firestore.firestore()
-                var userRef: DocumentReference? = nil
-                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
-                deadlinesRef?.updateData([
-                    "deadlines": FieldValue.arrayUnion([message])
-                ])
-                self.deadlines.append(message)
-                print(self.deadlines)
+            addDeadlinesVC.callback1 = { message, date in
+                
+                if !self.deadlines.contains(message) && !self.dates.contains(date) {
+                    let db = Firestore.firestore()
+                    var userRef: DocumentReference? = nil
+                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
+                    deadlinesRef?.updateData([
+                        "deadlines": FieldValue.arrayUnion([message]),
+                        "dates": FieldValue.arrayUnion([date])
+                        ])
+                    self.deadlines.append(message)
+                    self.dates.append(date)
+                    print(self.deadlines)
+                    self.tableView.reloadData()
+                    return true
+                }
+                else {
+                    print("duplicate")
+                    // alert user deadline already exists
+                    let alert = UIAlertController(title: "The deadline or date you entered already exists.", message: nil, preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
+                        return
+                    }
+                    
+                    alert.addAction(okAction)
+                    addDeadlinesVC.present(alert, animated: true)
+                    return false
+                }
+                
             }
             addDeadlinesVC.callback2 = { message in
-                let db = Firestore.firestore()
-                var userRef: DocumentReference? = nil
-                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                let datesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
-                datesRef?.updateData([
-                    "dates": FieldValue.arrayUnion([message])
-                ])
-                self.dates.append(message)
-                print(self.dates)
+                
+                if self.dates.contains(message) {
+                    let db = Firestore.firestore()
+                    var userRef: DocumentReference? = nil
+                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    let datesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
+                    datesRef?.updateData([
+                        "dates": FieldValue.arrayUnion([message])
+                        ])
+                    self.dates.append(message)
+                    print(self.dates)
+                }
+                else {
+                    // alert user deadline already exists
+                    let alert = UIAlertController(title: "There is already a deadline at the time you entered.", message: nil, preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
+                        return
+                    }
+                    
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true)
+                }
+                
             }
         }
-        self.tableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

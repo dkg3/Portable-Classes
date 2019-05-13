@@ -95,84 +95,97 @@ class ClassesTableViewController: UITableViewController {
     }
     
     func add(_ course: String) {
+        if !self.classes.contains(course) {
+            let db = Firestore.firestore()
         
-        let db = Firestore.firestore()
+            var userRef: DocumentReference? = nil
         
-        var userRef: DocumentReference? = nil
+            userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
+            // add new course collection
+            let newCourseCollection = classesRef?.collection(course)
+            print(newCourseCollection!)
         
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
-        // add new course collection
-        let newCourseCollection = classesRef?.collection(course)
-        
-        // append semester
-        classesRef?.updateData([
-            "classes": FieldValue.arrayUnion([course])
-        ]) { err in
-            if err != nil {
-                print("Error adding course")
-            } else {
-                // initialize notes, handNotes, deadlines, & flashcards arrays for this course
-                let currClassRef = classesRef?.collection(course)
-                let notesDoc = currClassRef?.document("notes")
-                let handNotesDoc = currClassRef?.document("handNotes")
-                let deadlinesDoc = currClassRef?.document("deadlines")
-                let flashcardsDoc = currClassRef?.document("flashcards")
-                
-                // initialize notes array
-                notesDoc?.setData([
-                    "notes": [],
-                ]) { err in
-                    if err != nil {
-                        print("Error adding notes")
+            // append semester
+            classesRef?.updateData([
+                "classes": FieldValue.arrayUnion([course])
+            ]) { err in
+                if err != nil {
+                    print("Error adding course")
+                } else {
+                    // initialize notes, handNotes, deadlines, & flashcards arrays for this course
+                    let currClassRef = classesRef?.collection(course)
+                    let notesDoc = currClassRef?.document("notes")
+                    let handNotesDoc = currClassRef?.document("handNotes")
+                    let deadlinesDoc = currClassRef?.document("deadlines")
+                    let flashcardsDoc = currClassRef?.document("flashcards")
+                    
+                    // initialize notes array
+                    notesDoc?.setData([
+                        "notes": [],
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding notes")
+                        }
+                    }
+                    
+                    // initialize hand notes array
+                    handNotesDoc?.setData([
+                        "handNotes": [],
+                        ]) { err in
+                            if err != nil {
+                                print("Error adding hand notes")
+                            }
+                    }
+                    
+                    // initialize dealines array
+                    deadlinesDoc?.setData([
+                        "dates": [],
+                        "deadlines": [],
+                        ]) { err in
+                            if err != nil {
+                                print("Error adding deadlines")
+                            }
+                    }
+                    
+                    // initialize notes array
+                    flashcardsDoc?.setData([
+                        "flashcards": [],
+                        ]) { err in
+                            if err != nil {
+                                print("Error adding flash cards")
+                            }
+                    }
+                    
+                    let index = self.classes.count
+                    self.classes.insert(course, at: index)
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self.tableView.insertRows(at: [indexPath], with: .left)
+                    
+                    let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+                    let url = URL(fileURLWithPath: path)
+                    do {
+                        self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                        self.audioPlayer.play()
+                    } catch {
+                        print("uh oh")
                     }
                 }
-                
-                // initialize hand notes array
-                handNotesDoc?.setData([
-                    "handNotes": [],
-                    ]) { err in
-                        if err != nil {
-                            print("Error adding hand notes")
-                        }
-                }
-                
-                // initialize dealines array
-                deadlinesDoc?.setData([
-                    "dates": [],
-                    "deadlines": [],
-                    ]) { err in
-                        if err != nil {
-                            print("Error adding deadlines")
-                        }
-                }
-                
-                // initialize notes array
-                flashcardsDoc?.setData([
-                    "flashcards": [],
-                    ]) { err in
-                        if err != nil {
-                            print("Error adding flash cards")
-                        }
-                }
-                
-                
-                
-                let index = self.classes.count
-                self.classes.insert(course, at: index)
-                let indexPath = IndexPath(row: index, section: 0)
-                self.tableView.insertRows(at: [indexPath], with: .left)
             }
         }
-        
-        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
-        let url = URL(fileURLWithPath: path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            print("uh oh")
+        else {
+            // alert user class already exists
+            let alert = UIAlertController(title: "The course you entered already existsv.", message: nil, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Sorry, I just love that class", style: UIAlertAction.Style.cancel) { (_) in
+                return
+            }
+            
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
         }
+        
+        
     }
   
     
@@ -255,6 +268,7 @@ class ClassesTableViewController: UITableViewController {
             
             classes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }

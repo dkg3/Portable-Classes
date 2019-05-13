@@ -132,51 +132,70 @@ class SemestersTableViewController: UITableViewController {
     }
   
     func add(_ semester: String) {
-        
-        let db = Firestore.firestore()
-        
-        var userRef: DocumentReference? = nil
-        
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        let semestsRef = userRef?.collection("semesters").document("semesters")
-        // add new semester collection
-        let newSemesterCollection = semestsRef?.collection(semester)
-        print("new \(newSemesterCollection!)")
-        
-        // append semester
-        semestsRef?.updateData([
-            "semesters": FieldValue.arrayUnion([semester])
-        ]) { err in
-            if err != nil {
-                print("Error adding document")
-            } else {
-                // initialize classes array for this semester
-                let classesRef = semestsRef?.collection(semester)
-                let classesDoc = classesRef?.document("classes")
-                classesDoc?.setData([
-                    "classes": []
-                ]) { err in
-                    if err != nil {
-                        print("Error adding document")
-                    } else {
-                        // add semester to table
-                        let index = self.semesters.count
-                        self.semesters.insert(semester, at: index)
-                        let indexPath = IndexPath(row: index, section: 0)
-                        self.tableView.insertRows(at: [indexPath], with: .left)
+        // only add semester if not in the user's semester array
+        if !self.semesters.contains(semester) {
+            
+            let db = Firestore.firestore()
+            
+            var userRef: DocumentReference? = nil
+            
+            userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            let semestsRef = userRef?.collection("semesters").document("semesters")
+            // add new semester collection
+            let newSemesterCollection = semestsRef?.collection(semester)
+            print("new \(newSemesterCollection!)")
+            
+            
+            // append semester
+            semestsRef?.updateData([
+                "semesters": FieldValue.arrayUnion([semester])
+            ]) { err in
+                if err != nil {
+                    print("Error adding document")
+                } else {
+                    
+                    
+                    // initialize classes array for this semester
+                    let classesRef = semestsRef?.collection(semester)
+                    let classesDoc = classesRef?.document("classes")
+                    classesDoc?.setData([
+                        "classes": []
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding document")
+                        }
+                        else {
+                            let index = self.semesters.count
+                            self.semesters.insert(semester, at: index)
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.tableView.insertRows(at: [indexPath], with: .left)
+                            let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+                            let url = URL(fileURLWithPath: path)
+                            do {
+                                self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                                self.audioPlayer.play()
+                            } catch {
+                                print("uh oh")
+                            }
+                        }
                     }
                 }
             }
+            
         }
+        else {
+            // alert user semester already exists
+            let alert = UIAlertController(title: "The semester you entered already exists.", message: nil, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Sorry, I just love that semester", style: UIAlertAction.Style.cancel) { (_) in
+                return
+            }
+            
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
+            
         
-        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
-        let url = URL(fileURLWithPath: path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            print("uh oh")
-        }
     }
     
     

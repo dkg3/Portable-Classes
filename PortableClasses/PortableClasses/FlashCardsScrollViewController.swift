@@ -254,30 +254,46 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addFlashCardslinesVC = segue.destination as? AddFlashCardViewController {
-            addFlashCardslinesVC.callback1 = { message in
+            addFlashCardslinesVC.callback1 = { message, definition in
                 
                 
-                
-                
-                let db = Firestore.firestore()
-                var userRef: DocumentReference? = nil
-                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                
-                let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
-                
-                // append term
-                fcRef?.updateData([
-                    "terms": FieldValue.arrayUnion([message])
-                ]) { err in
-                    if err != nil {
-                        print("Error adding document")
+                if !self.terms.contains(message) && !self.definitions.contains(definition) {
+                    let db = Firestore.firestore()
+                    var userRef: DocumentReference? = nil
+                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    
+                    let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
+                    
+                    // append term
+                    fcRef?.updateData([
+                        "terms": FieldValue.arrayUnion([message]),
+                        "definitions": FieldValue.arrayUnion([definition])
+                    ]) { err in
+                        if err != nil {
+                            print("Error adding document")
+                        }
                     }
+                    
+                    
+                    let newFC = Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard
+                    newFC.label.text = message
+                    self.pages.append(newFC)
+                    return true
+                }
+                else {
+                    // alert user deadline already exists
+                    let alert = UIAlertController(title: "The term or definition you entered already exists.", message: nil, preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
+                        return
+                    }
+                    
+                    alert.addAction(okAction)
+                    addFlashCardslinesVC.present(alert, animated: true)
+                    return false
                 }
                 
                 
-                let newFC = Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard
-                newFC.label.text = message
-                self.pages.append(newFC)
             }
             
             

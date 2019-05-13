@@ -11,7 +11,7 @@ import AVFoundation
 
 class AddNoteViewController: UIViewController, UITextViewDelegate {
     
-    var callback : ((String) -> Void)?
+    var callback : ((String) -> Bool)?
 
     @IBOutlet weak var noteBody: UITextView!
     
@@ -57,16 +57,18 @@ class AddNoteViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func addNoteTapped(_ sender: Any) {
-        callback?(noteBody.text!)
-        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
-        let url = URL(fileURLWithPath: path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            print("uh oh")
+        if (callback?(noteBody.text!))! {
+            let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
+            }
+            self.dismiss(animated: true, completion: nil)
         }
-        self.dismiss(animated: true, completion: nil)
+        
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {

@@ -120,14 +120,31 @@ class NotesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addNotesVC = segue.destination as? AddNoteViewController {
             addNotesVC.callback = { message in
-                let db = Firestore.firestore()
-                var userRef: DocumentReference? = nil
-                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                let notesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
-                notesRef?.updateData([
-                    "notes": FieldValue.arrayUnion([message])
-                    ])
-                self.notes.append(message)
+                
+                if !self.notes.contains(message) {
+                    let db = Firestore.firestore()
+                    var userRef: DocumentReference? = nil
+                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    let notesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
+                    notesRef?.updateData([
+                        "notes": FieldValue.arrayUnion([message])
+                        ])
+                    self.notes.append(message)
+                    return true
+                }
+                else {
+                    // alert user note already exists
+                    let alert = UIAlertController(title: "This note already exists", message: nil, preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
+                        return
+                    }
+                    
+                    alert.addAction(okAction)
+                    addNotesVC.present(alert, animated: true)
+                    return false
+                }
+                
             }
         }
         else if let editNotesVC = segue.destination as? ViewNoteViewController {

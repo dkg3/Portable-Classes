@@ -12,7 +12,7 @@ import AVFoundation
 
 class AddDeadlineViewController: UIViewController {
 
-    var callback1 : ((String) -> Void)?
+    var callback1 : ((String, String) -> Bool)?
     var callback2 : ((String) -> Void)?
     
     @IBOutlet weak var dateTextField: UITextField!
@@ -114,47 +114,53 @@ class AddDeadlineViewController: UIViewController {
 //        let deadlinesVC = segue.destination as! DeadlinesTableViewController
 //        deadlinesVC.deadlines.append(newDeadline)
         
-        callback1?(reminderTextField.text!)
-        callback2?(dateTextField.text!)
-        self.dismiss(animated: true, completion: nil)
-//        self.navigationController?.popViewController(animated: true)
-        
-        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
-        let url = URL(fileURLWithPath: path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            print("uh oh")
-        }
-        
-        
-        
-        // add to calendar
-        if addToCalendar {
-            let eventStore:EKEventStore = EKEventStore()
+        if (callback1?(reminderTextField.text!, dateTextField.text!))! {
             
-            eventStore.requestAccess(to: .event, completion: {(granted, error) in
-                if granted && error == nil {
-                    
-                    let event:EKEvent = EKEvent(eventStore: eventStore)
-                    event.title = self.reminderTextField.text
-                    event.startDate = self.dateToAdd
-                    event.endDate = self.dateToAdd
-                    event.calendar = eventStore.defaultCalendarForNewEvents
-                    do {
-                        try eventStore.save(event, span: .thisEvent)
+            let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
+            }
+            
+            
+            
+            // add to calendar
+            if addToCalendar {
+                let eventStore:EKEventStore = EKEventStore()
+                
+                eventStore.requestAccess(to: .event, completion: {(granted, error) in
+                    if granted && error == nil {
+                        
+                        let event:EKEvent = EKEvent(eventStore: eventStore)
+                        event.title = self.reminderTextField.text
+                        event.startDate = self.dateToAdd
+                        event.endDate = self.dateToAdd
+                        event.calendar = eventStore.defaultCalendarForNewEvents
+                        do {
+                            try eventStore.save(event, span: .thisEvent)
+                        }
+                        catch let error as NSError{
+                            print("err")
+                        }
                     }
-                    catch let error as NSError{
+                    else {
                         print("err")
                     }
-                }
-                else {
-                    print("err")
-                }
-                
-            })
+                    
+                })
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+            
         }
+//        callback2?(dateTextField.text!)
+        
+//        self.navigationController?.popViewController(animated: true)
+        
+        
     }
     
     
@@ -163,7 +169,6 @@ class AddDeadlineViewController: UIViewController {
         print("hm")
         if sender.isOn {
             addToCalendar = true
-            print("YES?!")
         }
         else {
             addToCalendar = false
@@ -176,7 +181,6 @@ class AddDeadlineViewController: UIViewController {
         } catch {
             print("uh oh")
         }
-        print("DID THIS WORK???")
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
