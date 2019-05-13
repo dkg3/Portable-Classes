@@ -80,46 +80,14 @@ class PicsCollectionViewController: UICollectionViewController {
                 }
             }
             catch {
-                // error
+                
             }
         }
         
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         imgSelected = indexPath.row
-        
         return cell
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    
-//    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-//    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-//        print(indexPath.row, "testing")
-//        return false
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-//        print(indexPath.row, "test")
-//        return false
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-//    }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.collectionView)
@@ -175,10 +143,6 @@ class PicsCollectionViewController: UICollectionViewController {
         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
         
         currUserRef?.getDocument { (document, error) in
-            //            if let document = document {
-            //                self.pics = document["handNotes"] as? Array ?? [""]
-            //                print(self.pics)
-            //            }
             if error != nil {
                 print("Could not find document")
             }
@@ -193,6 +157,5 @@ class PicsCollectionViewController: UICollectionViewController {
             })
         }
     }
- 
 
 }
