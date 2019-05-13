@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewNoteViewController: UIViewController {
+class ViewNoteViewController: UIViewController, UITextViewDelegate {
     
     var currNote = ""
     
@@ -22,6 +22,7 @@ class ViewNoteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        completedNoteText.delegate = self
         completedNoteText.text = currNote
         
         self.navigationItem.backBarButtonItem?.tintColor = UIColor.white
@@ -50,6 +51,11 @@ class ViewNoteViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        // toggle add button upon text being added/removed
+        self.done.isEnabled = textView.text!.count > 0
     }
     
     @objc func editNote(_ sender: Any) {

@@ -18,7 +18,9 @@ class CardsViewController: UITableViewController {
     var currClass = ""
     var currCardsCollection = ""
     
+    var addAction:UIAlertAction!
     var audioPlayer = AVAudioPlayer()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,14 +84,19 @@ class CardsViewController: UITableViewController {
         let alert = UIAlertController(title: "Add Collection of Flash Cards", message: nil, preferredStyle: .alert)
         alert.addTextField {(fcCollectionTF) in
             fcCollectionTF.placeholder = "Enter Collection"
+            
+            // add event listener to text field to toggle add button
+            fcCollectionTF.addTarget(self, action: #selector(self.textFieldChanged(_:)), for: .editingChanged)
         }
-        let addAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        self.addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let fcCollection = alert.textFields?.first?.text else {return}
             self.add(fcCollection)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
             return
         }
+        
+        addAction.isEnabled = false
         
         alert.addAction(cancelAction)
         alert.addAction(addAction)
@@ -142,6 +149,10 @@ class CardsViewController: UITableViewController {
         } catch {
             print("uh oh")
         }
+    }
+    
+    @objc func textFieldChanged(_ textField: UITextField) {
+        addAction.isEnabled = textField.text!.count > 0
     }
     
     
