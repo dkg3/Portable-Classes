@@ -24,8 +24,11 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var audioPlayer = AVAudioPlayer()
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        doneButton.isEnabled = false
     }
     
     @IBAction func importImage(_ sender: Any) {
@@ -50,29 +53,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.dismiss(animated: true, completion: nil)
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             myImg.image = pickedImage
-            
-            var data = Data()
-            data = pickedImage.jpegData(compressionQuality: 0.5)!
-            let imageRef = Storage.storage().reference().child((Auth.auth().currentUser?.email)! + "/" +  randomString(20))
-            _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
-                imageRef.downloadURL { url, error in
-                    if error != nil {
-
-                    } else {
-                        self.allImages.append(url?.absoluteString ?? "")
-                        let db = Firestore.firestore()
-                        let allUsersRef: CollectionReference? = db.collection("users")
-                        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
-                        currUserRef?.setData([
-                            "handNotes": FieldValue.arrayUnion([url?.absoluteString ?? ""])
-                        ], merge: true) { err in
-                            if err != nil {
-                                print("Error adding document")
-                            }
-                        }
-                    }
-                }
-            }
+            doneButton.isEnabled = true
         }
     }
     
@@ -90,23 +71,44 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func cancelView(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        if myImg != nil {
-            callback?(myImg)
-        }
     }
     
     @IBAction func doneView(_ sender: Any) {
-        let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
-        let url = URL(fileURLWithPath: path)
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.play()
-        } catch {
-            print("uh oh")
+        if myImg.image != nil {
+            let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
+            let url = URL(fileURLWithPath: path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+            } catch {
+                print("uh oh")
+            }
+            var data = Data()
+            data = myImg.image!.jpegData(compressionQuality: 0.3)!
+            let imageRef = Storage.storage().reference().child((Auth.auth().currentUser?.email)! + "/" +  randomString(20))
+            _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
+                imageRef.downloadURL { url, error in
+                    if error != nil {
+
+                    } else {
+                        self.allImages.append(url?.absoluteString ?? "")
+                        let db = Firestore.firestore()
+                        let allUsersRef: CollectionReference? = db.collection("users")
+                        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
+                        currUserRef?.setData([
+                            "handNotes": FieldValue.arrayUnion([url?.absoluteString ?? ""])
+                        ], merge: true) { err in
+                            if err != nil {
+                                print("Error adding document")
+                            }
+                            else {
+                                self.callback?(self.myImg)
+                            }
+                        }
+                    }
+                }
+            }
         }
         self.dismiss(animated: true, completion: nil)
-        if myImg != nil {
-            callback?(myImg)
-        }
     }
 }

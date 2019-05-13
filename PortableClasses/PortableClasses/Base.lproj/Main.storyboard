@@ -720,6 +720,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="DOX-ma-V5W" id="b13-fL-C0m"/>
                         <outlet property="myImg" destination="Gg1-3n-Ajl" id="pxQ-5S-eAY"/>
                     </connections>
                 </viewController>
