@@ -23,17 +23,12 @@ class NotesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let db = Firestore.firestore()
-        
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         let notesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("notes")
-        
         notesRef!.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
                     // asynchronously reload table once db returns array of semesters
@@ -47,55 +42,44 @@ class NotesViewController: UITableViewController {
         
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        
         navigationItem.rightBarButtonItems?.append(add)
-        
     }
+    
     @objc func addTapped() {
         performSegue(withIdentifier: "notesToAdd", sender: self)
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        // number of sections
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        // number of rows
         return notes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // configure the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath)
-        
-        // Configure the cell...
-        
         let note = notes[indexPath.row]
         cell.textLabel?.text = note
-        
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
-        
         return cell
     }
     
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
             let db = Firestore.firestore()
-            
             var userRef: DocumentReference? = nil
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-            
             let notesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("notes")
-            
             notesRef?.updateData([
                 "notes": FieldValue.arrayRemove([notes[indexPath.row]])
             ]) { err in
                 if let err = err {
                     print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
                 }
             }
             
@@ -105,22 +89,17 @@ class NotesViewController: UITableViewController {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
             } catch {
-                print("uh oh")
+                
             }
-            
             
             notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addNotesVC = segue.destination as? AddNoteViewController {
             addNotesVC.callback = { message in
-                
                 if !self.notes.contains(message) {
                     let db = Firestore.firestore()
                     var userRef: DocumentReference? = nil
@@ -135,16 +114,13 @@ class NotesViewController: UITableViewController {
                 else {
                     // alert user note already exists
                     let alert = UIAlertController(title: "This note already exists", message: nil, preferredStyle: .alert)
-                    
                     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
                         return
                     }
-                    
                     alert.addAction(okAction)
                     addNotesVC.present(alert, animated: true)
                     return false
                 }
-                
             }
         }
         else if let editNotesVC = segue.destination as? ViewNoteViewController {

@@ -26,8 +26,6 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         pSwitch.setOn(false, animated: true)
-        print(pSwitch.isOn)
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
@@ -39,19 +37,13 @@ class RegisterViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         pSwitch.setOn(false, animated: true)
-        print(pSwitch.isOn)
     }
     
     @IBAction func `switch`(_ sender: UISwitch) {
         if sender.isOn {
-//            privacyLabel.text = "Public Account"
-//            privacyDescription.text = "Allow other users to see you on the map."
             publicAccount = true
-            
         }
         else {
-//            privacyLabel.text = "Private Account"
-//            privacyDescription.text = "Other users will not be able to see you on the map"
             publicAccount = false
         }
         
@@ -61,7 +53,7 @@ class RegisterViewController: UIViewController {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
     }
     
@@ -127,14 +119,8 @@ class RegisterViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         else {
-            
-            
-            
-            
-            
             Auth.auth().createUser(withEmail: userEmail.text!, password: userPassword.text!){ (user, error) in
                 if error == nil {
-                    
                     let db = Firestore.firestore()
                     // add user to db
                     var ref: DocumentReference? = nil
@@ -144,9 +130,7 @@ class RegisterViewController: UIViewController {
                         "public": self.publicAccount,
                         "location": GeoPoint(latitude: 0, longitude: 0)
                     ]) { err in
-                        if err != nil {
-                            print("Error adding document")
-                        }
+                        if err != nil {}
                     }
                     // create semesters array
                     let semestersRef = ref?.collection("semesters")
@@ -154,9 +138,7 @@ class RegisterViewController: UIViewController {
                     semestersCollectionRef?.setData([
                         "semesters": []
                     ]) { err in
-                        if err != nil {
-                            print("Error adding collection")
-                        }
+                        if err != nil {}
                     }
                     
                     let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
@@ -165,18 +147,15 @@ class RegisterViewController: UIViewController {
                         self.audioPlayer = try AVAudioPlayer(contentsOf: url)
                         self.audioPlayer.play()
                     } catch {
-                        print("uh oh")
+                        
                     }
-                    
                     self.performSegue(withIdentifier: "signupToHome", sender: self)
-                    
                 }
                 else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                     alertController.addAction(defaultAction)
                     self.present(alertController, animated: true, completion: nil)
-
                 }
             }
         }
@@ -185,4 +164,5 @@ class RegisterViewController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
+    
 }

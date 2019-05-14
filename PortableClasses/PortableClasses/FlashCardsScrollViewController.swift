@@ -36,21 +36,13 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.bringSubviewToFront(pageControl)
-        
         self.navigationItem.title = currCardsCollection
-        
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
-        
         self.navigationItem.rightBarButtonItem = self.trash
         self.navigationItem.rightBarButtonItems?.append(add)
-
-        
         getInfoFromDB()
-        
-        
     }
     
     @objc func addTapped() {
@@ -58,14 +50,10 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     }
     
     @objc func trashTapped() {
-        
         let db = Firestore.firestore()
-        
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        
         let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
-        
         fcRef?.updateData([
             "terms": FieldValue.arrayRemove([terms[self.pageControl.currentPage]]),
             "definitions": FieldValue.arrayRemove([definitions[self.pageControl.currentPage]])
@@ -78,8 +66,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                 DispatchQueue.main.async {
                     self.terms.remove(at: self.pageControl.currentPage)
                     self.definitions.remove(at: self.pageControl.currentPage)
-                    
-                    
                     if self.terms.count == 0 {
                         self.pages[0].textView.text = ""
                         self.pages[0].label.text = ""
@@ -89,20 +75,13 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                     }
                     else {
                         self.numCards = self.terms.count
-                        
                         self.pages = self.createFlashcards()
-                        
                         self.setupScrollView(pages: self.pages)
                         self.pageControl.numberOfPages = self.pages.count
-                        
                         self.pageControl.currentPage = 0
-                        
-                        
                         self.view.bringSubviewToFront(self.pageControl)
                     }
-                    
                 }
-                
             }
         }
         let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
@@ -111,10 +90,9 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
     }
-    
     
     func createFlashcards() -> [FlashCard] {
         var cards:[FlashCard] = []
@@ -123,7 +101,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             (cards[i] as FlashCard).label.text = terms[i]
             (cards[i] as FlashCard).textView.text = definitions[i]
             (cards[i] as FlashCard).textView.isHidden = true
-            
             revealed.append(false)
         }
         return cards
@@ -133,20 +110,13 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
         scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(pages.count), height: 1.0)
         scrollView.isPagingEnabled = true
-        
         for i in 0 ..< pages.count {
             pages[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
             scrollView.addSubview(pages[i])
-            
-            
             button = UIButton(frame: CGRect(x: view.frame.width/2 - 90, y: view.frame.height - 200, width: 180, height: 40))
-            
             button.backgroundColor = .red
-        
-//            button.center = self.view.center
             button.setTitle("Tap to toggle", for: .normal)
             button.addTarget(self, action:#selector(self.revealDefinition), for: .touchUpInside)
-            
             pages[i].addSubview(button)
         }
     }
@@ -158,31 +128,18 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     
     
     @objc func revealDefinition() {
-        
         reveal = revealed[pageControl.currentPage]
         if reveal {
             reveal = false
-            
-//            self.button.setTitle("Press to reveal term",for: .normal)
-            
             UIView.transition(with: scrollView, duration: 0.8, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-            
-        
             pages[pageControl.currentPage].label.isHidden = false
             pages[pageControl.currentPage].textView.isHidden = true
-            
         }
         else {
-            reveal = true;
-            
-//            self.button.setTitle("Press to reveal definition",for: .normal)
-            
+            reveal = true
             UIView.transition(with: scrollView, duration: 0.8, options: .transitionFlipFromRight, animations: nil, completion: nil)
-            
             pages[pageControl.currentPage].label.isHidden = true
             pages[pageControl.currentPage].textView.isHidden = false
-        
-           
         }
         
         let path = Bundle.main.path(forResource: "flip", ofType:"mp3")!
@@ -191,7 +148,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
         
         let result = revealed[pageControl.currentPage]
@@ -200,40 +157,28 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     
     
     override func viewDidAppear(_ animated: Bool) {
-//        self.navigationController?.hidesBarsOnTap = true
-        
-    
         pageControl.numberOfPages = pages.count
-//        pageControl.currentPage = 0
-        
         getInfoFromDB()
     }
     
     func getInfoFromDB() {
         let db = Firestore.firestore()
-        
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
         fcRef!.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
                     // asynchronously reload scroll view once db returns array of flash cards
                     DispatchQueue.main.async {
                         self.terms = data["terms"]! as! [String]
                         self.definitions = data["definitions"] as! [String]
-                        
                         self.numCards = self.terms.count
-                        
                         self.pages = self.createFlashcards()
                         self.setupScrollView(pages: self.pages)
                         self.pageControl.numberOfPages = self.pages.count
-                        
                         self.view.bringSubviewToFront(self.pageControl)
-                        
                         if self.numCards > 0 {
                             self.navigationItem.rightBarButtonItems?[0].isEnabled = true
                         }
@@ -246,35 +191,22 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             })
         }
     }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        self.navigationController?.hidesBarsOnTap = false
-//    }
-    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addFlashCardslinesVC = segue.destination as? AddFlashCardViewController {
             addFlashCardslinesVC.callback1 = { message, definition in
-                
-                
                 if !self.terms.contains(message) && !self.definitions.contains(definition) {
                     let db = Firestore.firestore()
                     var userRef: DocumentReference? = nil
                     userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                    
                     let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
-                    
                     // append term
                     fcRef?.updateData([
                         "terms": FieldValue.arrayUnion([message]),
                         "definitions": FieldValue.arrayUnion([definition])
                     ]) { err in
-                        if err != nil {
-                            print("Error adding document")
-                        }
+                        if err != nil {}
                     }
-                    
-                    
                     let newFC = Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard
                     newFC.label.text = message
                     self.pages.append(newFC)
@@ -283,42 +215,27 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                 else {
                     // alert user deadline already exists
                     let alert = UIAlertController(title: "The term or definition you entered already exists.", message: nil, preferredStyle: .alert)
-                    
                     let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
                         return
                     }
-                    
                     alert.addAction(okAction)
                     addFlashCardslinesVC.present(alert, animated: true)
                     return false
                 }
-                
-                
             }
-            
-            
             addFlashCardslinesVC.callback2 = { message in
                 let db = Firestore.firestore()
                 var userRef: DocumentReference? = nil
                 userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-                
                 let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
-                
                 // append term
                 fcRef?.updateData([
                     "definitions": FieldValue.arrayUnion([message])
                 ]) { err in
-                    if err != nil {
-                        print("Error adding document")
-                    }
+                    if err != nil {}
                 }
-                
-                /*
-                 let newFC = Bundle.main.loadNibNamed("FlashCard", owner: self, options: nil)?.first as! FlashCard
-                 newFC.label.text = fc
-                 self.pages.append(newFC)
-                 */
             }
         }
     }
+    
 }

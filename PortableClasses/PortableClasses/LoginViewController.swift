@@ -12,18 +12,17 @@ import AVFoundation
 
 class LoginViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad();
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        view.addGestureRecognizer(tap)
-        view.isUserInteractionEnabled = true
-    }
-    
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
     
     var audioPlayer = AVAudioPlayer()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        view.addGestureRecognizer(tap)
+        view.isUserInteractionEnabled = true
+    }
 
     @IBAction func loginAction(_ sender: Any) {
         Auth.auth().signIn(withEmail: userEmail.text!, password: userPassword.text!) { (user, error) in
@@ -34,7 +33,7 @@ class LoginViewController: UIViewController {
                     self.audioPlayer = try AVAudioPlayer(contentsOf: url)
                     self.audioPlayer.play()
                 } catch {
-                    print("uh oh")
+                    
                 }
                 self.performSegue(withIdentifier: "loginToHome", sender: self)
             }
@@ -57,4 +56,5 @@ class LoginViewController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
+    
 }

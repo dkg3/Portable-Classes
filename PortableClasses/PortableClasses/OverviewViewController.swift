@@ -22,19 +22,13 @@ class OverviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
         let db = Firestore.firestore()
-        
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        
         userRef!.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
-                   
                     DispatchQueue.main.async {
                         self.pSwitch.setOn(data["public"]! as! Bool, animated: true)
                         self.welcomeUser.text = "Welcome, " +  (data["email"]! as! String)
@@ -42,27 +36,22 @@ class OverviewViewController: UIViewController {
                 })
             })
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
     @IBAction func `switch`(_ sender: UISwitch) {
         let db = Firestore.firestore()
-        
         var userRef: DocumentReference? = nil
-        
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-        
-        
         if sender.isOn {
             publicAccount = true
         }
         else {
             publicAccount = false
         }
-        
         userRef?.updateData([
             "public": self.publicAccount
             ])
@@ -73,10 +62,8 @@ class OverviewViewController: UIViewController {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
-        
-        print(self.publicAccount)
     }
     
     @IBAction func logoutAction(_ sender: Any) {

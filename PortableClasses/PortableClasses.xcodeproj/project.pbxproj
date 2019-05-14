@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00177488226D17CC00A8B2D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00177487226D17CC00A8B2D7 /* AppDelegate.swift */; };
-		0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00177489226D17CC00A8B2D7 /* AddCourseViewController.swift */; };
 		0017748D226D17CC00A8B2D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0017748B226D17CC00A8B2D7 /* Main.storyboard */; };
 		0017748F226D17CF00A8B2D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0017748E226D17CF00A8B2D7 /* Assets.xcassets */; };
 		00177492226D17CF00A8B2D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00177490226D17CF00A8B2D7 /* LaunchScreen.storyboard */; };
@@ -24,7 +23,6 @@
 		00E17525227CD55E00DDD4B0 /* ViewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */; };
 		00E17527227E1A7800DDD4B0 /* PicsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */; };
 		00E17529227E231A00DDD4B0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */; };
-		00E1752D227F5FDE00DDD4B0 /* LinkedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */; };
 		00E1752F227F6D5900DDD4B0 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E1752E227F6D5900DDD4B0 /* FullImageViewController.swift */; };
 		00E175312287ACFC00DDD4B0 /* add.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 00E175302287ACFB00DDD4B0 /* add.mp3 */; };
 		00E175332287AD0E00DDD4B0 /* delete.wav in Resources */ = {isa = PBXBuildFile; fileRef = 00E175322287AD0E00DDD4B0 /* delete.wav */; };
@@ -65,7 +63,6 @@
 /* Begin PBXFileReference section */
 		00177484226D17CC00A8B2D7 /* PortableClasses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PortableClasses.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00177487226D17CC00A8B2D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		00177489226D17CC00A8B2D7 /* AddCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseViewController.swift; sourceTree = "<group>"; };
 		0017748C226D17CC00A8B2D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0017748E226D17CF00A8B2D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00177491226D17CF00A8B2D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,7 +83,6 @@
 		00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewNoteViewController.swift; sourceTree = "<group>"; };
 		00E17526227E1A7800DDD4B0 /* PicsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicsCollectionViewController.swift; sourceTree = "<group>"; };
 		00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedTextView.swift; sourceTree = "<group>"; };
 		00E1752E227F6D5900DDD4B0 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		00E175302287ACFB00DDD4B0 /* add.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = add.mp3; sourceTree = "<group>"; };
 		00E175322287AD0E00DDD4B0 /* delete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = delete.wav; sourceTree = "<group>"; };
@@ -169,7 +165,6 @@
 				00177487226D17CC00A8B2D7 /* AppDelegate.swift */,
 				4FAFD326227BC961004789EA /* AddDeadlineViewController.swift */,
 				4FAFD324227BC35F004789EA /* DeadlinesTableViewController.swift */,
-				00177489226D17CC00A8B2D7 /* AddCourseViewController.swift */,
 				00B8B04E227120B500499EFB /* OverviewViewController.swift */,
 				4F663AA12274C7D5003758EB /* SemestersTableViewController.swift */,
 				4F663AA32274F0AF003758EB /* ClassesTableViewController.swift */,
@@ -177,7 +172,6 @@
 				4F5F59DE226FA9E7005478D6 /* LoginViewController.swift */,
 				4F5F59E0226FB5CD005478D6 /* RegisterViewController.swift */,
 				0017748B226D17CC00A8B2D7 /* Main.storyboard */,
-				00E1752C227F5FDE00DDD4B0 /* LinkedTextView.swift */,
 				00E17528227E231A00DDD4B0 /* CollectionViewCell.swift */,
 				00E17524227CD55E00DDD4B0 /* ViewNoteViewController.swift */,
 				00E17522227CCD2800DDD4B0 /* AddNoteViewController.swift */,
@@ -549,10 +543,8 @@
 				00E17521227CC5D700DDD4B0 /* CardsViewController.swift in Sources */,
 				4F84E13D227ED5BE006AC40E /* FlashCard.swift in Sources */,
 				4F7B7453227ABC6B001F4141 /* ClassFeaturesTableViewController.swift in Sources */,
-				00E1752D227F5FDE00DDD4B0 /* LinkedTextView.swift in Sources */,
 				00E17523227CCD2800DDD4B0 /* AddNoteViewController.swift in Sources */,
 				4FAFD325227BC35F004789EA /* DeadlinesTableViewController.swift in Sources */,
-				0017748A226D17CC00A8B2D7 /* AddCourseViewController.swift in Sources */,
 				4F84E143227F4EF7006AC40E /* AddFlashCardViewController.swift in Sources */,
 				00B8B04F227120B600499EFB /* OverviewViewController.swift in Sources */,
 				4F663AA22274C7D5003758EB /* SemestersTableViewController.swift in Sources */,
@@ -741,14 +733,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GZ5BWT5578;
+				DEVELOPMENT_TEAM = RMK3DSSFMM;
 				INFOPLIST_FILE = PortableClasses/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ar4477.PortableClasses;
+				PRODUCT_BUNDLE_IDENTIFIER = dkg333.PortableClasses;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -762,14 +754,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GZ5BWT5578;
+				DEVELOPMENT_TEAM = RMK3DSSFMM;
 				INFOPLIST_FILE = PortableClasses/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ar4477.PortableClasses;
+				PRODUCT_BUNDLE_IDENTIFIER = dkg333.PortableClasses;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

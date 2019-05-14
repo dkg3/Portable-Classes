@@ -33,8 +33,6 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
-        print(currImage)
-        
         let imageName = currImage
         DispatchQueue.global(qos: .background).async {
             do {
@@ -49,15 +47,13 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
             catch {
-                // error
+                
             }
         }
         self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
         self.navigationItem.rightBarButtonItem = self.trash
-
         let gesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:)))
         self.view.addGestureRecognizer(gesture)
-        
         let right = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
         let left = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
         left.direction = .left
@@ -65,7 +61,6 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         up.direction = .up
         let down = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
         down.direction = .down
-        
         self.view.addGestureRecognizer(right)
         self.view.addGestureRecognizer(left)
         self.view.addGestureRecognizer(up)
@@ -81,7 +76,6 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         let picRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("handNotes")
-        
         picRef?.updateData([
             "handNotes": FieldValue.arrayRemove([currImage]),
         ])
@@ -91,7 +85,7 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -106,28 +100,24 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
     
     @objc func swipeAction(sender: UISwipeGestureRecognizer) {
         if (sender.direction == .left) {
-            print("Swipe Left")
             let labelPosition = CGPoint(x: self.view.frame.origin.x - 100.0, y: self.view.frame.origin.y)
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             })
         }
         else if (sender.direction == .right) {
-            print("Swipe Right")
             let labelPosition = CGPoint(x: self.view.frame.origin.x + 100.0, y: self.view.frame.origin.y)
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             })
         }
         else if (sender.direction == .up) {
-            print("Swipe Up")
             let labelPosition = CGPoint(x: self.view.frame.origin.x, y: self.view.frame.origin.y - 100.0)
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)
             })
         }
         else if (sender.direction == .down) {
-            print("Swipe Down")
             let labelPosition = CGPoint(x: self.view.frame.origin.x, y: self.view.frame.origin.y + 100.0)
             UIView.animate(withDuration: 0.3, animations: {
                 self.view.frame = CGRect(x: labelPosition.x, y: labelPosition.y, width: self.view.frame.size.width, height: self.view.frame.size.height)

@@ -81,16 +81,15 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
             } catch {
-                print("uh oh")
+                
             }
             var data = Data()
             data = myImg.image!.jpegData(compressionQuality: 0.3)!
             let imageRef = Storage.storage().reference().child((Auth.auth().currentUser?.email)! + "/" +  randomString(20))
             _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
                 imageRef.downloadURL { url, error in
-                    if error != nil {
-
-                    } else {
+                    if error != nil {}
+                    else {
                         self.allImages.append(url?.absoluteString ?? "")
                         let db = Firestore.firestore()
                         let allUsersRef: CollectionReference? = db.collection("users")
@@ -98,9 +97,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                         currUserRef?.setData([
                             "handNotes": FieldValue.arrayUnion([url?.absoluteString ?? ""])
                         ], merge: true) { err in
-                            if err != nil {
-                                print("Error adding document")
-                            }
+                            if err != nil {}
                             else {
                                 self.callback?(self.myImg)
                             }
@@ -111,4 +108,5 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         self.dismiss(animated: true, completion: nil)
     }
+    
 }

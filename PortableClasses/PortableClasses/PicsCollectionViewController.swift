@@ -24,10 +24,8 @@ class PicsCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
         // Do any additional setup after loading the view.
         let width = (view.frame.size.width - 3) / 3
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -36,11 +34,8 @@ class PicsCollectionViewController: UICollectionViewController {
         let db = Firestore.firestore()
         let allUsersRef: CollectionReference? = db.collection("users")
         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
-        
         currUserRef?.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
                     // asynchronously reload table once db returns array of pictures
@@ -56,21 +51,18 @@ class PicsCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        // number of sections
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        print("size = ", self.pics.count)
+        // number of items
         return self.pics.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // configure the cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picCell", for: indexPath) as! CollectionViewCell
-    
-        // Configure the cell
         DispatchQueue.global(qos: .background).async {
             do {
                 let data = try Data.init(contentsOf: URL.init(string:self.pics[indexPath.row])!)
@@ -83,7 +75,6 @@ class PicsCollectionViewController: UICollectionViewController {
                 
             }
         }
-        
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
         imgSelected = indexPath.row
         return cell
@@ -92,13 +83,10 @@ class PicsCollectionViewController: UICollectionViewController {
     @objc func tap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.collectionView)
         let indexPath = self.collectionView.indexPathForItem(at: location)
-        
         if let index = indexPath {
-            print("Got clicked on index: \(index.row)!")
             imgSelected = index.row
             performSegue(withIdentifier: "imgToFullImg", sender: nil)
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,11 +104,8 @@ class PicsCollectionViewController: UICollectionViewController {
                 let db = Firestore.firestore()
                 let allUsersRef: CollectionReference? = db.collection("users")
                 let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
-                
                 currUserRef?.getDocument { (document, error) in
-                    if error != nil {
-                        print("Could not find document")
-                    }
+                    if error != nil {}
                     _ = document.flatMap({
                         $0.data().flatMap({ (data) in
                             // asynchronously reload table once db returns array of pictures
@@ -141,11 +126,8 @@ class PicsCollectionViewController: UICollectionViewController {
         let db = Firestore.firestore()
         let allUsersRef: CollectionReference? = db.collection("users")
         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
-        
         currUserRef?.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
                     // asynchronously reload table once db returns array of pictures

@@ -24,23 +24,17 @@ class ViewNoteViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         completedNoteText.delegate = self
         completedNoteText.text = currNote
-        
         self.navigationItem.backBarButtonItem?.tintColor = UIColor.white
-        
         let backButton = UIBarButtonItem()
         backButton.title = "Notes"
         backButton.tintColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        
         self.done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         self.edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editNote))
-        
         done.tintColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
         self.edit.tintColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
-        
         self.navigationItem.rightBarButtonItem = self.edit
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.13, green:0.03, blue:0.59, alpha:1.0)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,4 +64,5 @@ class ViewNoteViewController: UIViewController, UITextViewDelegate {
         self.navigationItem.rightBarButtonItem = self.edit
         callback?(completedNoteText.text!)
     }
+    
 }

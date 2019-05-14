@@ -23,17 +23,12 @@ class ClassesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         let db = Firestore.firestore()
-
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
-        
         classesRef!.getDocument { (document, error) in
-            if error != nil {
-                print("Could not find document")
-            }
+            if error != nil {}
             _ = document.flatMap({
                 $0.data().flatMap({ (data) in
                     // asynchronously reload table once db returns array of semesters
@@ -45,18 +40,11 @@ class ClassesTableViewController: UITableViewController {
             })
         }
         
-        // Uncomment the following line to preserve selection between presentations
+        // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        
-        
+        // display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        //        self.navigationItem.leftBarButtonItems?.append(self.addButton)//, self.editButton]
-        
-        
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        
         navigationItem.rightBarButtonItems?.append(add)
     }
     
@@ -80,10 +68,7 @@ class ClassesTableViewController: UITableViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
             return
         }
-        
-        
         addAction.isEnabled = false
-        
         alert.addAction(cancelAction)
         alert.addAction(addAction)
         present(alert, animated: true)
@@ -97,64 +82,45 @@ class ClassesTableViewController: UITableViewController {
     func add(_ course: String) {
         if !self.classes.contains(course) {
             let db = Firestore.firestore()
-        
             var userRef: DocumentReference? = nil
-        
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
-            // add new course collection
-            let newCourseCollection = classesRef?.collection(course)
-            print(newCourseCollection!)
-        
             // append semester
             classesRef?.updateData([
                 "classes": FieldValue.arrayUnion([course])
             ]) { err in
-                if err != nil {
-                    print("Error adding course")
-                } else {
+                if err != nil {}
+                else {
                     // initialize notes, handNotes, deadlines, & flashcards arrays for this course
                     let currClassRef = classesRef?.collection(course)
                     let notesDoc = currClassRef?.document("notes")
                     let handNotesDoc = currClassRef?.document("handNotes")
                     let deadlinesDoc = currClassRef?.document("deadlines")
                     let flashcardsDoc = currClassRef?.document("flashcards")
-                    
                     // initialize notes array
                     notesDoc?.setData([
                         "notes": [],
                     ]) { err in
-                        if err != nil {
-                            print("Error adding notes")
-                        }
+                        if err != nil {}
                     }
-                    
                     // initialize hand notes array
                     handNotesDoc?.setData([
                         "handNotes": [],
                         ]) { err in
-                            if err != nil {
-                                print("Error adding hand notes")
-                            }
+                            if err != nil {}
                     }
-                    
                     // initialize dealines array
                     deadlinesDoc?.setData([
                         "dates": [],
                         "deadlines": [],
                         ]) { err in
-                            if err != nil {
-                                print("Error adding deadlines")
-                            }
+                            if err != nil {}
                     }
-                    
                     // initialize notes array
                     flashcardsDoc?.setData([
                         "flashcards": [],
                         ]) { err in
-                            if err != nil {
-                                print("Error adding flash cards")
-                            }
+                            if err != nil {}
                     }
                     
                     let index = self.classes.count
@@ -168,7 +134,7 @@ class ClassesTableViewController: UITableViewController {
                         self.audioPlayer = try AVAudioPlayer(contentsOf: url)
                         self.audioPlayer.play()
                     } catch {
-                        print("uh oh")
+                        
                     }
                 }
             }
@@ -176,83 +142,53 @@ class ClassesTableViewController: UITableViewController {
         else {
             // alert user class already exists
             let alert = UIAlertController(title: "The course you entered already existsv.", message: nil, preferredStyle: .alert)
-            
             let okAction = UIAlertAction(title: "Sorry, I just love that class", style: UIAlertAction.Style.cancel) { (_) in
                 return
             }
-            
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }
-        
-        
     }
   
     
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        // number of sections
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        // number of rows
         return classes.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "classCell", for: indexPath)
-        
-    
         let course = classes[indexPath.row]
         cell.textLabel?.text = course
-        
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
         currClass = classes[indexPath.row]
-        print(currSemester)
-        print(currClass)
         performSegue(withIdentifier: "courseToFeatures", sender: nil)
-        
-        //        self.performSegue(withIdentifier: "semesterToClasses", sender: self)
     }
-    
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
             let db = Firestore.firestore()
-            
             var userRef: DocumentReference? = nil
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
-            
             let clasesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
-            // TODO: finish deleting collection if possible
             _ = clasesRef?.collection(classes[indexPath.row])
-            
             clasesRef?.updateData([
                 "classes": FieldValue.arrayRemove([classes[indexPath.row]])
             ]) { err in
                 if let err = err {
                     print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
                 }
             }
             
@@ -262,43 +198,20 @@ class ClassesTableViewController: UITableViewController {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
             } catch {
-                print("uh oh")
+                
             }
-            
             
             classes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let classFeaturesVC = segue.destination as! ClassFeaturesTableViewController
         classFeaturesVC.currSemester = currSemester
         classFeaturesVC.currClass = currClass
      }
- 
     
 }
 

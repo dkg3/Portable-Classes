@@ -23,11 +23,8 @@ class AddDeadlineViewController: UIViewController {
     
     var reminderDone: Bool! = false
     var dateDone: Bool! = false
-    
     var dateToAdd:Date?
     var dateFormatterForCal = DateFormatter()
-    
-    
     var datePicker: UIDatePicker?
     var newDeadline: String?
     var newDate: String?
@@ -46,6 +43,7 @@ class AddDeadlineViewController: UIViewController {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
+        // create cancel and done buttons that have associated functions to perform when pressed
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelPressed(_:)))
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(donePressed(_:)))
         let flexButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -58,15 +56,14 @@ class AddDeadlineViewController: UIViewController {
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
         
-        
         addButton.isEnabled = false
         
         reminderTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
         dateTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingDidEnd)
         
-        
         reminderTextField.becomeFirstResponder()
     }
+    
     @objc func textFieldChanged(_ textField: UITextField) {
         // toggle add button when both text fields are filled
         if textField == reminderTextField {
@@ -77,8 +74,6 @@ class AddDeadlineViewController: UIViewController {
         }
     }
     
-    
-    
     @objc func cancelPressed(_ sender: UIBarButtonItem) {
         view.endEditing(true)
     }
@@ -87,53 +82,30 @@ class AddDeadlineViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE MMM dd, yyyy 'at' HH:mm "
         dateToAdd = self.datePicker!.date
-    
         dateTextField.text = dateFormatter.string(from: (datePicker?.date)!)
         view.endEditing(true)
     }
-    
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        
-    }
- 
-    
     
     @IBAction func cancelAddingDeadline(_ sender: Any) {
          self.dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func addDeadlineTapped(_ sender: Any) {
-        
-//        let deadlinesVC = segue.destination as! DeadlinesTableViewController
-//        deadlinesVC.deadlines.append(newDeadline)
-        
         if (callback1?(reminderTextField.text!, dateTextField.text!))! {
-            
             let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
             let url = URL(fileURLWithPath: path)
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
             } catch {
-                print("uh oh")
+                
             }
-            
-            
             
             // add to calendar
             if addToCalendar {
                 let eventStore:EKEventStore = EKEventStore()
-                
                 eventStore.requestAccess(to: .event, completion: {(granted, error) in
                     if granted && error == nil {
-                        
                         let event:EKEvent = EKEvent(eventStore: eventStore)
                         event.title = self.reminderTextField.text
                         event.startDate = self.dateToAdd
@@ -142,31 +114,17 @@ class AddDeadlineViewController: UIViewController {
                         do {
                             try eventStore.save(event, span: .thisEvent)
                         }
-                        catch let error as NSError{
-                            print("err")
+                        catch _ as NSError{
+                            
                         }
                     }
-                    else {
-                        print("err")
-                    }
-                    
                 })
             }
-            
             self.dismiss(animated: true, completion: nil)
-            
         }
-//        callback2?(dateTextField.text!)
-        
-//        self.navigationController?.popViewController(animated: true)
-        
-        
     }
     
-    
     @IBAction func calSwitch(_ sender: UISwitch) {
-        print(sender.isOn)
-        print("hm")
         if sender.isOn {
             addToCalendar = true
         }
@@ -179,7 +137,7 @@ class AddDeadlineViewController: UIViewController {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.play()
         } catch {
-            print("uh oh")
+            
         }
     }
     

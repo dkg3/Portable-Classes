@@ -25,16 +25,12 @@ class AddFlashCardViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         defintionTextView.delegate = self
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
-        
         termTextField.becomeFirstResponder()
-        
         addButton.isEnabled = false
         termTextField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-        
     }
     
     @objc func textFieldChanged(_ textField: UITextField) {
@@ -45,8 +41,6 @@ class AddFlashCardViewController: UIViewController, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         addButton.isEnabled = textView.text!.count > 0 && termTextField.text!.count > 0
     }
-    
-    
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
@@ -60,12 +54,10 @@ class AddFlashCardViewController: UIViewController, UITextViewDelegate {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer.play()
             } catch {
-                print("uh oh")
+                
             }
             self.dismiss(animated: true, completion: nil)
         }
-//        callback2?(defintionTextView.text!)
-        
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
