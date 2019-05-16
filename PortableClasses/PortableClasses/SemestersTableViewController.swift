@@ -17,8 +17,6 @@ class SemestersTableViewController: UITableViewController {
     
     @IBOutlet var semestersTable: UITableView!
     
-    @IBOutlet weak var addButton: UIBarButtonItem!
-    
     var addAction: UIAlertAction!
     
     var audioPlayer = AVAudioPlayer()
@@ -57,10 +55,15 @@ class SemestersTableViewController: UITableViewController {
 
         // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
-        // display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        navigationItem.rightBarButtonItems?.append(add)
+        
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            // display an Edit button in the navigation bar for this view controller.
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            navigationItem.rightBarButtonItems?.append(add)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,6 +166,10 @@ class SemestersTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return userEmail == (Auth.auth().currentUser?.email)!
+    }
+    
     // editing the table view
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -173,10 +180,10 @@ class SemestersTableViewController: UITableViewController {
             _ = semestsRef?.collection(semesters[indexPath.row])
             semestsRef?.updateData([
                 "semesters": FieldValue.arrayRemove([semesters[indexPath.row]])
-                ]) { err in
-                    if let err = err {
-                        print("Error updating document: \(err)")
-                    }
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                }
             }
             semesters.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)

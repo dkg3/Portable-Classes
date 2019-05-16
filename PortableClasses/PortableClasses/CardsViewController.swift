@@ -40,9 +40,13 @@ class CardsViewController: UITableViewController {
                 })
             })
         }
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        navigationItem.rightBarButtonItems?.append(add)
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            navigationItem.rightBarButtonItems?.append(add)
+        }
+
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -142,6 +146,12 @@ class CardsViewController: UITableViewController {
     
     @objc func textFieldChanged(_ textField: UITextField) {
         addAction.isEnabled = textField.text!.count > 0
+    }
+    
+    // only allow editing is current user displayed is logged in user
+    override func tableView(_ tableView: UITableView,
+                            canEditRowAt indexPath: IndexPath) -> Bool {
+        return userEmail == (Auth.auth().currentUser?.email)!
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

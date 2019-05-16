@@ -248,11 +248,8 @@
                             <outlet property="delegate" destination="5yH-8m-6aa" id="gBn-5Z-YgQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Semesters" leftItemsSupplementBackButton="YES" id="GCL-1M-FVS">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cJd-0r-T9N"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Semesters" leftItemsSupplementBackButton="YES" id="GCL-1M-FVS"/>
                     <connections>
-                        <outlet property="addButton" destination="cJd-0r-T9N" id="2Kr-ee-qOc"/>
                         <outlet property="semestersTable" destination="j8D-7Z-iQd" id="dct-0i-2hV"/>
                         <segue destination="EQW-DX-hHG" kind="show" identifier="semesterToCourses" id="1W0-Hj-WZr"/>
                     </connections>
@@ -287,13 +284,7 @@
                             <outlet property="delegate" destination="EQW-DX-hHG" id="hZa-sv-5yV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Courses" largeTitleDisplayMode="always" id="moM-g1-1gc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="HHf-z6-X3s">
-                            <connections>
-                                <action selector="addButtonTapped:" destination="EQW-DX-hHG" id="2Pt-z3-Rky"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Courses" largeTitleDisplayMode="always" id="moM-g1-1gc"/>
                     <connections>
                         <segue destination="Ai9-kY-u7v" kind="show" identifier="courseToFeatures" id="4fV-ue-jIE"/>
                     </connections>
@@ -471,13 +462,10 @@
                             <outlet property="delegate" destination="d54-Y1-7zV" id="iu5-lB-oVF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Notes" id="yBJ-Xq-bR7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RAs-jx-W7s">
-                            <connections>
-                                <segue destination="nt4-Es-rem" kind="presentation" identifier="notesToAdd" id="aa2-Tc-UhK"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Notes" id="yBJ-Xq-bR7"/>
+                    <connections>
+                        <segue destination="nt4-Es-rem" kind="presentation" identifier="notesToAdd" id="2xe-Gp-nlx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Rz-aE-dY6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -521,15 +509,10 @@
                             <outlet property="delegate" destination="cD4-qv-N4f" id="p2s-gI-eow"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Pictures" id="Wp2-RG-Cl8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="AzF-Py-Yeg">
-                            <connections>
-                                <segue destination="tBI-yU-v8K" kind="show" identifier="newImg" id="wjJ-P4-QZT"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Pictures" id="Wp2-RG-Cl8"/>
                     <connections>
                         <segue destination="QHn-2n-mSY" kind="presentation" identifier="imgToFullImg" id="zLU-ez-DcA"/>
+                        <segue destination="tBI-yU-v8K" kind="presentation" identifier="newImg" id="oq1-HS-LsZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfD-UU-55j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -577,13 +560,10 @@
                             <outlet property="delegate" destination="hte-uY-ydv" id="MvT-8w-KGK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Deadlines" id="Uss-1l-SH2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="kTh-fa-IsB">
-                            <connections>
-                                <segue destination="B0w-by-Q4Z" kind="presentation" identifier="deadlinesToAdd" id="WrG-Xm-PL6"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Deadlines" id="Uss-1l-SH2"/>
+                    <connections>
+                        <segue destination="B0w-by-Q4Z" kind="presentation" identifier="deadlinesToAdd" id="xPx-zB-OL2"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AS5-B5-i8Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -754,13 +734,7 @@
                             <outlet property="delegate" destination="lyI-YM-9QJ" id="WPS-to-cTB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Flash Cards" id="Q9J-Zc-8lf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v45-uj-cNl">
-                            <connections>
-                                <action selector="addTapped" destination="lyI-YM-9QJ" id="JLq-cJ-Hdh"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Flash Cards" id="Q9J-Zc-8lf"/>
                     <connections>
                         <segue destination="XeH-74-jON" kind="show" identifier="cardsToCollection" id="674-o9-Miu"/>
                     </connections>
@@ -1112,13 +1086,9 @@
                         <barButtonItem key="backBarButtonItem" title="Notes" id="kbr-Jk-31w">
                             <color key="tintColor" red="0.1300802529" green="0.028177028520000001" blue="0.58674603700000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="rNI-pb-RBV">
-                            <color key="tintColor" red="0.1300802529" green="0.028177028520000001" blue="0.58674603700000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="completedNoteText" destination="mCY-iz-HwS" id="mz4-9g-NiH"/>
-                        <outlet property="editButton" destination="rNI-pb-RBV" id="TFf-ap-3Pi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LoQ-yn-jc3" userLabel="First Responder" sceneMemberID="firstResponder"/>

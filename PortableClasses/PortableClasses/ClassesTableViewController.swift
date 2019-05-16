@@ -43,10 +43,14 @@ class ClassesTableViewController: UITableViewController {
         
         // preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
-        // display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        navigationItem.rightBarButtonItems?.append(add)
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            // display an Edit button in the navigation bar for this view controller.
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+            navigationItem.rightBarButtonItems?.append(add)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +59,7 @@ class ClassesTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func addButtonTapped(_ sender: Any) {
+    @objc func addButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Add Course", message: nil, preferredStyle: .alert)
         alert.addTextField {(courseTF) in
             courseTF.placeholder = "Enter Course Name"
@@ -206,6 +210,12 @@ class ClassesTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
         }
+    }
+    
+    // only allow editing is current user displayed is logged in user
+    override func tableView(_ tableView: UITableView,
+                            canEditRowAt indexPath: IndexPath) -> Bool {
+        return userEmail == (Auth.auth().currentUser?.email)!
     }
     
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

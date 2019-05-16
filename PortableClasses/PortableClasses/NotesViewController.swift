@@ -40,10 +40,13 @@ class NotesViewController: UITableViewController {
                 })
             })
         }
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            navigationItem.rightBarButtonItems?.append(add)
+        }
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        navigationItem.rightBarButtonItems?.append(add)
     }
     
     @objc func addTapped() {
@@ -68,6 +71,12 @@ class NotesViewController: UITableViewController {
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
         return cell
+    }
+    
+    // only allow editing is current user displayed is logged in user
+    override func tableView(_ tableView: UITableView,
+                            canEditRowAt indexPath: IndexPath) -> Bool {
+        return userEmail == (Auth.auth().currentUser?.email)!
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -140,6 +149,7 @@ class NotesViewController: UITableViewController {
             let viewNoteVC = segue.destination as! ViewNoteViewController
             viewNoteVC.currNote = self.notes[tableView.indexPathForSelectedRow!.row]
             index = tableView.indexPathForSelectedRow!.row
+            viewNoteVC.userEmail = userEmail
         }
         self.tableView.reloadData()
     }

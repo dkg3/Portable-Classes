@@ -47,8 +47,24 @@ class PicsCollectionViewController: UICollectionViewController {
                 })
             })
         }
+        
+        
+        
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            // display an Edit button in the navigation bar for this view controller.
+            
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            self.navigationItem.rightBarButtonItem = add
+//            navigationItem.rightBarButtonItems?.append(add)
+        }
+        
     }
 
+    @objc func addTapped() {
+        performSegue(withIdentifier: "newImg", sender: self)
+    }
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -97,6 +113,7 @@ class PicsCollectionViewController: UICollectionViewController {
             fullImgVC.currImage = self.pics[imgSelected]
             fullImgVC.currSemester = currSemester
             fullImgVC.currClass = currClass
+            fullImgVC.userEmail = userEmail
         }
         else if segue.identifier == "newImg" {
             let nav = segue.destination as! UINavigationController

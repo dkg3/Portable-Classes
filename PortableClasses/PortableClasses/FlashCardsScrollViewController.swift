@@ -39,10 +39,15 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
         super.viewDidLoad()
         view.bringSubviewToFront(pageControl)
         self.navigationItem.title = currCardsCollection
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
-        self.navigationItem.rightBarButtonItem = self.trash
-        self.navigationItem.rightBarButtonItems?.append(add)
+        
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
+            self.navigationItem.rightBarButtonItem = self.trash
+            self.navigationItem.rightBarButtonItems?.append(add)
+        }
+        
         getInfoFromDB()
     }
     

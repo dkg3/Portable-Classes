@@ -42,10 +42,12 @@ class DeadlinesTableViewController: UITableViewController {
             })
         }
 
-        // display an edit button on the right side of the nav bar
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        navigationItem.rightBarButtonItems?.append(add)
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            navigationItem.rightBarButtonItems?.append(add)
+        }
+        
     }
     
     @objc func addTapped() {
@@ -75,6 +77,12 @@ class DeadlinesTableViewController: UITableViewController {
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor(red:0.54, green:1.00, blue:0.71, alpha:1.0)
         return cell
+    }
+    
+    // only allow editing is current user displayed is logged in user
+    override func tableView(_ tableView: UITableView,
+                            canEditRowAt indexPath: IndexPath) -> Bool {
+        return userEmail == (Auth.auth().currentUser?.email)!
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

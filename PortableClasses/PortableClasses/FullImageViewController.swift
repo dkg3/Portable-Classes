@@ -14,6 +14,7 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var userEmail:String!
     var currImage = ""
     var currSemester = ""
     var currClass = ""
@@ -50,8 +51,12 @@ class FullImageViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         }
-        self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
-        self.navigationItem.rightBarButtonItem = self.trash
+        // only allow user to edit their own content
+        if userEmail == (Auth.auth().currentUser?.email)! {
+            self.trash = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashTapped))
+            self.navigationItem.rightBarButtonItem = self.trash
+        }
+       
         let gesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:)))
         self.view.addGestureRecognizer(gesture)
         let right = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(sender:)))
