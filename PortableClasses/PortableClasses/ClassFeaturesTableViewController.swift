@@ -12,6 +12,7 @@ class ClassFeaturesTableViewController: UITableViewController {
     @IBOutlet var classFeaturesTable: UITableView!
     
     var classFeatures = [String]()
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     
@@ -73,21 +74,27 @@ class ClassFeaturesTableViewController: UITableViewController {
             let deadlinesVC = segue.destination as! DeadlinesTableViewController
             deadlinesVC.currSemester = currSemester
             deadlinesVC.currClass = currClass
+            print("EMAIL FROM CLASS FTS TO DEADLINES: \(self.userEmail!)")
+            deadlinesVC.userEmail = userEmail
         }
         else if segue.identifier == "featuresToNotes" {
             let notesVC = segue.destination as! NotesViewController
             notesVC.currSemester = currSemester
             notesVC.currClass = currClass
+            notesVC.userEmail = userEmail
+        
         }
         else if segue.identifier == "featuresToPics" {
             let picsVC = segue.destination as! PicsCollectionViewController
             picsVC.currSemester = currSemester
             picsVC.currClass = currClass
+            picsVC.userEmail = userEmail
         }
         else if segue.identifier == "featuresToCards" {
             let cardsVC = segue.destination as! CardsViewController
             cardsVC.currSemester = currSemester
             cardsVC.currClass = currClass
+            cardsVC.userEmail = userEmail
         }
     }
 

@@ -17,6 +17,7 @@ class PicsCollectionViewController: UICollectionViewController {
     
     var pics = [String]()
     
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     
@@ -33,7 +34,7 @@ class PicsCollectionViewController: UICollectionViewController {
         
         let db = Firestore.firestore()
         let allUsersRef: CollectionReference? = db.collection("users")
-        let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
+        let currUserRef: DocumentReference? = allUsersRef?.document(userEmail!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
         currUserRef?.getDocument { (document, error) in
             if error != nil {}
             _ = document.flatMap({
@@ -119,6 +120,7 @@ class PicsCollectionViewController: UICollectionViewController {
             }
             picsVC.currSemester = currSemester
             picsVC.currClass = currClass
+//            picsVS.userEmail = userEmail
         }
     }
     

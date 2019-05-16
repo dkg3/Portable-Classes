@@ -14,6 +14,7 @@ class NotesViewController: UITableViewController {
 
     var notes = [String]()
     
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     
@@ -25,7 +26,7 @@ class NotesViewController: UITableViewController {
         super.viewDidLoad()
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        userRef = db.collection("users").document(userEmail!)
         let notesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("notes")
         notesRef!.getDocument { (document, error) in
             if error != nil {}

@@ -17,12 +17,15 @@ class OverviewViewController: UIViewController {
     
     var publicAccount:Bool!
     
+    var userEmail:String?
+    
     var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad();
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         let db = Firestore.firestore()
+//        loggedInUserEmail = (Auth.auth().currentUser?.email)!
         var userRef: DocumentReference? = nil
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         userRef!.getDocument { (document, error) in
@@ -75,4 +78,18 @@ class OverviewViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "overviewToSemesters" {
+//            let nav = segue.destination as! UINavigationController
+//            let semestersVC = nav.topViewController as! SemestersTableViewController
+            let semestersVC = segue.destination as! SemestersTableViewController
+            semestersVC.userEmail = Auth.auth().currentUser?.email
+        }
+        else if segue.identifier == "overviewToMap" {
+            let nav = segue.destination as! UINavigationController
+            let mapVC = nav.topViewController as! MapViewController
+            mapVC.userEmail = Auth.auth().currentUser?.email
+        }
+        
+    }
 }

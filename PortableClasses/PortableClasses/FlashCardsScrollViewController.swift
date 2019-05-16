@@ -21,6 +21,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     var term: UILabel!
     var button: UIButton!
     
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     var currCardsCollection = ""
@@ -164,7 +165,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     func getInfoFromDB() {
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        userRef = db.collection("users").document(userEmail!)
         let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
         fcRef!.getDocument { (document, error) in
             if error != nil {}
@@ -198,7 +199,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
                 if !self.terms.contains(message) && !self.definitions.contains(definition) {
                     let db = Firestore.firestore()
                     var userRef: DocumentReference? = nil
-                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    userRef = db.collection("users").document(self.userEmail!)
                     let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
                     // append term
                     fcRef?.updateData([

@@ -29,6 +29,8 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var tableView: UITableView!
     var usersArray = [String]()
     
+    var userEmail:String!
+    
     @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
@@ -73,6 +75,12 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                     }
                 }
             }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
         }
     }
     
@@ -134,10 +142,21 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.userEmail = self.usersArray[indexPath.row]
+        performSegue(withIdentifier: "mapToSemesters", sender: self)
+        
         
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mapToSemesters" {
+            let semestersVC = segue.destination as! SemestersTableViewController
+            semestersVC.userEmail = self.userEmail
+        }
+        
     }
 }

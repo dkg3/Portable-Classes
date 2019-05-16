@@ -14,6 +14,7 @@ class CardsViewController: UITableViewController {
 
     var cards = [String]()
     
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     var currCardsCollection = ""
@@ -25,7 +26,7 @@ class CardsViewController: UITableViewController {
         super.viewDidLoad()
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        userRef = db.collection("users").document(userEmail!)
         let flashCardsAllRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("flashcards")
         flashCardsAllRef!.getDocument { (document, error) in
             if error != nil {}
@@ -175,6 +176,7 @@ class CardsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let collectionVC = segue.destination as! FlashCardsScrollViewController
         collectionVC.currCardsCollection = currCardsCollection
+        collectionVC.userEmail = userEmail
         collectionVC.currClass = currClass
         collectionVC.currSemester = currSemester
     }

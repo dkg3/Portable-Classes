@@ -13,6 +13,7 @@ import AVFoundation
 class ClassesTableViewController: UITableViewController {
     
     var classes = [String]()
+    var userEmail:String!
     var currSemester = ""
     var currClass = ""
     
@@ -25,7 +26,7 @@ class ClassesTableViewController: UITableViewController {
         
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        userRef = db.collection("users").document(userEmail!)
         let classesRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes")
         classesRef!.getDocument { (document, error) in
             if error != nil {}
@@ -211,6 +212,7 @@ class ClassesTableViewController: UITableViewController {
         let classFeaturesVC = segue.destination as! ClassFeaturesTableViewController
         classFeaturesVC.currSemester = currSemester
         classFeaturesVC.currClass = currClass
+        classFeaturesVC.userEmail = userEmail
      }
     
 }

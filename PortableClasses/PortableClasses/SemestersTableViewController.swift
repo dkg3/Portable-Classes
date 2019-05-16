@@ -23,6 +23,9 @@ class SemestersTableViewController: UITableViewController {
     
     var audioPlayer = AVAudioPlayer()
     
+    
+    var userEmail: String! // user from map table.. not logged in user
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +39,8 @@ class SemestersTableViewController: UITableViewController {
         
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+        print("!!!!!!\(userEmail!)")
+        userRef = db.collection("users").document(userEmail!)
         let semestsRef = userRef?.collection("semesters").document("semesters")
         semestsRef!.getDocument { (document, error) in
             if error != nil {}
@@ -197,6 +201,7 @@ class SemestersTableViewController: UITableViewController {
         // send current semester to classrs page
         let classVC = segue.destination as! ClassesTableViewController
         classVC.currSemester = currSemester
+        classVC.userEmail = self.userEmail
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
