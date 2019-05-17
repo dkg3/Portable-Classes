@@ -23,28 +23,36 @@ class UserLocation: NSObject, MKAnnotation {
 
 class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
+    // access to the map view and location manager
     @IBOutlet weak var mapView: MKMapView!
     var locationManager = CLLocationManager()
     
+    // access to table view of users
     @IBOutlet weak var tableView: UITableView!
+    // array of users
     var usersArray = [String]()
     
+    // user's email
     var userEmail:String!
     
+    // variable of table title
     @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        // style the nav bar
         label.textColor = UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
+        // show the user's location if their location services are enabled
         mapView.showsUserLocation = true
         if CLLocationManager.locationServicesEnabled() == true {
             if CLLocationManager.authorizationStatus() == .restricted || CLLocationManager.authorizationStatus() == .denied || CLLocationManager.authorizationStatus() == .notDetermined {
                 locationManager.requestWhenInUseAuthorization()
             }
+            // set the desired accuracy and update the user's location
             locationManager.desiredAccuracy = 1.0
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
@@ -53,7 +61,9 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         tableView.dataSource = self
         
+        // get reference to firebase
         let db = Firestore.firestore()
+        // reference to the collection of users
         let allUsersRef: CollectionReference? = db.collection("users")
         // loop through all users
         allUsersRef?.getDocuments() { (querySnapshot, err) in
@@ -79,6 +89,7 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // get the index of the row selected
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
@@ -87,12 +98,17 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     //MARK: CLLocationManager Delagates
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // region to show on the map initially (user's location)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
         self.mapView.setRegion(region, animated: true)
         
+        // get reference to firebase
         let db = Firestore.firestore()
+        // reference to the collection of users
         let allUsersRef: CollectionReference? = db.collection("users")
+        // reference to the current user
         let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!)
+        // update the user's location in firebase
         currUserRef?.updateData(["location": GeoPoint(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)])
         // loop through all users
         allUsersRef?.getDocuments() { (querySnapshot, err) in
@@ -116,25 +132,26 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         }
+        // only update the location initially
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
+        // number of sections
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // number of rows
         return usersArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // configure the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "usernameCell", for: indexPath)
         cell.backgroundColor = UIColor(cgColor: (tableView.backgroundColor?.cgColor)!)
         let usr = usersArray[indexPath.row]
+        // set the text field and style the text
         cell.textLabel?.text = usr
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
@@ -142,18 +159,20 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // set the user's email to the email selected
         self.userEmail = self.usersArray[indexPath.row]
+        // go to that user's semesters view
         performSegue(withIdentifier: "mapToSemesters", sender: self)
-        
-        
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
+        // dismiss the map view
         self.dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapToSemesters" {
+            // pass the user's email to the semester view controller
             let semestersVC = segue.destination as! SemestersTableViewController
             semestersVC.userEmail = self.userEmail
         }

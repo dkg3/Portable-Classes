@@ -12,22 +12,32 @@ import AVFoundation
 
 class CardsViewController: UITableViewController {
 
+    // array of flash cards
     var cards = [String]()
     
-    var userEmail:String!
+    // variables for the current semester, class, and flash card collection
     var currSemester = ""
     var currClass = ""
     var currCardsCollection = ""
+    // user's email
+    var userEmail: String!
     
+    // variable for an add alert
     var addAction:UIAlertAction!
+    
+    // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // get reference to firebase
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
+        // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
+        // reference to the document of flashcards
         let flashCardsAllRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("flashcards")
+        // display the flashcards in the view controller
         flashCardsAllRef!.getDocument { (document, error) in
             if error != nil {}
             _ = document.flatMap({
@@ -42,6 +52,7 @@ class CardsViewController: UITableViewController {
         }
         // only allow user to edit their own content
         if userEmail == (Auth.auth().currentUser?.email)! {
+            // give the user access to an edit button
             self.navigationItem.rightBarButtonItem = self.editButtonItem
             let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
             navigationItem.rightBarButtonItems?.append(add)
@@ -60,8 +71,10 @@ class CardsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // configure the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "flashcardsCollectionCell", for: indexPath)
         let card = cards[indexPath.row]
+        // style the text
         cell.textLabel?.text = card
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
@@ -69,11 +82,13 @@ class CardsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // segue to the collection of flashcards selected
         currCardsCollection = cards[indexPath.row]
         performSegue(withIdentifier: "cardsToCollection", sender: nil)
     }
     
     @objc func addTapped() {
+        // display the add collection alert
         let alert = UIAlertController(title: "Add Collection of Flash Cards", message: nil, preferredStyle: .alert)
         alert.addTextField {(fcCollectionTF) in
             fcCollectionTF.placeholder = "Enter Collection"
@@ -84,9 +99,11 @@ class CardsViewController: UITableViewController {
             guard let fcCollection = alert.textFields?.first?.text else {return}
             self.add(fcCollection)
         }
+        // dismiss the alert
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
             return
         }
+        // enable the add button once there is text added
         addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
@@ -94,10 +111,14 @@ class CardsViewController: UITableViewController {
     }
     
     func add(_ collection: String) {
+        // no duplicates allowed
         if !self.cards.contains(collection) {
+            // get reference to firebase
             let db = Firestore.firestore()
             var userRef: DocumentReference? = nil
+            // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            // reference to the document of flashcards
             let flashCardsAllRef = userRef?.collection("semesters").document("semesters").collection(currSemester).document("classes").collection(currClass).document("flashcards")
             // add new flash cards collection
             let newCollection = flashCardsAllRef?.collection(collection)
@@ -124,6 +145,7 @@ class CardsViewController: UITableViewController {
                     }
                 }
             }
+            // play the success sound when adding a collection
             let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
             let url = URL(fileURLWithPath: path)
             do {
@@ -139,28 +161,33 @@ class CardsViewController: UITableViewController {
             let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (_) in
                 return
             }
+            // present the alert
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }
     }
     
     @objc func textFieldChanged(_ textField: UITextField) {
+        // enabled the add button when text is added
         addAction.isEnabled = textField.text!.count > 0
     }
     
     // only allow editing is current user displayed is logged in user
-    override func tableView(_ tableView: UITableView,
-                            canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return userEmail == (Auth.auth().currentUser?.email)!
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            // get reference to firebase
             let db = Firestore.firestore()
             var userRef: DocumentReference? = nil
+            // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            // reference to the document of flashcards
             let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards")
             _ = fcRef?.collection(cards[indexPath.row])
+            // remove the collection from firebase
             fcRef?.updateData([
                 "flashcards": FieldValue.arrayRemove([cards[indexPath.row]])
             ]) { err in
@@ -168,7 +195,11 @@ class CardsViewController: UITableViewController {
                     print("Error updating document: \(err)")
                 }
             }
+            // remove the collection cell
+            cards.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
+            // play the delete sound when removing a collection
             let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
             let url = URL(fileURLWithPath: path)
             do {
@@ -177,13 +208,11 @@ class CardsViewController: UITableViewController {
             } catch {
                 
             }
-            
-            cards.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // pass the collection, current semester, class, and user's email to the flashcards view
         let collectionVC = segue.destination as! FlashCardsScrollViewController
         collectionVC.currCardsCollection = currCardsCollection
         collectionVC.userEmail = userEmail
