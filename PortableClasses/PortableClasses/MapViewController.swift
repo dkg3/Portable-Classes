@@ -38,6 +38,9 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     // variable of table title
     @IBOutlet weak var label: UILabel!
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         // style the nav bar
@@ -61,8 +64,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.delegate = self
         tableView.dataSource = self
         
-        // get reference to firebase
-        let db = Firestore.firestore()
         // reference to the collection of users
         let allUsersRef: CollectionReference? = db.collection("users")
         // loop through all users
@@ -102,8 +103,6 @@ class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
         self.mapView.setRegion(region, animated: true)
         
-        // get reference to firebase
-        let db = Firestore.firestore()
         // reference to the collection of users
         let allUsersRef: CollectionReference? = db.collection("users")
         // reference to the current user

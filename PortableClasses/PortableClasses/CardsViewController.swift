@@ -28,11 +28,12 @@ class CardsViewController: UITableViewController {
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of flashcards
@@ -113,9 +114,6 @@ class CardsViewController: UITableViewController {
     func add(_ collection: String) {
         // no duplicates allowed
         if !self.cards.contains(collection) {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of flashcards
@@ -179,9 +177,6 @@ class CardsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of flashcards

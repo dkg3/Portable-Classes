@@ -26,12 +26,13 @@ class ClassesTableViewController: UITableViewController {
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of classes
@@ -98,9 +99,6 @@ class ClassesTableViewController: UITableViewController {
     func add(_ course: String) {
         // only add course if not in the user's classes array
         if !self.classes.contains(course) {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of classes
@@ -210,9 +208,6 @@ class ClassesTableViewController: UITableViewController {
     // editing the table view
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of classes

@@ -44,6 +44,10 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // have page control always show and make nav title the collection name
@@ -68,9 +72,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     }
     
     @objc func trashTapped() {
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to current user
         userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
         // reference to the document of flashcards
@@ -141,7 +142,7 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             pages[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
             scrollView.addSubview(pages[i])
             // add a toggle button to switch between term and definition
-            button = UIButton(frame: CGRect(x: view.frame.width/2 - 90, y: view.frame.height - 200, width: 180, height: 40))
+            button = UIButton(frame: CGRect(x: view.frame.width/2 - 90, y: view.frame.height - 350, width: 180, height: 40))
             button.backgroundColor = .red
             button.setTitle("Tap to toggle", for: .normal)
             button.addTarget(self, action:#selector(self.revealDefinition), for: .touchUpInside)
@@ -200,9 +201,6 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
     }
     
     func getInfoFromDB() {
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user's email
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of flashcards
@@ -243,13 +241,10 @@ class FlashCardsScrollViewController: UIViewController, UIScrollViewDelegate, UI
             addFlashCardslinesVC.callback1 = { message, definition in
                 // no duplicates allowed
                 if !self.terms.contains(message) && !self.definitions.contains(definition) {
-                    // get reference to firebase
-                    let db = Firestore.firestore()
-                    var userRef: DocumentReference? = nil
                     // reference to the user's email
-                    userRef = db.collection("users").document(self.userEmail!)
+                    self.userRef = self.db.collection("users").document(self.userEmail!)
                     // reference to the document of flashcards
-                    let fcRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
+                    let fcRef = self.userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("flashcards").collection(self.currCardsCollection).document("flashcards")
                     // append term and definition
                     fcRef?.updateData([
                         "terms": FieldValue.arrayUnion([message]),

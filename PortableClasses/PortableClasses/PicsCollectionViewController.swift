@@ -25,6 +25,9 @@ class PicsCollectionViewController: UICollectionViewController {
     
     // variable to know the index of the image selected for full view
     var imgSelected = -1
+    
+    // get access to firebase
+    let db = Firestore.firestore()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +37,6 @@ class PicsCollectionViewController: UICollectionViewController {
         let width = (view.frame.size.width - 3) / 3
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: width, height: width)
-        // get reference to firebase
-        let db = Firestore.firestore()
         // reference to all the users
         let allUsersRef: CollectionReference? = db.collection("users")
         // reference to the document of handNotes
@@ -127,10 +128,8 @@ class PicsCollectionViewController: UICollectionViewController {
             let nav = segue.destination as! UINavigationController
             let picsVC = nav.topViewController as! CameraViewController
             picsVC.callback = {message in
-                // get reference to firebase
-                let db = Firestore.firestore()
                 // reference to all the users
-                let allUsersRef: CollectionReference? = db.collection("users")
+                let allUsersRef: CollectionReference? = self.db.collection("users")
                 // reference to the document of handNotes
                 let currUserRef: DocumentReference? = allUsersRef?.document((Auth.auth().currentUser?.email)!).collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("handNotes")
                 // get all the images of the user
@@ -154,8 +153,6 @@ class PicsCollectionViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // get reference to firebase
-        let db = Firestore.firestore()
         // reference to all the users
         let allUsersRef: CollectionReference? = db.collection("users")
         // reference to the document of handNotes

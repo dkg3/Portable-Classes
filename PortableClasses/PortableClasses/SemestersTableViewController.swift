@@ -28,6 +28,10 @@ class SemestersTableViewController: UITableViewController {
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,9 +44,6 @@ class SemestersTableViewController: UITableViewController {
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 20)!]
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)]
         
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of semesters
@@ -109,9 +110,6 @@ class SemestersTableViewController: UITableViewController {
     func add(_ semester: String) {
         // only add semester if not in the user's semester array
         if !self.semesters.contains(semester) {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of semesters
@@ -198,9 +196,6 @@ class SemestersTableViewController: UITableViewController {
     // editing the table view
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of semesters

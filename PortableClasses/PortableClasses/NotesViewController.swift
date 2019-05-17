@@ -25,11 +25,12 @@ class NotesViewController: UITableViewController {
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // get reference to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of notes
@@ -91,9 +92,6 @@ class NotesViewController: UITableViewController {
     // editing the table view
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // get reference to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of notes
@@ -128,13 +126,10 @@ class NotesViewController: UITableViewController {
             addNotesVC.callback = { message in
                 // if the note doesn't already exist
                 if !self.notes.contains(message) {
-                    // get reference to firebase
-                    let db = Firestore.firestore()
-                    var userRef: DocumentReference? = nil
                     // reference to the current user
-                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    self.userRef = self.db.collection("users").document((Auth.auth().currentUser?.email)!)
                     // reference to the document of notes
-                    let notesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
+                    let notesRef = self.userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
                     // add the new note
                     notesRef?.updateData([
                         "notes": FieldValue.arrayUnion([message])
@@ -161,13 +156,10 @@ class NotesViewController: UITableViewController {
             editNotesVC.callback = { message in
                 // update the note in the array of notes
                 self.notes[self.index] = message
-                // get referene to firebase
-                let db = Firestore.firestore()
-                var userRef: DocumentReference? = nil
                 // reference to the current user
-                userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                self.userRef = self.db.collection("users").document((Auth.auth().currentUser?.email)!)
                 // reference to the document of notes
-                let notesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
+                let notesRef = self.userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("notes")
                 // update the existing note
                 notesRef?.updateData([
                     "notes": self.notes

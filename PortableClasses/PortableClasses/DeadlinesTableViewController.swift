@@ -24,12 +24,13 @@ class DeadlinesTableViewController: UITableViewController {
     // initial variable for sound
     var audioPlayer = AVAudioPlayer()
     
+    // get access to firebase
+    let db = Firestore.firestore()
+    var userRef: DocumentReference? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // get access to firebase
-        let db = Firestore.firestore()
-        var userRef: DocumentReference? = nil
         // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
         // reference to the document of deadlines
@@ -98,9 +99,6 @@ class DeadlinesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // get access to firebase
-            let db = Firestore.firestore()
-            var userRef: DocumentReference? = nil
             // reference the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
             // reference to the document of deadlines
@@ -135,13 +133,10 @@ class DeadlinesTableViewController: UITableViewController {
             addDeadlinesVC.callback1 = { message, date in
                 // make sure there isn't a duplicate deadline
                 if !self.deadlines.contains(message) && !self.dates.contains(date) {
-                    // get reference to firebase
-                    let db = Firestore.firestore()
-                    var userRef: DocumentReference? = nil
                     // reference the current user
-                    userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+                    self.userRef = self.db.collection("users").document((Auth.auth().currentUser?.email)!)
                     // reference to the document of deadlines
-                    let deadlinesRef = userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
+                    let deadlinesRef = self.userRef?.collection("semesters").document("semesters").collection(self.currSemester).document("classes").collection(self.currClass).document("deadlines")
                     // add the new deadline to firebase
                     deadlinesRef?.updateData([
                         "deadlines": FieldValue.arrayUnion([message]),
