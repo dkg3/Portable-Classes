@@ -10,6 +10,7 @@ import UIKit
 
 class FlashCard: UIView {
 
+    // variables for the term and definition
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
 

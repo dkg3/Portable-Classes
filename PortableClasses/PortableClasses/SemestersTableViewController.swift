@@ -12,21 +12,26 @@ import AVFoundation
 
 class SemestersTableViewController: UITableViewController {
     
+    // array of the semesters to display
     var semesters = [String]()
+    // the current semester selected
     var currSemester: String = ""
+    // user from map table, not the logged in user
+    var userEmail: String!
     
+    // variable accessing the semester table view
     @IBOutlet var semestersTable: UITableView!
     
+    // pop up variable used to display an alert to add a new semester
     var addAction: UIAlertAction!
     
+    // initial variable for sound
     var audioPlayer = AVAudioPlayer()
-    
-    
-    var userEmail: String! // user from map table.. not logged in user
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // creating and styling the nav bar with appropriote font and colors
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.titleTextAttributes = [ NSAttributedString.Key.font: UIFont(name: "Avenir Heavy", size: 20)!]
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -35,11 +40,14 @@ class SemestersTableViewController: UITableViewController {
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Avenir-Medium", size: 20)!]
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(red:1.00, green:0.96, blue:0.41, alpha:1.0)]
         
+        // get reference to firebase
         let db = Firestore.firestore()
         var userRef: DocumentReference? = nil
-        print("!!!!!!\(userEmail!)")
+        // reference to the user selected
         userRef = db.collection("users").document(userEmail!)
+        // reference to the document of semesters
         let semestsRef = userRef?.collection("semesters").document("semesters")
+        // display the semesters in the view controller
         semestsRef!.getDocument { (document, error) in
             if error != nil {}
             _ = document.flatMap({
@@ -52,13 +60,10 @@ class SemestersTableViewController: UITableViewController {
                 })
             })
         }
-
-        // preserve selection between presentations
-        self.clearsSelectionOnViewWillAppear = false
         
         // only allow user to edit their own content
         if userEmail == (Auth.auth().currentUser?.email)! {
-            // display an Edit button in the navigation bar for this view controller.
+            // display an Edit button in the navigation bar for this view controller
             self.navigationItem.rightBarButtonItem = self.editButtonItem
             let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
             navigationItem.rightBarButtonItems?.append(add)
@@ -67,17 +72,20 @@ class SemestersTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // deselect the tapped row so the gray color disappears
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
     }
     
     @objc func addTapped() {
+        // alert with a text field to add a new semester
         let alert = UIAlertController(title: "Add Semester", message: nil, preferredStyle: .alert)
         self.addAction = UIAlertAction(title: "Add", style: .default) { (_) in
             guard let semester = alert.textFields?.first?.text else {return}
             self.add(semester)
         }
+        // selecting cancel will dismiss the alert without adding anything
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (_) in
             return
         }
@@ -86,6 +94,7 @@ class SemestersTableViewController: UITableViewController {
             // add event listener to text field to toggle add button
             semesterTF.addTarget(self, action: #selector(self.textFieldChanged(_:)), for: .editingChanged)
         }
+        // don't allow add capabilities until text is added
         addAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(addAction)
@@ -100,9 +109,12 @@ class SemestersTableViewController: UITableViewController {
     func add(_ semester: String) {
         // only add semester if not in the user's semester array
         if !self.semesters.contains(semester) {
+            // get reference to firebase
             let db = Firestore.firestore()
             var userRef: DocumentReference? = nil
+            // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            // reference to the document of semesters
             let semestsRef = userRef?.collection("semesters").document("semesters")
             // append semester
             semestsRef?.updateData([
@@ -118,10 +130,12 @@ class SemestersTableViewController: UITableViewController {
                     ]) { err in
                         if err != nil {}
                         else {
+                            // add the new semester to the end of the table
                             let index = self.semesters.count
                             self.semesters.insert(semester, at: index)
                             let indexPath = IndexPath(row: index, section: 0)
                             self.tableView.insertRows(at: [indexPath], with: .left)
+                            // play the add sound when the semester is successfully added
                             let path = Bundle.main.path(forResource: "add", ofType:"mp3")!
                             let url = URL(fileURLWithPath: path)
                             do {
@@ -149,17 +163,21 @@ class SemestersTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+        // number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // number of rows
         return semesters.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // configure the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "semesterCell", for: indexPath)
         let semester = semesters[indexPath.row]
+        // set the text field and style the text
         cell.textLabel?.text = semester
         cell.textLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
         cell.textLabel?.textColor = UIColor.white
@@ -167,17 +185,28 @@ class SemestersTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // only allow user to edit their own content
         return userEmail == (Auth.auth().currentUser?.email)!
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // segue to the courses page based on the semester that was selected
+        currSemester = semesters[indexPath.row]
+        performSegue(withIdentifier: "semesterToCourses", sender: nil)
     }
     
     // editing the table view
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            // get reference to firebase
             let db = Firestore.firestore()
             var userRef: DocumentReference? = nil
+            // reference to the current user
             userRef = db.collection("users").document((Auth.auth().currentUser?.email)!)
+            // reference to the document of semesters
             let semestsRef = userRef?.collection("semesters").document("semesters")
             _ = semestsRef?.collection(semesters[indexPath.row])
+            // remove the selected semester from the database
             semestsRef?.updateData([
                 "semesters": FieldValue.arrayRemove([semesters[indexPath.row]])
             ]) { err in
@@ -185,9 +214,11 @@ class SemestersTableViewController: UITableViewController {
                     print("Error updating document: \(err)")
                 }
             }
+            // remove the selected semester from the table view
             semesters.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
+            // play the delete sound when removing a row
             let path = Bundle.main.path(forResource: "delete", ofType:"wav")!
             let url = URL(fileURLWithPath: path)
             do {
@@ -205,15 +236,10 @@ class SemestersTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // send current semester to classrs page
+        // send current semester and user's email to classes page
         let classVC = segue.destination as! ClassesTableViewController
         classVC.currSemester = currSemester
         classVC.userEmail = self.userEmail
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        currSemester = semesters[indexPath.row]
-        performSegue(withIdentifier: "semesterToCourses", sender: nil)
     }
 
 }

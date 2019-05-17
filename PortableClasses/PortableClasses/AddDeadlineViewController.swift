@@ -12,9 +12,8 @@ import AVFoundation
 
 class AddDeadlineViewController: UIViewController {
 
-    // callback variables to pass the reminder event and date back to deadlines script
+    // callback variable to pass the reminder event and date back to deadlines script
     var callback1 : ((String, String) -> Bool)?
-    var callback2 : ((String) -> Void)?
     
     // reminder event and date text field variables
     @IBOutlet weak var dateTextField: UITextField!
